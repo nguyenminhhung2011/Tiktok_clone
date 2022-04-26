@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ButtonDesign extends StatelessWidget {
-  final String tittle;
   final Function() press;
+  final Widget title;
   const ButtonDesign({
     Key? key,
-    required this.tittle,
     required this.press,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -22,14 +22,7 @@ class ButtonDesign extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: Color.fromARGB(255, 136, 199, 250),
         ),
-        child: Text(
-          tittle,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20,
-          ),
-        ),
+        child: title,
       ),
     );
   }

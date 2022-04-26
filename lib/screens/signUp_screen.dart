@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/controls/auth_methods.dart';
+import 'package:tiktok_clone/utils/untils.dart';
 
 import '../widgets/button_desgin.dart';
 import '../widgets/textField_desgin.dart';
@@ -17,7 +20,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailControllelr = TextEditingController();
   final TextEditingController _passwordControllelr = TextEditingController();
   final TextEditingController _bioControllelr = TextEditingController();
-  Uint8List? File;
+  Uint8List? _image;
+  bool isLoading = false;
   @override
   void dispose() {
     super.dispose();
@@ -25,6 +29,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _emailControllelr.dispose();
     _passwordControllelr.dispose();
     _bioControllelr.dispose();
+  }
+
+  void selectedImage() async {
+    Uint8List _file = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = _file;
+    });
+  }
+
+  void SignUpUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    String res = await AuthMethods().SignUp(
+      username: _userController.text,
+      email: _emailControllelr.text,
+      password: _passwordControllelr.text,
+      bio: _bioControllelr.text,
+      image: _image!,
+    );
+    setState(() {
+      isLoading = false;
+    });
+    //print(res);
+    if (res != "Success") {
+      showSnackBar(res.toString(), context);
+    } else {}
   }
 
   Widget build(BuildContext context) {
@@ -106,12 +137,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     color: Color.fromARGB(255, 94, 153, 201),
                                   ),
                                 ),
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    'https://images.unsplash.com/photo-1650859111563-2cfcfbbe586b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
-                                  ),
-                                  radius: 45,
-                                ),
+                                child: (_image == null)
+                                    ? CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          'https://images.unsplash.com/photo-1650859111563-2cfcfbbe586b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
+                                        ),
+                                        radius: 45,
+                                      )
+                                    : CircleAvatar(
+                                        backgroundImage: MemoryImage(_image!),
+                                        radius: 45,
+                                      ),
                               ),
                               const SizedBox(width: 15),
                               Column(
@@ -127,7 +163,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                   const SizedBox(height: 10),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      selectedImage();
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20, vertical: 5),
@@ -199,11 +237,65 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           icon: Icon(Icons.tiktok),
                         ),
                         const SizedBox(height: 20),
-                        ButtonDesign(
-                          tittle: 'Agree and continue',
-                          press: () {},
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'By selecting Agree and continue below',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: '',
+                                      style: TextStyle(fontSize: 15),
+                                      children: [
+                                        TextSpan(
+                                          text: 'I agree to ',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              'Terms of Service and Privacy Policy',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 94, 153, 201),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
+                        ButtonDesign(
+                          title: (isLoading)
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white))
+                              : Text(
+                                  'Agree and continue',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                          press: () {
+                            SignUpUser();
+                          },
+                        ),
                       ],
                     ),
                   ),

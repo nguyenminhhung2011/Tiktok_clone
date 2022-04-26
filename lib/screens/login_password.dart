@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/controls/auth_methods.dart';
 
 import '../widgets/button_desgin.dart';
 import '../widgets/textField_desgin.dart';
@@ -16,10 +17,22 @@ class LoginPasswordScreen extends StatefulWidget {
 
 class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
   final TextEditingController _passwordControllelr = TextEditingController();
+  bool isLoading = false;
   @override
   void dispose() {
     super.dispose();
     _passwordControllelr.dispose();
+  }
+
+  void signInUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    String res =
+        await AuthMethods().LoginUser(widget.email, _passwordControllelr.text);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -132,8 +145,22 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
                         ),
                         const SizedBox(height: 20),
                         ButtonDesign(
-                          tittle: 'Continue',
-                          press: () {},
+                          press: () {
+                            signInUser();
+                          },
+                          title: (!isLoading)
+                              ? Text(
+                                  'Continue',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
+                                )
+                              : Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
+                                ),
                         ),
                         const SizedBox(height: 30),
                         Row(

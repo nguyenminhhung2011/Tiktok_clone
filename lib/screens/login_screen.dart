@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/controls/auth_methods.dart';
 import 'package:tiktok_clone/screens/login_password.dart';
 import 'package:tiktok_clone/screens/signUp_screen.dart';
 import 'package:tiktok_clone/utils/color.dart';
+import 'package:tiktok_clone/utils/untils.dart';
 
+import '../controls/fireStore_methods.dart';
 import '../widgets/button_desgin.dart';
 import '../widgets/textField_desgin.dart';
 
@@ -16,11 +19,30 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailControllelr = TextEditingController();
   final TextEditingController _passwordControllelr = TextEditingController();
+  bool isLoading = false;
   @override
+  void initState() {
+    super.initState();
+  }
+
   void dispose() {
     super.dispose();
     _emailControllelr.dispose();
     _passwordControllelr.dispose();
+  }
+
+  void SignIn() async {
+    setState(() {
+      isLoading = true;
+    });
+    String res = await AuthMethods()
+        .LoginUser(_emailControllelr.text, _passwordControllelr.text);
+    setState(() {
+      isLoading = false;
+    });
+    if (res != "Success") {
+      showSnackBar(res, context);
+    } else {}
   }
 
   Widget build(BuildContext context) {
@@ -103,17 +125,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: Icon(Icons.email),
                         ),
                         const SizedBox(height: 20),
+                        TextFieldDesgin(
+                          hintText: 'Please enter your password',
+                          labelText: 'Password',
+                          isPass: true,
+                          textController: _passwordControllelr,
+                          icon: Icon(Icons.lock),
+                        ),
+                        const SizedBox(height: 20),
                         ButtonDesign(
-                          tittle: 'Continue',
-                          press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPasswordScreen(
-                                  email: _emailControllelr.text,
+                          title: (isLoading)
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
+                                )
+                              : Text(
+                                  'Continue',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                            );
+                          press: () {
+                            SignIn();
                           },
                         ),
                         const SizedBox(height: 10),
