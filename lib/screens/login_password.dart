@@ -135,7 +135,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
                           tittle: 'Continue',
                           press: () {},
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

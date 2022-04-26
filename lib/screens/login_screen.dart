@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/screens/login_password.dart';
+import 'package:tiktok_clone/screens/signUp_screen.dart';
 import 'package:tiktok_clone/utils/color.dart';
 
 import '../widgets/button_desgin.dart';
@@ -174,7 +175,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignUpScreen(),
+                                  ),
+                                );
+                              },
                               child: Text(
                                 'register',
                                 style: TextStyle(
