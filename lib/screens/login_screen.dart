@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/screens/login_password.dart';
 import 'package:tiktok_clone/utils/color.dart';
 
 import '../widgets/button_desgin.dart';
@@ -96,13 +97,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFieldDesgin(
                           hintText: 'Please enter your Email',
                           labelText: 'Email',
+                          isPass: false,
                           textController: _emailControllelr,
                           icon: Icon(Icons.email),
                         ),
                         const SizedBox(height: 20),
                         ButtonDesign(
                           tittle: 'Continue',
-                          press: () {},
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPasswordScreen(
+                                  email: _emailControllelr.text,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(height: 10),
                         Text(
