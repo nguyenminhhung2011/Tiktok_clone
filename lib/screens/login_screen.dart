@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/controls/auth_methods.dart';
+import 'package:get/get.dart';
+import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/screens/login_password.dart';
 import 'package:tiktok_clone/screens/signUp_screen.dart';
 import 'package:tiktok_clone/utils/color.dart';
@@ -35,13 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       isLoading = true;
     });
-    String res = await AuthMethods()
+    String res = await AuthControls()
         .LoginUser(_emailControllelr.text, _passwordControllelr.text);
     setState(() {
       isLoading = false;
     });
     if (res != "Success") {
-      showSnackBar(res, context);
     } else {}
   }
 
@@ -211,6 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             InkWell(
                               onTap: () {
+                                // Get.to(SignUpScreen());
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

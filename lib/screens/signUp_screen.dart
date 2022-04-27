@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tiktok_clone/controls/auth_methods.dart';
+import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/utils/untils.dart';
 
 import '../widgets/button_desgin.dart';
@@ -23,14 +23,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Uint8List? _image;
   bool isLoading = false;
   @override
-  void dispose() {
-    super.dispose();
-    _userController.dispose();
-    _emailControllelr.dispose();
-    _passwordControllelr.dispose();
-    _bioControllelr.dispose();
-  }
-
   void selectedImage() async {
     Uint8List _file = await pickImage(ImageSource.gallery);
     setState(() {
@@ -39,23 +31,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void SignUpUser() async {
-    setState(() {
-      isLoading = true;
-    });
-    String res = await AuthMethods().SignUp(
+    String res = await AuthControls().SignUp(
       username: _userController.text,
       email: _emailControllelr.text,
       password: _passwordControllelr.text,
       bio: _bioControllelr.text,
       image: _image!,
     );
-    setState(() {
-      isLoading = false;
-    });
+
     //print(res);
-    if (res != "Success") {
-      showSnackBar(res.toString(), context);
-    } else {}
+  }
+
+  void dispose() {
+    super.dispose();
+    _userController.dispose();
+    _emailControllelr.dispose();
+    _passwordControllelr.dispose();
+    _bioControllelr.dispose();
   }
 
   Widget build(BuildContext context) {

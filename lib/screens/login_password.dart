@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/controls/auth_methods.dart';
+import 'package:tiktok_clone/controls/auth_controls.dart';
 
 import '../widgets/button_desgin.dart';
 import '../widgets/textField_desgin.dart';
@@ -29,7 +29,7 @@ class _LoginPasswordScreenState extends State<LoginPasswordScreen> {
       isLoading = true;
     });
     String res =
-        await AuthMethods().LoginUser(widget.email, _passwordControllelr.text);
+        await AuthControls().LoginUser(widget.email, _passwordControllelr.text);
     setState(() {
       isLoading = false;
     });

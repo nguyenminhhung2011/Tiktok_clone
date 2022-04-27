@@ -1,15 +1,40 @@
+import 'dart:html';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/controls/storage_methods.dart';
 import 'package:tiktok_clone/models/user.dart' as models;
 
-var _auth = FirebaseAuth.instance;
-var _firStore = FirebaseFirestore.instance;
+import '../screens/Home_screen/Home_screen.dart';
+import '../screens/login_screen.dart';
 
-class AuthMethods {
+class AuthControls extends GetxController {
+  static AuthControls instance = Get.find();
+  var _auth = FirebaseAuth.instance;
+  var _firStore = FirebaseFirestore.instance;
+  late Rx<User?> _user;
+
+  User get user => _user.value!;
+  @override
+  void onReady() {
+    super.onReady();
+    _user = Rx<User?>(_auth.currentUser);
+    _user.bindStream(_auth.authStateChanges());
+    ever(_user, _setIntialScreen); // ghe moi khi co su thay doi
+  }
+
+  _setIntialScreen(User? user) {
+    //if user == null screen will go to Login screen else go to home screen
+    if (user == null) {
+      Get.offAll(() => LoginScreen());
+    } else {
+      Get.offAll(() => HomeScreen());
+    }
+  }
+
   Future<String> SignUp({
     required String username,
     required String email,
@@ -56,6 +81,7 @@ class AuthMethods {
       } else if (err.code == 'email-already-in-use') {
         res = 'The Email address is already in use by another account';
       }
+      Get.snackbar('Error Sign Up', res);
     }
     return res;
   }
@@ -68,14 +94,14 @@ class AuthMethods {
             email: email, password: password);
         res = 'Success';
       } else {
-        res = 'Input is null';
+        res = 'Please all the feilds';
       }
       print(res);
     } on FirebaseAuthException catch (err) {
       print(err.code);
       res = err.code;
+      Get.snackbar('Error Sign Up', err.toString());
     }
-
     return res;
   }
 }
