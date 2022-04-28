@@ -26,12 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  void dispose() {
-    super.dispose();
-    _emailControllelr.dispose();
-    _passwordControllelr.dispose();
-  }
-
   void SignIn() async {
     setState(() {
       isLoading = true;

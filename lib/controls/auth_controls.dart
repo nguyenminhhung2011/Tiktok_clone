@@ -1,10 +1,10 @@
-import 'dart:html';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/controls/storage_methods.dart';
 import 'package:tiktok_clone/models/user.dart' as models;
 
@@ -13,7 +13,6 @@ import '../screens/login_screen.dart';
 
 class AuthControls extends GetxController {
   static AuthControls instance = Get.find();
-  var _auth = FirebaseAuth.instance;
   var _firStore = FirebaseFirestore.instance;
   late Rx<User?> _user;
 
@@ -21,8 +20,8 @@ class AuthControls extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    _user = Rx<User?>(_auth.currentUser);
-    _user.bindStream(_auth.authStateChanges());
+    _user = Rx<User?>(firebaseAuth.currentUser);
+    _user.bindStream(firebaseAuth.authStateChanges());
     ever(_user, _setIntialScreen); // ghe moi khi co su thay doi
   }
 
@@ -49,7 +48,7 @@ class AuthControls extends GetxController {
           password.isNotEmpty &&
           bio.isNotEmpty &&
           image != null) {
-        UserCredential cred = await _auth.createUserWithEmailAndPassword(
+        UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(
             email: email, password: password);
         String photouUrl = await StorageMethods()
             .UploadImageStorage('ProfilePic', image, false);
@@ -90,7 +89,7 @@ class AuthControls extends GetxController {
     String res = "Some error";
     try {
       if (email.isNotEmpty && password.isNotEmpty) {
-        await _auth.signInWithEmailAndPassword(
+        await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
         res = 'Success';
       } else {
