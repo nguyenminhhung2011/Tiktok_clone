@@ -18,8 +18,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
-  bool _isFollowing = false;
+  bool _isFollowing = true;
   bool _checkShowProfile = false;
+  double _height = 0;
   // make animation
   late AnimationController _controller =
       AnimationController(duration: const Duration(seconds: 10), vsync: this)
@@ -35,7 +36,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.live_tv)),
+        leading: InkWell(
+          onTap: () {},
+          child: Container(
+            margin: const EdgeInsets.only(top: 8, left: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 250, 45, 108),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(Icons.live_tv),
+          ),
+        ),
         actions: [
           InkWell(
             onTap: () {},
@@ -55,40 +67,85 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isFollowing = true;
-                });
-              },
-              child: Text(
-                'Following',
-                style: (_isFollowing)
-                    ? TextStyle(fontWeight: FontWeight.bold, fontSize: 20)
-                    : TextStyle(
-                        fontSize: 15,
-                        color: Colors.white.withOpacity(0.6),
-                      ),
+            Container(
+              width: 220,
+              padding:
+                  const EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Color.fromARGB(255, 255, 252, 227),
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color.fromARGB(255, 255, 252, 227),
+                    Color.fromARGB(255, 255, 252, 227),
+                  ],
+                ),
               ),
-            ),
-            Text(
-              '   |   ',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _isFollowing = false;
-                });
-              },
-              child: Text(
-                'For You',
-                style: (!_isFollowing)
-                    ? TextStyle(fontWeight: FontWeight.bold, fontSize: 20)
-                    : TextStyle(
-                        fontSize: 15,
-                        color: Colors.white.withOpacity(0.6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      if (_isFollowing == false) {
+                        setState(() {
+                          _isFollowing = !_isFollowing;
+                        });
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: (_isFollowing)
+                            ? Color.fromARGB(255, 136, 199, 250)
+                            : Colors.transparent,
                       ),
+                      child: Text(
+                        'Following',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: (_isFollowing)
+                              ? Colors.white
+                              : Color.fromARGB(255, 136, 199, 250),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  InkWell(
+                    onTap: () {
+                      if (_isFollowing == true) {
+                        setState(() {
+                          _isFollowing = !_isFollowing;
+                        });
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: !(_isFollowing)
+                            ? Color.fromARGB(255, 250, 45, 108)
+                            : Colors.transparent,
+                      ),
+                      child: Text(
+                        'For You',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: !(_isFollowing)
+                              ? Colors.white
+                              : Color.fromARGB(255, 250, 45, 108),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ],
@@ -272,6 +329,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   no: 'View',
                                   press: () {
                                     setState(() {
+                                      _height = (_height == 150) ? 0 : 150;
                                       _checkShowProfile = !_checkShowProfile;
                                     });
                                   },
@@ -310,26 +368,33 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         ),
                       ],
                     ),
-                    (_checkShowProfile)
-                        ? Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height / 7,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                              color: Colors.black,
-                              gradient: const LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Colors.black26,
-                                  Colors.white10,
-                                ],
-                              ),
-                            ),
-                            child: Padding(
+                    AnimatedContainer(
+                      curve: Curves.fastOutSlowIn,
+                      width: double.infinity,
+                      height: _height,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        color: Colors.black,
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black26,
+                            Colors.white10,
+                          ],
+                        ),
+                      ),
+                      duration: Duration(seconds: 1),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 40),
+                            Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20),
                               child: Row(
@@ -397,8 +462,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 ],
                               ),
                             ),
-                          )
-                        : Container(),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 )
               ],

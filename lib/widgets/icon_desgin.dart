@@ -20,12 +20,7 @@ class IconDesgin extends StatelessWidget {
                 height: 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(
-                    255,
-                    32,
-                    211,
-                    234,
-                  ),
+                  color: const Color.fromARGB(255, 32, 211, 234),
                 ),
               ),
             ),
@@ -37,12 +32,7 @@ class IconDesgin extends StatelessWidget {
                 height: 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(
-                    255,
-                    250,
-                    45,
-                    108,
-                  ),
+                  color: Color.fromARGB(255, 250, 45, 108),
                 ),
               ),
             ),
