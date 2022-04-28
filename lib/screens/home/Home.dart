@@ -107,6 +107,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text(
                         'Following',
                         style: TextStyle(
+                          fontFamily: "Muli",
+                          fontWeight: FontWeight.bold,
                           fontSize: 15,
                           color: (_isFollowing)
                               ? Colors.white
@@ -137,6 +139,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       child: Text(
                         'For You',
                         style: TextStyle(
+                          fontFamily: "Muli",
+                          fontWeight: FontWeight.bold,
                           fontSize: 15,
                           color: !(_isFollowing)
                               ? Colors.white
@@ -200,6 +204,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
+                                        fontFamily: "Muli",
                                       ),
                                 ),
                                 const SizedBox(height: 7),
@@ -211,6 +216,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       ?.copyWith(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 13,
+                                        fontFamily: "Muli",
                                       ),
                                   expandText: 'show more',
                                   collapseText: 'show less',
@@ -240,6 +246,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             ?.copyWith(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 13,
+                                              fontFamily: "Muli",
                                             ),
                                         velocity: 10,
                                       ),
@@ -428,6 +435,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             ?.copyWith(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 17,
+                                              fontFamily: "Muli",
                                             ),
                                       ),
                                       const SizedBox(height: 3),
@@ -439,6 +447,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                             ?.copyWith(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 14,
+                                              fontFamily: "Muli",
                                             ),
                                       ),
                                     ],
