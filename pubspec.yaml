@@ -49,6 +49,8 @@ dependencies:
   expandable: ^5.0.1
   expandable_text: ^2.3.0
   marquee: ^2.2.1
+  video_player: ^2.4.0
+  video_compress: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +97,9 @@ flutter:
           weight: 700
         - asset: assets/fonts/muli/Muli-Light.ttf
           weight: 300
+    - family:  TikTokIcons
+      fonts:
+        - asset: assets/fonts/TikTokIcons.ttf
           
   #
   # For details regarding fonts from package dependencies,
