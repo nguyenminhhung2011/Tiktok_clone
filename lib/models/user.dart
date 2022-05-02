@@ -9,6 +9,7 @@ class User {
   final List following;
   final String uid;
   final String bio;
+
   User({
     required this.username,
     required this.password,

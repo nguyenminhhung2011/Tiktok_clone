@@ -172,12 +172,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               children: [
                 Container(
                   width: double.infinity,
-                  child: Image(
-                    image: NetworkImage(
-                      'https://image.winudf.com/v2/image1/Y29tLlJvc2VCbGFja3BpbmtXYWxscGFwZXIuYWRuYXBwc19zY3JlZW5fMF8xNTk1ODQ5NDE0XzA3OA/screen-0.jpg?fakeurl=1&type=.webp',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+                  color: Colors.yellow,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -277,12 +272,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                           width: 2,
                                           color: Colors.white,
                                         ),
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                            'https://i.vietgiaitri.com/2021/12/9/1-fan-bong-duoc-rose-blackpink-tra-loi-tin-nhan-nhung-bi-chan-trong-1-not-nhac-vi-su-co-cu-quay-xe-sau-do-moi-bat-ngo-223-6200333.jpg',
-                                          ),
-                                        ),
+                                        color: Colors.red,
                                       ),
                                     ),
                                     Positioned(
@@ -408,20 +398,22 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.all(2),
+                                    width: 60, height: 60,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
+                                      color: Colors.red,
                                       border: Border.all(
                                         width: 2,
                                         color:
                                             Color.fromARGB(255, 136, 199, 250),
                                       ),
                                     ),
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        'https://i.vietgiaitri.com/2021/12/9/1-fan-bong-duoc-rose-blackpink-tra-loi-tin-nhan-nhung-bi-chan-trong-1-not-nhac-vi-su-co-cu-quay-xe-sau-do-moi-bat-ngo-223-6200333.jpg',
-                                      ),
-                                      radius: 30,
-                                    ),
+                                    // child: CircleAvatar(
+                                    //   backgroundImage: NetworkImage(
+                                    //     'https://i.vietgiaitri.com/2021/12/9/1-fan-bong-duoc-rose-blackpink-tra-loi-tin-nhan-nhung-bi-chan-trong-1-not-nhac-vi-su-co-cu-quay-xe-sau-do-moi-bat-ngo-223-6200333.jpg',
+                                    //   ),
+                                    //   radius: 30,
+                                    // ),
                                   ),
                                   const SizedBox(width: 8),
                                   Column(
@@ -450,6 +442,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               fontFamily: "Muli",
                                             ),
                                       ),
+                                      const SizedBox(height: 5),
                                     ],
                                   ),
                                   Spacer(),
