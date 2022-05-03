@@ -23,42 +23,72 @@ class _TextFieldDesginState extends State<TextFieldDesgin> {
   bool isLook = true;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: TextFormField(
-        controller: widget.textController,
-        keyboardType: TextInputType.emailAddress,
-        obscureText: (widget.isPass) ? isLook : false,
-        decoration: InputDecoration(
-          fillColor: Colors.white,
-          suffixIcon: (widget.isPass)
-              ? IconButton(
+    return TextFormField(
+      style: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
+      controller: widget.textController,
+      keyboardType: TextInputType.emailAddress,
+      obscureText: (widget.isPass) ? isLook : false,
+      decoration: InputDecoration(
+        iconColor: Color.fromARGB(255, 32, 211, 234),
+        labelStyle: TextStyle(
+          // color: (widget.textController.text == "")
+          //     ? Colors.grey
+          //     : Colors.grey,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        floatingLabelStyle: TextStyle(
+          color: (widget.textController.text == "") ? Colors.grey : Colors.grey,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        hintStyle: TextStyle(
+          color: Colors.grey.withOpacity(0.6),
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        suffixIcon: (widget.isPass)
+            ? Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: IconButton(
                   onPressed: () {
                     setState(() {
                       isLook = !isLook;
                     });
                   },
                   icon: (isLook)
-                      ? Icon(Icons.visibility)
-                      : Icon(Icons.visibility_off),
-                )
-              : widget.icon,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 42,
-            vertical: 2,
+                      ? Icon(Icons.visibility,
+                          color: Colors.grey.withOpacity(0.3))
+                      : Icon(Icons.visibility_off,
+                          color: Colors.grey.withOpacity(0.3)),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(right: 17),
+                child: widget.icon,
+              ),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 42,
+          vertical: 2,
+        ),
+        hintText: widget.hintText,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(
+            color: const Color.fromARGB(255, 32, 211, 234),
+            width: 2,
           ),
-          hintText: widget.hintText,
-          labelText: widget.labelText,
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              color: Color.fromARGB(255, 136, 199, 250),
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.white),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(
+            color: Colors.grey.withOpacity(0.3),
+            width: 2,
           ),
         ),
       ),

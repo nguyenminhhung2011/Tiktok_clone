@@ -22,7 +22,9 @@ void main() async {
       Get.put(AuthControls());
     });
   } else {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp().then((value) {
+      Get.put(AuthControls());
+    });
   }
   runApp(const MyApp());
 }
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
       ),
+      home: LoginScreen(),
       getPages: [
         GetPage(name: '/LoginScreen', page: () => LoginScreen()),
         GetPage(name: '/HomeScreen', page: () => HomeScreen()),

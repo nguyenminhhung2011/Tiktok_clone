@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
@@ -9,8 +12,11 @@ import '../models/video.dart';
 
 class upLoadVideoController extends GetxController {
   _compressVideo(String videoPath) async {
+    VideoCompress.deleteAllCache();
     final compressVideo = await VideoCompress.compressVideo(videoPath,
-        quality: VideoQuality.MediumQuality);
+        quality: VideoQuality.DefaultQuality, deleteOrigin: false);
+
+    print(0);
     return compressVideo!.file;
   }
 
@@ -19,7 +25,8 @@ class upLoadVideoController extends GetxController {
     return thumbNails;
   }
 
-  Future<String> _uploadVideotoStorage(String id, String videoPath) async {
+  Future<String> _uploadVideotoStorage(
+      String id, String videoPath, File videoFile) async {
     Reference ref = firebaseStorage.ref().child('videos').child(id);
     UploadTask upLoadTask = ref.putFile(await _compressVideo(videoPath));
     TaskSnapshot snap = await upLoadTask;
@@ -35,15 +42,21 @@ class upLoadVideoController extends GetxController {
     return dowLoadUrl;
   }
 
-  upLoadVideo(String songName, String caption, String videoPath) async {
+  upLoadVideo(
+    String songName,
+    String caption,
+    String videoPath,
+    File videoFile,
+  ) async {
     try {
+      print(videoPath);
       String uid = firebaseAuth.currentUser!.uid;
       DocumentSnapshot userDoc =
           await firestore.collection('users').doc(uid).get();
       var allDoc = await firestore.collection('videos').get();
       print(allDoc.docs.length);
-      String videoUrl =
-          await _uploadVideotoStorage("video ${allDoc.docs.length}", videoPath);
+      String videoUrl = await _uploadVideotoStorage(
+          "video ${allDoc.docs.length}", videoPath, videoFile);
       print(videoUrl);
       String thumbNailsUrl =
           await upLoadImagetoStorage("video ${allDoc.docs.length}", videoPath);
@@ -74,6 +87,7 @@ class upLoadVideoController extends GetxController {
         backgroundColor: Color.fromARGB(255, 136, 199, 250),
       );
     } catch (err) {
+      print(err.toString());
       Get.snackbar(
         'Error Upload Video',
         err.toString(),

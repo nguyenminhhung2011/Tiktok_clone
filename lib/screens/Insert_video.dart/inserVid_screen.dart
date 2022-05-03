@@ -10,7 +10,6 @@ class InserVid extends StatelessWidget {
   pickVideo(ImageSource src, BuildContext context) async {
     final video = await ImagePicker().pickVideo(source: src);
     if (video != null) {
-      print(video.path);
       showDialog(
         context: context,
         builder: (_) => Dialog(
@@ -104,10 +103,6 @@ class InserVid extends StatelessWidget {
                           height: 45,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('images/background1.jpg'),
-                            ),
                           ),
                         ),
                       ),
@@ -198,10 +193,6 @@ class InserVid extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(width: 3, color: Colors.white),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('images/background2.png'),
-                            ),
                           ),
                         ),
                       ),

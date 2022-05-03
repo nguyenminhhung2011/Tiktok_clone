@@ -346,11 +346,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       shape: BoxShape.circle,
                                       color: Color.fromARGB(255, 136, 199, 250),
                                     ),
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        'https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/271537442_481970630087778_2729125125287225165_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=31EE469YyFQAX-BMRZ2&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT9JAfJoCX6QWNt4k7zpn79dOBqvo2v0jeNAX-EhytAFbg&oe=626FA8C5',
-                                      ),
-                                    ),
+                                    child: CircleAvatar(),
                                   ),
                                   builder: (context, Widget? child) {
                                     return Transform.rotate(

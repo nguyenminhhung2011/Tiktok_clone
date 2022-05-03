@@ -164,6 +164,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                             _songController.text,
                             _captionController.text,
                             widget.videoPath,
+                            widget.videoFile,
                           );
                         },
                         child: Container(

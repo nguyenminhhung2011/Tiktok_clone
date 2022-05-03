@@ -15,11 +15,11 @@ class ButtonDesign extends StatelessWidget {
       onTap: press,
       child: Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.symmetric(horizontal: 40),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(30),
           color: Color.fromARGB(255, 136, 199, 250),
         ),
         child: title,
@@ -55,7 +55,7 @@ class ButtonWithIcon extends StatelessWidget {
         ),
         child: Row(
           children: [
-            icon,
+            // icon,
             Text(
               tittle,
               style: TextStyle(
