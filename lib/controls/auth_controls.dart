@@ -80,7 +80,6 @@ class AuthControls extends GetxController {
       } else if (err.code == 'email-already-in-use') {
         res = 'The Email address is already in use by another account';
       }
-      Get.snackbar('Error Sign Up', res);
     }
     return res;
   }
@@ -99,7 +98,6 @@ class AuthControls extends GetxController {
     } on FirebaseAuthException catch (err) {
       print(err.code);
       res = err.code;
-      Get.snackbar('Error Sign Up', err.toString());
     }
     return res;
   }

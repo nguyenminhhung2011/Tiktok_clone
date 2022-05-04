@@ -13,7 +13,6 @@ class Video {
   List likes;
   int commentCount;
   int shareCount;
-  DateTime date;
   Video({
     required this.username,
     required this.id,
@@ -26,7 +25,6 @@ class Video {
     required this.likes,
     required this.commentCount,
     required this.shareCount,
-    required this.date,
   });
 
   Map<String, dynamic> toJson() => {
@@ -41,7 +39,6 @@ class Video {
         'likes': likes,
         'commentCount': commentCount,
         'shareCount': shareCount,
-        'date': date,
       };
   static Video fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -57,7 +54,6 @@ class Video {
       likes: snapshot['likes'],
       commentCount: snapshot['commentCount'],
       shareCount: snapshot['shareCount'],
-      date: snapshot['date'],
     );
   }
 }

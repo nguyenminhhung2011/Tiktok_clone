@@ -1,4 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/controls/auth_controls.dart';
+import 'package:tiktok_clone/utils/untils.dart';
 
 import '../widgets/button_desgin.dart';
 import '../widgets/textField_desgin.dart';
@@ -27,27 +33,65 @@ class SignUpMain extends StatefulWidget {
 
 class _SignUpMainState extends State<SignUpMain> {
   bool isLoading = false;
+  Uint8List? _image;
   @override
+  void selectedImage() async {
+    Uint8List file = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = file;
+    });
+  }
+
+  void signUpUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    String res = await AuthControls().SignUp(
+        username: widget._usernameController.text,
+        email: widget._emailControllelrSU.text,
+        password: widget._passwordControllelrSU.text,
+        bio: widget._bioControllelr.text,
+        image: _image!);
+
+    setState(() {
+      isLoading = false;
+    });
+    if (res == 'Success') {
+    } else {
+      Get.snackbar(
+        'Error Sign Up',
+        res,
+        backgroundColor: Color.fromARGB(255, 136, 199, 250),
+      );
+    }
+  }
+
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
           children: [
             Container(
-                padding: const EdgeInsets.all(1),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    width: 3,
-                    color: Color.fromARGB(255, 94, 153, 201),
-                  ),
+              padding: const EdgeInsets.all(1),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  width: 3,
+                  color: Color.fromARGB(255, 94, 153, 201),
                 ),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1650859111563-2cfcfbbe586b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
-                  ),
-                  radius: 45,
-                )),
+              ),
+              child: (_image == null)
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        'https://images.unsplash.com/photo-1650859111563-2cfcfbbe586b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
+                      ),
+                      radius: 45,
+                    )
+                  : CircleAvatar(
+                      radius: 45,
+                      backgroundImage: MemoryImage(_image!),
+                    ),
+            ),
             const SizedBox(width: 15),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +106,9 @@ class _SignUpMainState extends State<SignUpMain> {
                 ),
                 const SizedBox(height: 10),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    selectedImage();
+                  },
                   child: Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -165,15 +211,23 @@ class _SignUpMainState extends State<SignUpMain> {
         ),
         const SizedBox(height: 20),
         ButtonDesign(
-          press: () {},
-          title: Text(
-            'Continue',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
+          press: () {
+            signUpUser();
+          },
+          title: (!isLoading)
+              ? Text(
+                  'Continue',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
         )
       ],
     );

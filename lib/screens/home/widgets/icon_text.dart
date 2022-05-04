@@ -23,6 +23,7 @@ class Icon_text extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontFamily: "Muli",
+            fontSize: 17,
           ),
         ),
       ],

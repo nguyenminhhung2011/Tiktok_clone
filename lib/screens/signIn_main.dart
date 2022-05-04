@@ -44,10 +44,7 @@ class _SignInMainState extends State<SignInMain> {
           labelText: 'Email',
           isPass: false,
           textController: widget._emailControllelr,
-          icon: Icon(
-            Icons.email,
-            color: Color.fromARGB(255, 250, 45, 108),
-          ),
+          icon: Icon(Icons.email, color: Colors.grey.withOpacity(0.3)),
         ),
         const SizedBox(height: 25),
         TextFieldDesgin(

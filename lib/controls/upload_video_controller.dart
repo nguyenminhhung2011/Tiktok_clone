@@ -16,7 +16,6 @@ class upLoadVideoController extends GetxController {
     final compressVideo = await VideoCompress.compressVideo(videoPath,
         quality: VideoQuality.DefaultQuality, deleteOrigin: false);
 
-    print(0);
     return compressVideo!.file;
   }
 
@@ -36,7 +35,7 @@ class upLoadVideoController extends GetxController {
 
   Future<String> upLoadImagetoStorage(String id, String videoPath) async {
     Reference ref = firebaseStorage.ref().child('thumbNails').child(id);
-    UploadTask upLoadTask = ref.putData(await _getThumbNail(videoPath));
+    UploadTask upLoadTask = ref.putFile(await _getThumbNail(videoPath));
     TaskSnapshot snap = await upLoadTask;
     String dowLoadUrl = await snap.ref.getDownloadURL();
     return dowLoadUrl;
@@ -49,18 +48,14 @@ class upLoadVideoController extends GetxController {
     File videoFile,
   ) async {
     try {
-      print(videoPath);
       String uid = firebaseAuth.currentUser!.uid;
       DocumentSnapshot userDoc =
           await firestore.collection('users').doc(uid).get();
       var allDoc = await firestore.collection('videos').get();
-      print(allDoc.docs.length);
       String videoUrl = await _uploadVideotoStorage(
           "video ${allDoc.docs.length}", videoPath, videoFile);
-      print(videoUrl);
       String thumbNailsUrl =
           await upLoadImagetoStorage("video ${allDoc.docs.length}", videoPath);
-      print(thumbNailsUrl);
       Video video = Video(
         username: (userDoc.data()! as Map<String, dynamic>)['username'],
         id: "video ${allDoc.docs.length}",
@@ -68,12 +63,11 @@ class upLoadVideoController extends GetxController {
         proFilePic: (userDoc.data()! as Map<String, dynamic>)['photoUrl'],
         caption: caption,
         songName: songName,
-        videoPath: videoPath,
+        videoPath: videoUrl,
         thumbNailsPath: thumbNailsUrl,
         likes: [],
         commentCount: 0,
         shareCount: 0,
-        date: DateTime.now(),
       );
       await firestore
           .collection('videos')
@@ -87,7 +81,6 @@ class upLoadVideoController extends GetxController {
         backgroundColor: Color.fromARGB(255, 136, 199, 250),
       );
     } catch (err) {
-      print(err.toString());
       Get.snackbar(
         'Error Upload Video',
         err.toString(),

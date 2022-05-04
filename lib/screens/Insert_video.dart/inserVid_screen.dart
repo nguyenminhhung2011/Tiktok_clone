@@ -10,16 +10,12 @@ class InserVid extends StatelessWidget {
   pickVideo(ImageSource src, BuildContext context) async {
     final video = await ImagePicker().pickVideo(source: src);
     if (video != null) {
-      showDialog(
-        context: context,
-        builder: (_) => Dialog(
-          backgroundColor: Color.fromARGB(255, 255, 252, 227),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: ConfirmScreen(
-              videoFile: File(video.path),
-              videoPath: video.path,
-            ),
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConfirmScreen(
+            videoPath: video.path,
+            videoFile: File(video.path),
           ),
         ),
       );
@@ -103,6 +99,11 @@ class InserVid extends StatelessWidget {
                           height: 45,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image:
+                                  AssetImage('assets/images/background2.png'),
+                            ),
                           ),
                         ),
                       ),
@@ -111,6 +112,7 @@ class InserVid extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: "Muli",
                           fontWeight: FontWeight.bold,
+                          fontSize: 17,
                         ),
                       )
                     ],
@@ -193,6 +195,11 @@ class InserVid extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(width: 3, color: Colors.white),
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image:
+                                  AssetImage('assets/images/background1.jpg'),
+                            ),
                           ),
                         ),
                       ),
@@ -201,6 +208,7 @@ class InserVid extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: "Muli",
                           fontWeight: FontWeight.bold,
+                          fontSize: 17,
                         ),
                       )
                     ],

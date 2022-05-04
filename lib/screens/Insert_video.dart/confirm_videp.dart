@@ -26,6 +26,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   bool is_upload = false;
   bool is_filter = false;
   double _height = 0;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -39,25 +40,46 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
             setState(() {});
           });
       } else {
-        vidController = VideoPlayerController.file(widget.videoFile);
+        vidController = VideoPlayerController.file(widget.videoFile)
+          ..initialize().then((_) {
+            vidController.play();
+            vidController.setVolume(0);
+            vidController.setLooping(true);
+            setState(() {});
+          });
       }
     });
   }
 
+  void upLoadVideo(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+    await upLoadVideoController().upLoadVideo(
+      _songController.text,
+      _captionController.text,
+      widget.videoPath,
+      widget.videoFile,
+    );
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.pop(context);
+  }
+
+  void dispose() {
+    super.dispose();
+    vidController.dispose();
+  }
+
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 1.2,
-              width: vidController.value.size.width,
-              child: VideoPlayer(vidController),
-            ),
-          ],
-        ),
-        Padding(
+    return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Padding(
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
@@ -100,10 +122,69 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
               InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
-                  setState(() {
-                    is_upload = !is_upload;
-                    _height = (is_upload) ? 200 : 0;
-                  });
+                  showDialog(
+                    context: context,
+                    builder: (context) => Dialog(
+                      backgroundColor: Colors.white,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 200,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 20),
+                              TextFieldDesgin(
+                                hintText: 'Input Caption',
+                                labelText: 'Caption',
+                                isPass: false,
+                                textController: _captionController,
+                                icon: Icon(
+                                  Icons.closed_caption,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              TextFieldDesgin(
+                                hintText: 'Input Song name',
+                                labelText: 'Song name',
+                                isPass: false,
+                                textController: _songController,
+                                icon: Icon(
+                                  Icons.music_note,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              InkWell(
+                                onTap: () {
+                                  upLoadVideo(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 136, 199, 250),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: (!isLoading)
+                                      ? Text('Upload')
+                                      : const Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -117,74 +198,25 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
             ],
           ),
         ),
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height / 1.2 - 160),
-              AnimatedContainer(
-                curve: Curves.fastOutSlowIn,
-                decoration: BoxDecoration(
-                  color: Colors.black,
+      ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.yellow,
+                  child: VideoPlayer(vidController),
+                  height: MediaQuery.of(context).size.height,
                 ),
-                duration: Duration(seconds: 1),
-                width: MediaQuery.of(context).size.width,
-                height: _height,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 20),
-                      TextFieldDesgin(
-                        hintText: 'Input Caption',
-                        labelText: 'Caption',
-                        isPass: false,
-                        textController: _captionController,
-                        icon: Icon(
-                          Icons.closed_caption,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      TextFieldDesgin(
-                        hintText: 'Input Song name',
-                        labelText: 'Song name',
-                        isPass: false,
-                        textController: _songController,
-                        icon: Icon(
-                          Icons.music_note,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      InkWell(
-                        onTap: () async {
-                          await upLoadVideoController().upLoadVideo(
-                            _songController.text,
-                            _captionController.text,
-                            widget.videoPath,
-                            widget.videoFile,
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 136, 199, 250),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Text('Upload'),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

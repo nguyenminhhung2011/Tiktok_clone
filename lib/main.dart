@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/screens/Home_screen/Home_screen.dart';
 import 'package:tiktok_clone/screens/login_screen.dart';
-import 'package:tiktok_clone/screens/signUp_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +44,6 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/LoginScreen', page: () => LoginScreen()),
         GetPage(name: '/HomeScreen', page: () => HomeScreen()),
-        GetPage(name: '/SignUpScreen', page: () => SignUpScreen()),
       ],
     );
   }

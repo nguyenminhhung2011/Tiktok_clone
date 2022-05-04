@@ -104,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: PageView(
         controller: _pageController,
         children: [
-          InserVid(),
           Home(),
           Home(),
           InserVid(),
