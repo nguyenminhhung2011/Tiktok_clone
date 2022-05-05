@@ -72,7 +72,7 @@ class AuthControls extends GetxController {
         res = "Input is not null";
       }
     } on FirebaseAuthException catch (err) {
-      //print(err.code);
+      print(err.code);
       if (err.code == 'weak-password') {
         res = 'Password should be at least 6 characters';
       } else if (err.code == 'invalid-email') {

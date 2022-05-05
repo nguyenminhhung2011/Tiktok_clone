@@ -53,9 +53,9 @@ class upLoadVideoController extends GetxController {
           await firestore.collection('users').doc(uid).get();
       var allDoc = await firestore.collection('videos').get();
       String videoUrl = await _uploadVideotoStorage(
-          "video ${allDoc.docs.length}", videoPath, videoFile);
-      String thumbNailsUrl =
-          await upLoadImagetoStorage("video ${allDoc.docs.length}", videoPath);
+          "video ${allDoc.docs.length}.mp4", videoPath, videoFile);
+      String thumbNailsUrl = await upLoadImagetoStorage(
+          "video ${allDoc.docs.length}.png", videoPath);
       Video video = Video(
         username: (userDoc.data()! as Map<String, dynamic>)['username'],
         id: "video ${allDoc.docs.length}",

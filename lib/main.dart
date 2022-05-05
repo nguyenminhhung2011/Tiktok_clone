@@ -11,11 +11,11 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: 'AIzaSyCOojk7SckXLU1DwM_IOQjKdm1gb42_INA',
-        appId: '1:698247112398:web:be35b2dc43dc81030d929f',
-        messagingSenderId: '698247112398',
-        projectId: 'tiktok-clone-1f0b9',
-        storageBucket: 'tiktok-clone-1f0b9.appspot.com',
+        apiKey: 'AIzaSyCIFdSeLwiEgjCkYMBj8H-KnaboSZb6gno',
+        appId: '1:255649307162:web:5ccec7298c09e085af4fa3',
+        messagingSenderId: '255649307162',
+        projectId: 'tiktik-tute',
+        storageBucket: 'tiktik-tute.appspot.com',
       ),
     ).then((value) {
       Get.put(AuthControls());

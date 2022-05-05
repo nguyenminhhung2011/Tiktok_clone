@@ -27,7 +27,7 @@ class _TextFieldDesginState extends State<TextFieldDesgin> {
       style: TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,
-        fontSize: 20,
+        fontSize: 17,
       ),
       controller: widget.textController,
       keyboardType: TextInputType.emailAddress,
@@ -39,17 +39,17 @@ class _TextFieldDesginState extends State<TextFieldDesgin> {
           //     ? Colors.grey
           //     : Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 17,
         ),
         floatingLabelStyle: TextStyle(
           color: (widget.textController.text == "") ? Colors.grey : Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 17,
         ),
         hintStyle: TextStyle(
           color: Colors.grey.withOpacity(0.6),
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 17,
         ),
         suffixIcon: (widget.isPass)
             ? Padding(
@@ -123,7 +123,7 @@ class _TextFieldDesgin1State extends State<TextFieldDesgin1> {
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
-        fontSize: 20,
+        fontSize: 17,
       ),
       controller: widget.textController,
       keyboardType: TextInputType.emailAddress,
@@ -135,17 +135,17 @@ class _TextFieldDesgin1State extends State<TextFieldDesgin1> {
           //     ? Colors.grey
           //     : Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 17,
         ),
         floatingLabelStyle: TextStyle(
           color: (widget.textController.text == "") ? Colors.grey : Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 17,
         ),
         hintStyle: TextStyle(
           color: Colors.grey.withOpacity(0.6),
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 17,
         ),
         suffixIcon: (widget.isPass)
             ? Padding(

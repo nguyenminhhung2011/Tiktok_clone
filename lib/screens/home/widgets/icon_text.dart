@@ -17,13 +17,13 @@ class Icon_text extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         InkWell(onTap: press, child: icon),
-        const SizedBox(height: 5),
+        // const SizedBox(height: 5),
         Text(
           no,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontFamily: "Muli",
-            fontSize: 17,
+            fontSize: 19,
           ),
         ),
       ],

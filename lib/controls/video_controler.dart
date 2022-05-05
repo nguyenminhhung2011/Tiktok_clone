@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
@@ -16,10 +17,27 @@ class VideoController extends GetxController {
           for (var item in event.docs) {
             result.add(Video.fromSnap(item));
           }
-          print(result.length);
           return result;
         },
       ),
     );
+  }
+
+  Future<void> likeVideo(String uidUser, List userLike, String idVid) async {
+    try {
+      var uid = authMethods.user.uid;
+      if (userLike.contains(uidUser)) {
+        await firestore.collection('videos').doc(idVid).update({
+          'likes': FieldValue.arrayRemove([uid]),
+        });
+      } else {
+        await firestore.collection('videos').doc(idVid).update({
+          'likes': FieldValue.arrayUnion([uid]),
+        });
+      }
+    } catch (err) {
+      Get.snackbar('Error when like video', err.toString(),
+          backgroundColor: Colors.blue);
+    }
   }
 }

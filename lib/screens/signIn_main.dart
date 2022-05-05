@@ -63,7 +63,7 @@ class _SignInMainState extends State<SignInMain> {
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 17,
+                fontSize: 14,
               ),
             ),
             Text(
@@ -71,7 +71,7 @@ class _SignInMainState extends State<SignInMain> {
               style: TextStyle(
                 color: const Color.fromARGB(255, 32, 211, 234),
                 fontWeight: FontWeight.bold,
-                fontSize: 17,
+                fontSize: 14,
               ),
             ),
           ],
@@ -86,12 +86,12 @@ class _SignInMainState extends State<SignInMain> {
               style: TextStyle(
                 color: const Color.fromARGB(255, 32, 211, 234),
                 fontWeight: FontWeight.bold,
-                fontSize: 17,
+                fontSize: 14,
               ),
             ),
           ],
         ),
-        SizedBox(height: MediaQuery.of(context).size.height / 3.5),
+        SizedBox(height: MediaQuery.of(context).size.height / 4),
         ButtonDesign(
           press: () {
             SignIn();
@@ -102,7 +102,7 @@ class _SignInMainState extends State<SignInMain> {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 17,
                   ),
                 )
               : Center(

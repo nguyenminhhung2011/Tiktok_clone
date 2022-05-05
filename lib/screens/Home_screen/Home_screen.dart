@@ -105,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _pageController,
         children: [
           Home(),
-          Home(),
           InserVid(),
         ],
       ),

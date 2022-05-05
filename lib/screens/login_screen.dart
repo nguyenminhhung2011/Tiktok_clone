@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 loginWithDiff(),
                 const SizedBox(height: 20),
                 checkSign(context),
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
                 (isCheckSign)
                     ? SignInMain(
                         emailControllelr: _emailControllelr,
@@ -199,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 17,
                   ),
                 ),
               ),
@@ -228,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 17,
                   ),
                 ),
               ),

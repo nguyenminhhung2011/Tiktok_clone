@@ -25,7 +25,7 @@ class IconDesgin extends StatelessWidget {
               ),
             ),
             Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerRight, 
               widthFactor: 100,
               child: Container(
                 width: 20,

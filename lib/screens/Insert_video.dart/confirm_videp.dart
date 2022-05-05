@@ -32,10 +32,10 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     super.initState();
     setState(() {
       if (kIsWeb) {
-        vidController = VideoPlayerController.network(widget.videoPath)
+        vidController = VideoPlayerController.network('widget.videoPath')
           ..initialize().then((_) {
             vidController.play();
-            vidController.setVolume(0);
+            vidController.setVolume(1);
             vidController.setLooping(true);
             setState(() {});
           });
@@ -43,7 +43,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
         vidController = VideoPlayerController.file(widget.videoFile)
           ..initialize().then((_) {
             vidController.play();
-            vidController.setVolume(0);
+            vidController.setVolume(1);
             vidController.setLooping(true);
             setState(() {});
           });

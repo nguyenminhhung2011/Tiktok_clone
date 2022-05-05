@@ -177,7 +177,7 @@ class _SignUpMainState extends State<SignUpMain> {
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 17,
+                      fontSize: 14,
                     ),
                   ),
                   RichText(
@@ -190,7 +190,7 @@ class _SignUpMainState extends State<SignUpMain> {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 17,
+                            fontSize: 14,
                           ),
                         ),
                         TextSpan(
@@ -198,7 +198,7 @@ class _SignUpMainState extends State<SignUpMain> {
                           style: TextStyle(
                             color: Color.fromARGB(255, 94, 153, 201),
                             fontWeight: FontWeight.bold,
-                            fontSize: 17,
+                            fontSize: 14,
                           ),
                         )
                       ],
