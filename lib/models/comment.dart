@@ -8,6 +8,8 @@ class Comments {
   final datePublished;
   List likes;
   String title;
+  String profilePic;
+  String username;
   Comments({
     required this.commentId,
     required this.postId,
@@ -15,6 +17,8 @@ class Comments {
     required this.datePublished,
     required this.likes,
     required this.title,
+    required this.profilePic,
+    required this.username,
   });
   Map<String, dynamic> toJson() => {
         'commentId': commentId,
@@ -23,6 +27,8 @@ class Comments {
         'datePublished': datePublished,
         'likes': likes,
         'title': title,
+        'profilePic': profilePic,
+        'username': username,
       };
 
   static Comments fromSnap(DocumentSnapshot snap) {
@@ -33,6 +39,8 @@ class Comments {
       datePublished: snap['datePublished'],
       likes: snap['likes'],
       title: snap['title'],
+      profilePic: snap['profilePic'],
+      username: snap['username'],
     );
   }
 }

@@ -23,14 +23,6 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
   final TextEditingController commentConttoller = TextEditingController();
   CommentsController cmtController = Get.put(CommentsController());
   @override
-  void initialize() {
-    super.initState();
-  }
-
-  void dispose() {
-    super.dispose();
-  }
-
   void postComments() async {
     String res = await cmtController.PostComments(commentConttoller.text);
     if (res != "Comment is uploaded") {

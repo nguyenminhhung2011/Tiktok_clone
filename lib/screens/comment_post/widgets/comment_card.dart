@@ -21,12 +21,12 @@ class CommentCard extends StatefulWidget {
 }
 
 class _CommentCardState extends State<CommentCard> {
-  Map<String, dynamic> userCmt = {};
+  // Map<String, dynamic> userCmt = {};
   bool checkLoad = false;
   @override
   void initState() {
     super.initState();
-    getUser();
+    // getUser();
   }
 
   void getUser() async {
@@ -36,7 +36,7 @@ class _CommentCardState extends State<CommentCard> {
     DocumentSnapshot userDoc =
         await firestore.collection('users').doc(widget.data.uid).get();
     setState(() {
-      userCmt = userDoc.data() as Map<String, dynamic>;
+      //  userCmt = userDoc.data() as Map<String, dynamic>;
       checkLoad = false;
     });
   }
@@ -52,7 +52,7 @@ class _CommentCardState extends State<CommentCard> {
               color: Color.fromARGB(255, 255, 252, 227),
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -66,8 +66,8 @@ class _CommentCardState extends State<CommentCard> {
                         ),
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(userCmt['photoUrl']),
-                        radius: 25,
+                        backgroundImage: NetworkImage(widget.data.profilePic),
+                        radius: 20,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -79,7 +79,7 @@ class _CommentCardState extends State<CommentCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                userCmt['username'],
+                                widget.data.username,
                                 style: TextStyle(
                                   color:
                                       const Color.fromARGB(255, 32, 211, 234),
@@ -91,7 +91,7 @@ class _CommentCardState extends State<CommentCard> {
                               Container(
                                 width:
                                     MediaQuery.of(context).size.width / 2.25 -
-                                        userCmt['username'].length * 2,
+                                        widget.data.username.length * 2,
                                 child: Text(
                                   widget.data.title,
                                   overflow: TextOverflow.fade,
@@ -136,7 +136,7 @@ class _CommentCardState extends State<CommentCard> {
                     IconButton(
                       onPressed: () {
                         CommentsController().likesCmt(
-                          userCmt['uid'],
+                          widget.data.uid,
                           widget.data.postId,
                           widget.data.commentId,
                           widget.data.likes,
@@ -144,7 +144,7 @@ class _CommentCardState extends State<CommentCard> {
                       },
                       icon: Icon(
                         Icons.favorite,
-                        color: (widget.data.likes.contains(userCmt['uid']))
+                        color: (widget.data.likes.contains(widget.data.uid))
                             ? Color.fromARGB(255, 250, 45, 108)
                             : const Color.fromARGB(255, 32, 211, 234),
                         size: 30,

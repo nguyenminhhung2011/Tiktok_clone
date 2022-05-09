@@ -40,6 +40,8 @@ class CommentsController extends GetxController {
     try {
       String uid = firebaseAuth.currentUser!.uid;
       if (postId.isNotEmpty && tittle.isNotEmpty) {
+        DocumentSnapshot userDoc =
+            await firestore.collection('users').doc(authMethods.user.uid).get();
         var allCmtInPost = await firestore
             .collection('videos')
             .doc(postId)
@@ -53,6 +55,8 @@ class CommentsController extends GetxController {
           likes: [],
           datePublished: DateTime.now(),
           title: tittle,
+          profilePic: (userDoc.data() as Map<String, dynamic>)['photoUrl'],
+          username: (userDoc.data() as Map<String, dynamic>)['username'],
         );
 
         await firestore
