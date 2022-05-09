@@ -32,7 +32,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     super.initState();
     setState(() {
       if (kIsWeb) {
-        vidController = VideoPlayerController.network('widget.videoPath')
+        vidController = VideoPlayerController.network(widget.videoPath)
           ..initialize().then((_) {
             vidController.play();
             vidController.setVolume(1);

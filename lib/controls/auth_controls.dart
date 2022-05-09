@@ -15,7 +15,6 @@ class AuthControls extends GetxController {
   static AuthControls instance = Get.find();
   var _firStore = FirebaseFirestore.instance;
   late Rx<User?> _user;
-
   User get user => _user.value!;
   @override
   void onReady() {
@@ -49,7 +48,7 @@ class AuthControls extends GetxController {
           bio.isNotEmpty &&
           image != null) {
         UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(
-            email: email, password: password);
+            email: email, password: password); // get uid of user
         String photouUrl = await StorageMethods()
             .UploadImageStorage('ProfilePic', image, false);
         models.User user = models.User(
@@ -100,5 +99,13 @@ class AuthControls extends GetxController {
       res = err.code;
     }
     return res;
+  }
+
+  Future<Map<String, dynamic>> getUser() async {
+    Map<String, dynamic> user = {};
+    DocumentSnapshot userDoc =
+        await firestore.collection('users').doc(authMethods.user.uid).get();
+    user = userDoc.data()! as Map<String, dynamic>;
+    return user;
   }
 }

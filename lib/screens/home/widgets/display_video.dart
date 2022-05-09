@@ -31,11 +31,11 @@ class _DisPlayVideoState extends State<DisPlayVideo>
   @override
   void initState() {
     super.initState();
-    // videoController = VideoPlayerController.network(widget.data.videoPath)
-    //   ..initialize().then((value) {
-    //     videoController.play();
-    //     videoController.setVolume(1);
-    //   });
+    videoController = VideoPlayerController.network(widget.data.videoPath)
+      ..initialize().then((value) {
+        videoController.play();
+        videoController.setVolume(0);
+      });
     _controller =
         AnimationController(duration: const Duration(seconds: 10), vsync: this)
           ..repeat();
@@ -44,7 +44,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
   void dispose() {
     _controller.dispose();
     super.dispose();
-    //   videoController.dispose();
+    videoController.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -59,18 +59,18 @@ class _DisPlayVideoState extends State<DisPlayVideo>
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          // Container(
-          //   width: double.infinity,
-          //   child: VideoPlayer(videoController),r
-          // ),
           Container(
             width: double.infinity,
-            height: double.infinity,
-            child: Image(
-              image: new NetworkImage(widget.data.thumbNailsPath),
-              fit: BoxFit.fill,
-            ),
+            child: VideoPlayer(videoController),
           ),
+          // Container(
+          //   width: double.infinity,
+          //   height: double.infinity,
+          //   child: Image(
+          //     image: new NetworkImage(widget.data.thumbNailsPath),
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -225,7 +225,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                           Icon_text(
                             no: '${widget.data.shareCount}',
                             press: () async {
-                              /// videoController.dispose();
+                              videoController.dispose();
                               await firebaseAuth.signOut();
                             },
                             icon: Icon(

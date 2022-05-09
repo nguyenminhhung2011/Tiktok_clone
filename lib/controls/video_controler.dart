@@ -40,4 +40,18 @@ class VideoController extends GetxController {
           backgroundColor: Colors.blue);
     }
   }
+
+  Future<void> updateCmtCount(String postId) async {
+    try {
+      DocumentSnapshot df =
+          await firestore.collection('videos').doc(postId).get();
+      await firestore.collection('videos').doc(postId).update(
+        {
+          'commentCount': (df.data() as Map<String, dynamic>)['commentCount']++,
+        },
+      );
+    } catch (err) {
+      print(err.toString());
+    }
+  }
 }
