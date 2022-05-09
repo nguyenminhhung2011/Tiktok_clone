@@ -58,16 +58,18 @@ class _CommentCardState extends State<CommentCard> {
                   children: [
                     Container(
                       padding: const EdgeInsets.all(1),
+                      height: 50,
+                      width: 50,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
                           width: 2,
                           color: Color.fromARGB(255, 250, 45, 108),
                         ),
-                      ),
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(widget.data.profilePic),
-                        radius: 20,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(widget.data.profilePic),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -136,7 +138,7 @@ class _CommentCardState extends State<CommentCard> {
                     IconButton(
                       onPressed: () {
                         CommentsController().likesCmt(
-                          widget.data.uid,
+                          authMethods.user.uid,
                           widget.data.postId,
                           widget.data.commentId,
                           widget.data.likes,
@@ -144,9 +146,10 @@ class _CommentCardState extends State<CommentCard> {
                       },
                       icon: Icon(
                         Icons.favorite,
-                        color: (widget.data.likes.contains(widget.data.uid))
-                            ? Color.fromARGB(255, 250, 45, 108)
-                            : const Color.fromARGB(255, 32, 211, 234),
+                        color:
+                            (widget.data.likes.contains(authMethods.user.uid))
+                                ? Color.fromARGB(255, 250, 45, 108)
+                                : const Color.fromARGB(255, 32, 211, 234),
                         size: 30,
                       ),
                     ),

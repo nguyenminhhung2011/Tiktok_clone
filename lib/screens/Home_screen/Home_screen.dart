@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/screens/Insert_video.dart/inserVid_screen.dart';
+import 'package:tiktok_clone/screens/Search_screen/search_screen.dart';
 
 import '../../widgets/icon_desgin.dart';
 import '../home/Home.dart';
@@ -105,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _pageController,
         children: [
           Home(),
+          SearchScreen(),
           InserVid(),
         ],
       ),

@@ -50,6 +50,7 @@ class VideoController extends GetxController {
           'commentCount': (df.data() as Map<String, dynamic>)['commentCount']++,
         },
       );
+      print('pluss');
     } catch (err) {
       print(err.toString());
     }
