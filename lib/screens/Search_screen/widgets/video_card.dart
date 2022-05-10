@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/video.dart';
+
 class VideoCard extends StatelessWidget {
+  final Video data;
   const VideoCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -17,16 +21,14 @@ class VideoCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                image: NetworkImage(
-                  'https://i.pinimg.com/originals/46/cb/f6/46cbf63a8a09b08170778befb024c4fc.jpg',
-                ),
+                image: NetworkImage(data.thumbNailsPath),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           const SizedBox(height: 3),
           Text(
-            'This is commment',
+            data.caption,
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -41,16 +43,14 @@ class VideoCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(
-                      'https://media.vov.vn/sites/default/files/styles/large/public/2021-06/rose-blackpink-pha-moi-ky-luc-voi-san-pham-am-nhac-solo-dau-tay.jpeg',
-                    ),
+                    image: NetworkImage(data.proFilePic),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(width: 5),
               Text(
-                'Rose Blackpint',
+                data.username,
                 style: TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class VideoCard extends StatelessWidget {
               ),
               const SizedBox(width: 3),
               Text(
-                '2011',
+                data.likes.length.toString(),
                 style: TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
