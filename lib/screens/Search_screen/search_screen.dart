@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tiktok_clone/controls/fake_data.dart';
+import 'package:tiktok_clone/screens/Search_screen/widgets/person_card.dart';
+import 'package:tiktok_clone/screens/Search_screen/widgets/video_card.dart';
+
+import '../../controls/searchPerson.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -8,6 +14,10 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  final SearchPersonController _searchPerSonController =
+      SearchPersonController();
+  bool isShow = false;
   bool checkSearch = true;
   @override
   Widget build(BuildContext context) {
@@ -56,6 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     Container(
                       width: MediaQuery.of(context).size.width / 1.4,
                       child: TextFormField(
+                        controller: _searchController,
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                         decoration: InputDecoration(
@@ -63,6 +74,17 @@ class _SearchScreenState extends State<SearchScreen> {
                           hintText: 'Search here',
                           border: InputBorder.none,
                         ),
+                        onChanged: (value) {
+                          if (_searchController.text.isNotEmpty) {
+                            setState(() {
+                              isShow = true;
+                            });
+                          }
+                          setState(() {
+                            _searchPerSonController
+                                .searchWithType(_searchController.text);
+                          });
+                        },
                       ),
                     ),
                   ],
@@ -76,25 +98,50 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              (checkSearch)
-                  ? SingleChildScrollView(
-                      scrollDirection: Axis.vertical, child: PerSonSearch())
-                  : Container(
+              (isShow)
+                  ? (checkSearch)
+                      ? Obx(
+                          () => SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                                children:
+                                    _searchPerSonController.searchUser.map(
+                              (e) {
+                                return PerSonCard(data: e);
+                              },
+                            ).toList()),
+                          ),
+                        )
+                      : VideoSearch()
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 7,
-                            mainAxisSpacing: 5,
-                            childAspectRatio: 0.6,
-                          ),
-                          itemBuilder: (context, index) {
-                            return VideoCard();
-                          },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Column(
+                              children: FakeData().namme_search.map(
+                                (e) {
+                                  return FakePersonCard(name: e);
+                                },
+                              ).toList(),
+                            ),
+                            Text(
+                              'Popular Search',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Column(
+                              children: FakeData().popular_search.map(
+                                (e) {
+                                  return FakePopularSearch(
+                                      name: e['name'], color: e['color']);
+                                },
+                              ).toList(),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -182,179 +229,80 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-class VideoCard extends StatelessWidget {
-  const VideoCard({
+class FakePersonCard extends StatelessWidget {
+  final String name;
+  const FakePersonCard({
     Key? key,
+    required this.name,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width / 2 - 20,
-            height: 320,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(
-                image: NetworkImage(
-                  'https://i.pinimg.com/originals/46/cb/f6/46cbf63a8a09b08170778befb024c4fc.jpg',
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(height: 3),
-          Text(
-            'This is commment',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(width: 3),
-          Row(
-            children: [
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://media.vov.vn/sites/default/files/styles/large/public/2021-06/rose-blackpink-pha-moi-ky-luc-voi-san-pham-am-nhac-solo-dau-tay.jpeg',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 5),
-              Text(
-                'Rose Blackpint',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Spacer(),
-              Icon(
-                Icons.favorite,
-                size: 18,
-                color: Color.fromARGB(255, 250, 45, 108),
-              ),
-              const SizedBox(width: 3),
-              Text(
-                '2011',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class PerSonSearch extends StatelessWidget {
-  const PerSonSearch({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        PerSonCard(),
-        PerSonCard(),
-        PerSonCard(),
-        PerSonCard(),
-        PerSonCard(),
+        Icon(Icons.access_time, color: Colors.black),
+        const SizedBox(width: 4),
+        Text(name, style: TextStyle(color: Colors.black)),
+        Spacer(),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.close, color: Colors.black),
+        )
       ],
     );
   }
 }
 
-class PerSonCard extends StatelessWidget {
-  const PerSonCard({
+class FakePopularSearch extends StatelessWidget {
+  final String name;
+  final Color color;
+  const FakePopularSearch({Key? key, required this.name, required this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 4),
+        Text(name, style: TextStyle(color: Colors.black)),
+        Spacer(),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.close, color: Colors.black),
+        )
+      ],
+    );
+  }
+}
+
+class VideoSearch extends StatelessWidget {
+  const VideoSearch({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      //color: Colors.red,
-      margin: const EdgeInsets.symmetric(horizontal: 18),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(1),
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                width: 2,
-                color: Color.fromARGB(255, 250, 45, 108),
-              ),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  'https://scontent.fsgn5-13.fna.fbcdn.net/v/t39.30808-6/271537442_481970630087778_2729125125287225165_n.jpg?_nc_cat=106&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=zGOuA7Eyo90AX-aPxOg&_nc_ht=scontent.fsgn5-13.fna&oh=00_AT9uN0iIvFTkYUbqG45UnncGmAIcU1PpXTITyfE1ljHVzw&oe=627D8085',
-                ),
-              ),
-            ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: GridView.builder(
+          shrinkWrap: true,
+          itemCount: 5,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 7,
+            mainAxisSpacing: 5,
+            childAspectRatio: 0.6,
           ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Username',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  // fontFamily: "Muli",
-                  fontSize: 15,
-                ),
-              ),
-              Text(
-                '#Tiktok name',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  // fontFamily: "Muli",
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          Spacer(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(23),
-              color: Color.fromARGB(255, 250, 45, 108),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.favorite),
-                const SizedBox(width: 5),
-                Text('7,7k'),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.person_add, color: Colors.black),
-            onPressed: () {},
-          )
-        ],
+          itemBuilder: (context, index) {
+            return VideoCard();
+          },
+        ),
       ),
     );
   }
