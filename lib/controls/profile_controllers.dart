@@ -34,6 +34,7 @@ class ProfileControls extends GetxController {
       Map<String, dynamic> i = {
         "id": item.data()['id'],
         "thumbNails": item.data()['thumbNailsPath'],
+        "caption": item.data()['caption'],
       };
       allPosts.add(i);
     }
