@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tiktok_clone/controls/comments_controller.dart';
+import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
 import '../../../constains.dart';
 import '../../../models/comment.dart';
@@ -56,22 +57,7 @@ class _CommentCardState extends State<CommentCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(1),
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 2,
-                          color: Color.fromARGB(255, 250, 45, 108),
-                        ),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(widget.data.profilePic),
-                        ),
-                      ),
-                    ),
+                    AvatarCircle(avtPath: widget.data.profilePic, sizeAvt: 60),
                     const SizedBox(width: 10),
                     Container(
                       width: MediaQuery.of(context).size.width / 1.7,

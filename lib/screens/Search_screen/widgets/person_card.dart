@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
 import '../../../models/user.dart';
 
@@ -18,24 +19,7 @@ class PerSonCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            padding: const EdgeInsets.all(1),
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                width: 2,
-                color: Color.fromARGB(255, 250, 45, 108),
-              ),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                  data.photoUrl,
-                ),
-              ),
-            ),
-          ),
+          AvatarCircle(avtPath: data.photoUrl, sizeAvt: 60),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

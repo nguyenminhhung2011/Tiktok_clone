@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/screens/Insert_video.dart/inserVid_screen.dart';
 import 'package:tiktok_clone/screens/Search_screen/search_screen.dart';
+import 'package:tiktok_clone/screens/profileUser/profile_user_screen.dart';
 
 import '../../widgets/icon_desgin.dart';
 import '../home/Home.dart';
@@ -37,7 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor: (_page != 2)
-              ? Color.fromARGB(255, 136, 199, 250)
+              ? (_page < 2)
+                  ? Color.fromARGB(255, 136, 199, 250)
+                  : Color.fromARGB(255, 250, 45, 108)
               : Colors.transparent,
           labelTextStyle: MaterialStateProperty.all(
             const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
@@ -108,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Home(),
           SearchScreen(),
           InserVid(),
+          ProfileScreen(),
         ],
       ),
     );
