@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
+import 'package:tiktok_clone/screens/profileUser/videoFavTab.dart';
+import 'package:tiktok_clone/screens/profileUser/videoTab.dart';
 
 import '../../controls/profile_controllers.dart';
+import '../../models/video.dart';
 import '../../widgets/Avtar_circle.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -20,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _profileControls.upDateUser(authMethods.user.uid);
+    _profileControls.updatVideoFav(authMethods.user.uid);
   }
 
   Widget build(BuildContext context) {
@@ -310,12 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       VideosTab(data: controller.user),
                       Icon(Icons.directions_transit),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: [],
-                        ),
-                      )
+                      videoFavTab(data: controller.videoFav),
                     ],
                   ),
                 ),
@@ -327,125 +326,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
       },
     );
-  }
-}
-
-class VideosTab extends StatelessWidget {
-  final Map<String, dynamic> data;
-  const VideosTab({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 10,
-          ),
-          child: GridView.builder(
-            shrinkWrap: true,
-            itemCount: data['allPosts'].length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
-              childAspectRatio: 0.6,
-            ),
-            itemBuilder: (context, index) {
-              return Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          data['allPosts'][index]['thumbNails'],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(8),
-                            bottomRight: Radius.circular(8),
-                          ),
-                          gradient: const LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.black26,
-                              Colors.white10,
-                            ],
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(width: 5),
-                            Container(
-                              width: 35,
-                              height: 35,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                    data['profilePic'],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  data['username'],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 32, 211, 234),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.play_arrow,
-                                      color: Colors.white,
-                                      size: 17,
-                                    ),
-                                    Text(
-                                      '20.11K',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          ),
-        ));
   }
 }

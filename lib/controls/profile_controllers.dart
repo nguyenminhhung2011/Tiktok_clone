@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 
+import '../models/video.dart';
+
 class ProfileControls extends GetxController {
+  final Rx<List<Video>> _videoFav = Rx<List<Video>>([]);
   final Rx<Map<String, dynamic>> _user = Rx<Map<String, dynamic>>({});
   Map<String, dynamic> get user => _user.value;
+  List<Video> get videoFav => _videoFav.value;
   Rx<String> _uid = "".obs;
   upDateUser(String id) {
     _uid.value = id;
@@ -54,6 +58,23 @@ class ProfileControls extends GetxController {
       "following": following,
     };
     //  print(_user.value);
+    update();
+  }
+
+  updatVideoFav(String id) {
+    _uid.value = id;
+    getDataVidFav();
+  }
+
+  getDataVidFav() async {
+    var allVideo = await firestore.collection('videos').get();
+    List<Video> result = [];
+    for (var item in allVideo.docs) {
+      if ((item.data() as Map<String, dynamic>)['likes'].contains(_uid.value)) {
+        result.add(Video.fromSnap(item));
+      }
+    }
+    _videoFav.value = result;
     update();
   }
 }
