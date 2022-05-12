@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/screens/profileUser/videoFavTab.dart';
 import 'package:tiktok_clone/screens/profileUser/videoTab.dart';
+import 'package:tiktok_clone/screens/profileUser/widgets/cardPersonInList.dart';
 
 import '../../controls/profile_controllers.dart';
+import '../../models/user.dart';
 import '../../models/video.dart';
 import '../../widgets/Avtar_circle.dart';
 
@@ -17,16 +19,31 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   int indexOfTab = 0;
+  bool isShowListPerson = false;
   final ProfileControls _profileControls = Get.put(ProfileControls());
-
+  int counter = 2;
   @override
   void initState() {
     super.initState();
     _profileControls.upDateUser(authMethods.user.uid);
     _profileControls.updatVideoFav(authMethods.user.uid);
+    _profileControls.updateUserUnfollow(authMethods.user.uid);
+    // _profileControls.updateFollowing(authMethods.user.uid);
+    // _profileControls.updateFollowers(authMethods.user.uid);
+  }
+
+  void updateController() {
+    _profileControls.upDateUser(authMethods.user.uid);
+    _profileControls.updateUserUnfollow(authMethods.user.uid);
+    if (_profileControls.userUnFollow.length == 0) {
+      setState(() {
+        isShowListPerson = false;
+      });
+    }
   }
 
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GetBuilder<ProfileControls>(
       init: ProfileControls(),
       builder: (controller) {
@@ -41,7 +58,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Scaffold(
                   backgroundColor: Colors.white,
                   appBar: AppBar(
-                    toolbarHeight: MediaQuery.of(context).size.height / 4,
+                    toolbarHeight: (isShowListPerson &&
+                            _profileControls.userUnFollow.length > 0)
+                        ? MediaQuery.of(context).size.height / 2
+                        : MediaQuery.of(context).size.height / 4,
                     elevation: 0,
                     backgroundColor: Colors.transparent,
                     bottom: TabBar(
@@ -246,7 +266,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(width: 20),
+                              const SizedBox(width: 50),
                               InkWell(
                                 borderRadius: BorderRadius.circular(14),
                                 onTap: () {},
@@ -289,7 +309,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               const SizedBox(width: 5),
                               InkWell(
                                 borderRadius: BorderRadius.circular(14),
-                                onTap: () {},
+                                onTap: () {
+                                  setState(() {
+                                    isShowListPerson =
+                                        (controller.userUnFollow.length != 0)
+                                            ? !isShowListPerson
+                                            : isShowListPerson;
+                                  });
+                                },
                                 child: Container(
                                   width: 40,
                                   height: 40,
@@ -305,7 +332,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               )
                             ],
-                          )
+                          ),
+                          const SizedBox(height: 10),
+                          (isShowListPerson)
+                              ? Container(
+                                  width: size.width,
+                                  alignment: Alignment.centerLeft,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children:
+                                          controller.userUnFollow.map((e) {
+                                        return CardPersonInList(
+                                          size: size,
+                                          user: e,
+                                          press: () async {
+                                            _profileControls.followingUser(
+                                                e.uid, e.following);
+                                            updateController();
+                                            setState(() {});
+                                          },
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
@@ -313,7 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   body: TabBarView(
                     children: [
                       VideosTab(data: controller.user),
-                      Icon(Icons.directions_transit),
+                      PersonTab(),
                       videoFavTab(data: controller.videoFav),
                     ],
                   ),
@@ -325,6 +379,128 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               );
       },
+    );
+  }
+}
+
+class PersonTab extends StatefulWidget {
+  const PersonTab({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<PersonTab> createState() => _PersonTabState();
+}
+
+class _PersonTabState extends State<PersonTab> {
+  bool checkFollowingFollowers = false;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const SizedBox(width: 20),
+              Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+                height: 40,
+                width: 150,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 255, 252, 227),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        if (checkFollowingFollowers == false) {
+                          setState(() {
+                            checkFollowingFollowers = true;
+                          });
+                        }
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 71,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          color: (checkFollowingFollowers)
+                              ? Color.fromARGB(255, 250, 45, 108)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            topRight: Radius.circular(4),
+                            bottomRight: Radius.circular(4),
+                          ),
+                        ),
+                        child: Text(
+                          'Following',
+                          style: TextStyle(
+                            color: (checkFollowingFollowers)
+                                ? Colors.white
+                                : Color.fromARGB(255, 250, 45, 108),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 2,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (checkFollowingFollowers == true) {
+                          setState(() {
+                            checkFollowingFollowers = false;
+                          });
+                        }
+                      },
+                      child: Container(
+                        width: 71,
+                        height: 34,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: (!checkFollowingFollowers)
+                              ? Color.fromARGB(255, 32, 211, 234)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4),
+                            bottomLeft: Radius.circular(4),
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          'Followers',
+                          style: TextStyle(
+                            color: (!checkFollowingFollowers)
+                                ? Colors.white
+                                : Color.fromARGB(255, 32, 211, 234),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 10),
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

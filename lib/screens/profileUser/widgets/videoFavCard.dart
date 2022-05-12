@@ -49,6 +49,7 @@ class VideoFavCard extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
+                    Text(' '),
                     Text(
                       data.caption,
                       style: TextStyle(
