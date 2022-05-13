@@ -7,6 +7,7 @@ import 'package:tiktok_clone/screens/Search_screen/search_screen.dart';
 import 'package:tiktok_clone/screens/profileUser/profile_user_screen.dart';
 
 import '../../widgets/icon_desgin.dart';
+import '../Notification/notification.dart';
 import '../home/Home.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -111,6 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Home(),
           SearchScreen(),
           InserVid(),
+          NotifiCationScreen(),
           ProfileScreen(),
         ],
       ),

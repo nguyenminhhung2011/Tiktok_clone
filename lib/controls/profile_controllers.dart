@@ -151,16 +151,20 @@ class ProfileControls extends GetxController {
     DocumentSnapshot userDoc =
         await firestore.collection('users').doc(_uid.value).get();
     User data = User.fromSnap(userDoc);
-    _following
-        .bindStream(firestore.collection('users').snapshots().map((event) {
-      List<User> result = [];
-      for (var item in event.docs) {
-        if (data.following.contains((item as Map<String, dynamic>)['uid'])) {
-          result.add(User.fromSnap(item));
-        }
-      }
-      return result;
-    }));
+    _following.bindStream(
+      firestore.collection('users').snapshots().map(
+        (event) {
+          List<User> result = [];
+          for (var item in event.docs) {
+            User d = User.fromSnap(item);
+            if (data.following.contains(d.uid)) {
+              result.add(d);
+            }
+          }
+          return result;
+        },
+      ),
+    );
   }
 
   updateFollowers(String id) {
@@ -176,8 +180,9 @@ class ProfileControls extends GetxController {
         .bindStream(firestore.collection('users').snapshots().map((event) {
       List<User> result = [];
       for (var item in event.docs) {
-        if (data.followers.contains((item as Map<String, dynamic>)['uid'])) {
-          result.add(User.fromSnap(item));
+        User d = User.fromSnap(item);
+        if (data.followers.contains(d.uid)) {
+          result.add(d);
         }
       }
       return result;

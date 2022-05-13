@@ -28,13 +28,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _profileControls.upDateUser(authMethods.user.uid);
     _profileControls.updatVideoFav(authMethods.user.uid);
     _profileControls.updateUserUnfollow(authMethods.user.uid);
-    // _profileControls.updateFollowing(authMethods.user.uid);
-    // _profileControls.updateFollowers(authMethods.user.uid);
+    _profileControls.updateFollowing(authMethods.user.uid);
+    _profileControls.updateFollowers(authMethods.user.uid);
   }
 
   void updateController() {
     _profileControls.upDateUser(authMethods.user.uid);
     _profileControls.updateUserUnfollow(authMethods.user.uid);
+    _profileControls.updateFollowing(authMethods.user.uid);
     if (_profileControls.userUnFollow.length == 0) {
       setState(() {
         isShowListPerson = false;
@@ -367,7 +368,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   body: TabBarView(
                     children: [
                       VideosTab(data: controller.user),
-                      PersonTab(),
+                      PersonTab(
+                        followingUser: _profileControls.following,
+                        followerUser: _profileControls.followers,
+                      ),
                       videoFavTab(data: controller.videoFav),
                     ],
                   ),
@@ -386,14 +390,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 class PersonTab extends StatefulWidget {
   const PersonTab({
     Key? key,
+    required this.followingUser,
+    required this.followerUser,
   }) : super(key: key);
 
+  final List<User> followingUser;
+  final List<User> followerUser;
   @override
   State<PersonTab> createState() => _PersonTabState();
 }
 
 class _PersonTabState extends State<PersonTab> {
-  bool checkFollowingFollowers = false;
+  bool checkFollowingFollowers = true;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -496,8 +504,119 @@ class _PersonTabState extends State<PersonTab> {
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
-              children: [],
+              children: (checkFollowingFollowers)
+                  ? widget.followingUser.map(
+                      (e) {
+                        return FollowingCardPerson(data: e);
+                      },
+                    ).toList()
+                  : widget.followerUser.map(
+                      (e) {
+                        return FollowersCardPerson(data: e);
+                      },
+                    ).toList(),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FollowersCardPerson extends StatelessWidget {
+  const FollowersCardPerson({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+  final User data;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      alignment: Alignment.center,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(),
+      child: Row(
+        children: [
+          AvatarCircle(
+            avtPath: data.photoUrl,
+            sizeAvt: 70,
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.username,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                '#${data.bio}',
+                style:
+                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+          Spacer(),
+          Icon(
+            Icons.favorite,
+            color: Color.fromARGB(255, 32, 211, 234),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FollowingCardPerson extends StatelessWidget {
+  const FollowingCardPerson({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+  final User data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      alignment: Alignment.center,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(),
+      child: Row(
+        children: [
+          AvatarCircle(
+            avtPath: data.photoUrl,
+            sizeAvt: 70,
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.username,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+              Text(
+                '#${data.bio}',
+                style:
+                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+          Spacer(),
+          Icon(
+            Icons.favorite,
+            color: Color.fromARGB(255, 250, 45, 108),
           ),
         ],
       ),
