@@ -46,7 +46,6 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    fontFamily: "Muli",
                   ),
                 ),
               ],
@@ -90,67 +89,70 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
           ],
         ),
       ),
-      body: GetBuilder<NotiController>(
-        init: NotiController(),
-        builder: (controller) {
-          return (controller.listMessage.length > 0)
-              ? SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: (_searchController.text != "")
-                      ? Column(
-                          children: [
-                            MessageCard(),
-                          ],
-                        )
-                      : Center(
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              Text(
-                                'You don \'t have message',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Text(
-                                'Search and start chats with friends',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              )
-                            ],
+      body: Obx(
+        () => (_searchController.text != "")
+            ? SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                    children: _notiController.listUser.map((e) {
+                  return PersonCard(
+                    data: e,
+                    press: () {
+                      _notiController.creatMessageWithPerson(e.uid);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MessChat(
+                            uidPerson1: authMethods.user.uid,
+                            uidPerson2: e.uid,
                           ),
                         ),
-                )
-              : SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: controller.listUser.map(
-                      (e) {
-                        return PersonCard(
-                          data: e,
-                          press: () {
-                            _notiController.createMessPerson(e.uid);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MessChat(
-                                    uidPerson1: authMethods.user.uid,
-                                    uidPerson2: e.uid),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ).toList(),
+                      );
+                    },
+                  );
+                }).toList()),
+              )
+            : (_notiController.listMessage.isNotEmpty)
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: _notiController.listMessage
+                          .map(
+                            (e) => MessageCard(
+                              message: e,
+                              index: 1 -
+                                  _notiController.getIndexUserInList(
+                                    authMethods.user.uid,
+                                    e.listUid,
+                                  ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  )
+                : Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'You Don\t have Message',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Please search and start chat with Your friend',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-        },
       ),
     );
   }

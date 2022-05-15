@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
@@ -26,10 +27,8 @@ class NotiController extends GetxController {
         (event) {
           List<Message> result = [];
           for (var item in event.docs) {
-            Message data = Message.fromSnap(item);
-            if (data.listMem.contains(_uid.value)) {
-              result.add(data);
-            }
+            Message d = Message.fromSnap(item);
+            result.add(d);
           }
           return result;
         },
@@ -69,19 +68,32 @@ class NotiController extends GetxController {
       for (var item in allMessage.docs) {
         Message data = Message.fromSnap(item);
         check = (data.groupOrWithPerson == 0 &&
-                data.listMem.contains(uid) &&
-                data.listMem.contains(id))
+                data.listUid.contains(uid) &&
+                data.listUid.contains(id))
             ? 1
             : check;
       }
       if (check == 0) {
-        List listMem = [uid, id];
+        List listUid = [];
+        List username = [];
+        List photoUrl = [];
+        var userDoc = await firestore.collection('users').get();
+        for (var item in userDoc.docs) {
+          User data = User.fromSnap(item);
+          if (data.uid == id || data.uid == uid) {
+            listUid.add(data.uid);
+            username.add(data.username);
+            photoUrl.add(data.photoUrl);
+          }
+        }
         Message mess = Message(
           id: "message ${allMessage.docs.length}",
-          messNearest: "",
+          messNearest: "Don\t have mess Nearest",
           groupOrWithPerson: 0,
           photoGroup_member: "",
-          listMem: listMem,
+          listUid: listUid,
+          username: username,
+          photoUrl: photoUrl,
         );
         await firestore
             .collection('messages')
@@ -94,6 +106,15 @@ class NotiController extends GetxController {
       print(err.toString());
     }
   }
-}
 
-class MessItem {}
+  int getIndexUserInList(String id, List listMem) {
+    int index = 0;
+    for (var item in listMem) {
+      if (item == item) {
+        return index;
+      }
+      index++;
+    }
+    return index;
+  }
+}
