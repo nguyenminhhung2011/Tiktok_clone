@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tiktok_clone/constains.dart';
+import 'package:tiktok_clone/controls/notiController.dart';
+import 'package:tiktok_clone/screens/Notification/messChat.dart';
+import 'package:tiktok_clone/screens/Notification/widget/messageCard.dart';
+import 'package:tiktok_clone/screens/Notification/widget/messageGroupCard.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
+
+import '../../models/user.dart';
 
 class NotifiCationScreen extends StatefulWidget {
   const NotifiCationScreen({Key? key}) : super(key: key);
@@ -9,13 +17,22 @@ class NotifiCationScreen extends StatefulWidget {
 }
 
 class _NotifiCationScreenState extends State<NotifiCationScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  final NotiController _notiController = Get.put(NotiController());
   bool checkNotifi = false;
   @override
+  void initState() {
+    super.initState();
+    _notiController.updateMessage(authMethods.user.uid);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height / 6,
+        toolbarHeight: (!checkNotifi)
+            ? MediaQuery.of(context).size.height / 5
+            : MediaQuery.of(context).size.height / 6,
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Column(
@@ -35,20 +52,105 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
               ],
             ),
             const SizedBox(height: 15),
-            CheckNoti(context)
+            CheckNoti(context),
+            const SizedBox(height: 10),
+            !(checkNotifi)
+                ? Container(
+                    width: MediaQuery.of(context).size.width / 1.1,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 153, 231, 255),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.search, color: Colors.white),
+                        const SizedBox(width: 2),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.6,
+                          child: TextFormField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: 'Search',
+                              border: InputBorder.none,
+                            ),
+                            onChanged: (_) {
+                              setState(() {
+                                _notiController
+                                    .searchWithType(_searchController.text);
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            MessageCard(),
-            MessageCard(),
-            MessageCard(),
-            MessageCard(),
-            MessageCard(),
-          ],
-        ),
+      body: GetBuilder<NotiController>(
+        init: NotiController(),
+        builder: (controller) {
+          return (controller.listMessage.length > 0)
+              ? SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: (_searchController.text != "")
+                      ? Column(
+                          children: [
+                            MessageCard(),
+                          ],
+                        )
+                      : Center(
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Text(
+                                'You don \'t have message',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                'Search and start chats with friends',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                )
+              : SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: controller.listUser.map(
+                      (e) {
+                        return PersonCard(
+                          data: e,
+                          press: () {
+                            _notiController.createMessPerson(e.uid);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MessChat(
+                                    uidPerson1: authMethods.user.uid,
+                                    uidPerson2: e.uid),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ).toList(),
+                  ),
+                );
+        },
       ),
     );
   }
@@ -74,6 +176,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                   if (checkNotifi == false) {
                     checkNotifi = true;
                   }
+                  _searchController.clear();
                 });
               },
               child: Container(
@@ -130,104 +233,55 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
   }
 }
 
-class MessageCard extends StatelessWidget {
-  const MessageCard({
+class PersonCard extends StatelessWidget {
+  const PersonCard({
     Key? key,
+    required this.data,
+    required this.press,
   }) : super(key: key);
-
+  final User data;
+  final Function() press;
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Color.fromARGB(255, 230, 251, 255),
-      ),
+      decoration: BoxDecoration(),
       child: Row(
         children: [
           AvatarCircle(
-            avtPath:
-                'https://i.pinimg.com/originals/46/cb/f6/46cbf63a8a09b08170778befb024c4fc.jpg',
+            avtPath: data.photoUrl,
             sizeAvt: 70,
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Username',
+                data.username,
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
+                  fontSize: 17,
                 ),
               ),
               Text(
-                'Your bio',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          Spacer(),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '9:00 PM',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  // const SizedBox(width: 2),
-                  // Container(
-                  //   height: 8,
-                  //   width: 8,
-                  //   decoration: BoxDecoration(
-                  //     shape: BoxShape.circle,
-                  //     color: Colors.red,
-                  //   ),
-                  // ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 8,
-                    width: 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Container(
-                    height: 8,
-                    width: 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Container(
-                    height: 8,
-                    width: 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.yellow,
-                    ),
-                  ),
-                ],
+                '#${data.bio}',
+                style:
+                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
               )
             ],
           ),
+          Spacer(),
+          IconButton(
+            onPressed: press,
+            icon: Icon(
+              Icons.send,
+              color: Color.fromARGB(255, 32, 211, 234),
+            ),
+          )
         ],
       ),
     );
