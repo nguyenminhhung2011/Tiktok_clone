@@ -9,6 +9,7 @@ class MessItem {
   final datePublished;
   String userPic;
   String username;
+  String uid;
   MessItem({
     required this.messid,
     required this.itemId,
@@ -17,6 +18,7 @@ class MessItem {
     required this.datePublished,
     required this.userPic,
     required this.username,
+    required this.uid,
   });
 
   Map<String, dynamic> toJson() => {
@@ -27,6 +29,7 @@ class MessItem {
         'datePublished': datePublished,
         'userPic': userPic,
         'username': username,
+        'uid': uid,
       };
   static MessItem fromSnap(DocumentSnapshot snap) {
     return MessItem(
@@ -37,6 +40,7 @@ class MessItem {
       datePublished: snap['datePublished'],
       userPic: snap['userPic'],
       username: snap['username'],
+      uid: snap['uid'],
     );
   }
 }

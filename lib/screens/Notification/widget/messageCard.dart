@@ -22,8 +22,8 @@ class MessageCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => MessChat(
-              uidPerson1: message.listUid[index],
-              uidPerson2: message.listUid[1 - index],
+              uidPerson1: message.listUid[1 - index],
+              uidPerson2: message.listUid[index],
             ),
           ),
         );
