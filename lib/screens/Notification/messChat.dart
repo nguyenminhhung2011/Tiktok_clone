@@ -1,9 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/screens/Notification/widget/recCard.dart';
+import 'package:tiktok_clone/screens/Notification/widget/sendCard.dart';
+import 'package:tiktok_clone/utils/untils.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
 import '../../constains.dart';
 import '../../controls/messController.dart';
+import '../../controls/storage_methods.dart';
 import '../../models/messItem.dart';
 
 class MessChat extends StatefulWidget {
@@ -22,6 +29,8 @@ class MessChat extends StatefulWidget {
 class _MessChatState extends State<MessChat> {
   final MessController _messController = Get.put(MessController());
   final TextEditingController _stringController = TextEditingController();
+  Uint8List? _image;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -30,10 +39,113 @@ class _MessChatState extends State<MessChat> {
   }
 
   void sendMessage() async {
-    await _messController.sendMessage(
-        _stringController.text, 0, widget.uidPerson2);
+    if (_stringController.text.length > 25) {
+      var l = _stringController.text.split(' ');
+      if (l.length > 2) {
+        int countLength = 0;
+        String addS = "";
+        int check = 1;
+        int count = 0;
+        l.forEach(
+          (element) {
+            if ((countLength / 25).floor() == check && count < l.length - 1) {
+              addS += '\n';
+              check++;
+            }
+            countLength += element.length;
+            addS += element + ' ';
+            count++;
+          },
+        );
+        await _messController.sendMessage(addS, 0, widget.uidPerson2);
+      } else {
+        await _messController.sendMessage(
+            _stringController.text, 0, widget.uidPerson2);
+      }
+    } else {
+      await _messController.sendMessage(
+          _stringController.text, 0, widget.uidPerson2);
+    }
+
     setState(() {
       _stringController.clear();
+    });
+  }
+
+  void sendImage(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
+    String photoUrl = await StorageMethods()
+        .UploadImageStorage('MessagePics', _image!, false);
+    await _messController.sendMessage(photoUrl, 1, widget.uidPerson2);
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.pop(context);
+  }
+
+  void selectedImage() async {
+    Uint8List file = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = file;
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            width: MediaQuery.of(context).size.width - 10,
+            height: MediaQuery.of(context).size.height / 3,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 255, 252, 227),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width - 20,
+                      height: MediaQuery.of(context).size.height / 4,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: MemoryImage(_image!),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    InkWell(
+                      onTap: () {
+                        sendImage(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.send,
+                          color: const Color.fromARGB(255, 32, 211, 234),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                (isLoading)
+                    ? Center(
+                        child: CircularProgressIndicator(color: Colors.blue),
+                      )
+                    : Container(),
+              ],
+            ),
+          ),
+        ),
+      );
     });
   }
 
@@ -154,7 +266,9 @@ class _MessChatState extends State<MessChat> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  selectedImage();
+                                },
                                 child: Icon(
                                   Icons.picture_as_pdf,
                                   color:
@@ -251,106 +365,6 @@ class _MessChatState extends State<MessChat> {
           : Center(
               child: CircularProgressIndicator(),
             ),
-    );
-  }
-}
-
-class RecCard extends StatelessWidget {
-  final MessItem data;
-  const RecCard({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Container(
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.transparent,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: (data.checkEnd == 1)
-                      ? NetworkImage(data.userPic)
-                      : NetworkImage(
-                          'https://tse4.mm.bing.net/th?id=OIP.gP1tVKJUehx7kX43qmrSswHaHa&pid=Api&P=0&w=172&h=172',
-                        ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 5),
-            Container(
-//          margin: const EdgeInsets.only(left: 10),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 32, 211, 234),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30),
-                  topLeft: Radius.circular(data.border1 as double),
-                  bottomRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(data.border2 as double),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              child: Text(
-                data.tittle,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SendCard extends StatelessWidget {
-  final MessItem data;
-  const SendCard({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Container(
-//          margin: const EdgeInsets.only(left: 10),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 222, 236, 238),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(data.border1 as double),
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(data.border2 as double),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: Text(
-            data.tittle,
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

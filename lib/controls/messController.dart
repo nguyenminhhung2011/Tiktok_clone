@@ -72,7 +72,7 @@ class MessController extends GetxController {
         String itemID = "messItem ${(allMessItem.docs.length).toString()}";
 
         int border1 = 0;
-        int border2 = 25;
+        int border2 = 30;
 
         String mess_nearest = "";
         String userSend = "";
@@ -88,7 +88,7 @@ class MessController extends GetxController {
         border1 =
             ((userDoc.data() as Map<String, dynamic>)['username'] == userSend)
                 ? 5
-                : 25;
+                : 30;
         if (userSend == (userDoc.data() as Map<String, dynamic>)['username']) {
           await firestore
               .collection('messages')
