@@ -36,7 +36,7 @@ class MessController extends GetxController {
       firestore
           .collection('messages')
           .doc(messId)
-          .collection('messItem')
+          .collection('messItems')
           .snapshots()
           .map(
         (event) {
@@ -70,6 +70,39 @@ class MessController extends GetxController {
         DocumentSnapshot userDoc =
             await firestore.collection('users').doc(_uid.value).get();
         String itemID = "messItem ${(allMessItem.docs.length).toString()}";
+
+        int border1 = 0;
+        int border2 = 25;
+
+        String mess_nearest = "";
+        String userSend = "";
+        int index = 0;
+        for (var item in allMessItem.docs) {
+          if (index == allMessItem.docs.length - 1) {
+            mess_nearest = (item.data() as Map<String, dynamic>)["itemId"];
+            userSend = (item.data() as Map<String, dynamic>)['username'];
+          }
+          index++;
+        }
+
+        border1 =
+            ((userDoc.data() as Map<String, dynamic>)['username'] == userSend)
+                ? 5
+                : 25;
+        if (userSend == (userDoc.data() as Map<String, dynamic>)['username']) {
+          await firestore
+              .collection('messages')
+              .doc(messId)
+              .collection('messItems')
+              .doc(mess_nearest)
+              .update(
+            {
+              'border2': 5,
+              'checkEnd': 0,
+            },
+          );
+        }
+
         MessItem messItem = MessItem(
           messid: messId,
           itemId: itemID,
@@ -79,6 +112,9 @@ class MessController extends GetxController {
           userPic: (userDoc.data() as Map<String, dynamic>)['photoUrl'],
           username: (userDoc.data() as Map<String, dynamic>)['username'],
           uid: (userDoc.data() as Map<String, dynamic>)['uid'],
+          border1: border1,
+          border2: border2,
+          checkEnd: 1,
         );
         await firestore
             .collection('messages')

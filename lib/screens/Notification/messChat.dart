@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
+import '../../constains.dart';
 import '../../controls/messController.dart';
+import '../../models/messItem.dart';
 
 class MessChat extends StatefulWidget {
   final String uidPerson1; //uid
@@ -48,10 +50,17 @@ class _MessChatState extends State<MessChat> {
                       Icons.phone,
                       color: const Color.fromARGB(255, 32, 211, 234),
                     ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.settings,
+                      color: const Color.fromARGB(255, 32, 211, 234),
+                    ),
                   )
                 ],
                 toolbarHeight: MediaQuery.of(context).size.height * 0.08,
-                elevation: 0,
+                // elevation: 0,
                 backgroundColor: Colors.transparent,
                 leading: IconButton(
                   onPressed: () {
@@ -99,13 +108,6 @@ class _MessChatState extends State<MessChat> {
                     topRight: Radius.circular(30),
                   ),
                   color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      offset: Offset(-2, -2),
-                      blurRadius: 100,
-                    ),
-                  ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -187,6 +189,7 @@ class _MessChatState extends State<MessChat> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
+                    const SizedBox(height: 20),
                     Container(
                       alignment: Alignment.center,
                       child: Column(
@@ -228,15 +231,18 @@ class _MessChatState extends State<MessChat> {
                         ],
                       ),
                     ),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                          ),
-                        )
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Column(
+                        children: _messController.listMessItem.map(
+                          (e) {
+                            if (e.uid == authMethods.user.uid) {
+                              return SendCard(data: e);
+                            }
+                            return RecCard(data: e);
+                          },
+                        ).toList(),
+                      ),
                     ),
                   ],
                 ),
@@ -245,6 +251,106 @@ class _MessChatState extends State<MessChat> {
           : Center(
               child: CircularProgressIndicator(),
             ),
+    );
+  }
+}
+
+class RecCard extends StatelessWidget {
+  final MessItem data;
+  const RecCard({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.transparent,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: (data.checkEnd == 1)
+                      ? NetworkImage(data.userPic)
+                      : NetworkImage(
+                          'https://tse4.mm.bing.net/th?id=OIP.gP1tVKJUehx7kX43qmrSswHaHa&pid=Api&P=0&w=172&h=172',
+                        ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            Container(
+//          margin: const EdgeInsets.only(left: 10),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 32, 211, 234),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(data.border1 as double),
+                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(data.border2 as double),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              child: Text(
+                data.tittle,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SendCard extends StatelessWidget {
+  final MessItem data;
+  const SendCard({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+//          margin: const EdgeInsets.only(left: 10),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 222, 236, 238),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(data.border1 as double),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(data.border2 as double),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: Text(
+            data.tittle,
+            style: TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

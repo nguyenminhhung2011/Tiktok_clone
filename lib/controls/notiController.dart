@@ -28,7 +28,9 @@ class NotiController extends GetxController {
           List<Message> result = [];
           for (var item in event.docs) {
             Message d = Message.fromSnap(item);
-            result.add(d);
+            if (d.listUid.contains(_uid.value)) {
+              result.add(d);
+            }
           }
           return result;
         },
@@ -110,7 +112,7 @@ class NotiController extends GetxController {
   int getIndexUserInList(String id, List listMem) {
     int index = 0;
     for (var item in listMem) {
-      if (item == item) {
+      if (item == id) {
         return index;
       }
       index++;
