@@ -22,6 +22,15 @@ class MessController extends GetxController {
     getDataMessWithPerson(opId);
   }
 
+  int mySortComparison(MessItem a, MessItem b) {
+    if (a.index < b.index) {
+      return -1;
+    } else if (a.index > b.index) {
+      return 1;
+    }
+    return 0;
+  }
+
   getDataMessWithPerson(String opId) async {
     var allMess = await firestore.collection('messages').get();
     String messId = "";
@@ -44,6 +53,7 @@ class MessController extends GetxController {
           for (var item in event.docs) {
             result.add(MessItem.fromSnap(item));
           }
+          result.sort(mySortComparison);
           return result;
         },
       ),
@@ -85,6 +95,10 @@ class MessController extends GetxController {
           index++;
         }
 
+        await firestore.collection('messages').doc(messId).update({
+          'messNearest': (typeMess == 0) ? tittle : "Receive Picture",
+        });
+
         border1 =
             ((userDoc.data() as Map<String, dynamic>)['username'] == userSend)
                 ? 5
@@ -115,6 +129,7 @@ class MessController extends GetxController {
           border1: border1,
           border2: border2,
           checkEnd: 1,
+          index: allMessItem.docs.length,
         );
         await firestore
             .collection('messages')

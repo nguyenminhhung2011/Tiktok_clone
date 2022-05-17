@@ -13,6 +13,7 @@ class MessItem {
   int border1;
   int border2;
   int checkEnd;
+  int index;
   MessItem({
     required this.messid,
     required this.itemId,
@@ -25,6 +26,7 @@ class MessItem {
     required this.border1,
     required this.border2,
     required this.checkEnd, // 0: don't have icon 1: have icon
+    required this.index,
   });
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +41,7 @@ class MessItem {
         'border1': border1,
         'border2': border2,
         'checkEnd': checkEnd,
+        'index': index,
       };
   static MessItem fromSnap(DocumentSnapshot snap) {
     return MessItem(
@@ -53,6 +56,7 @@ class MessItem {
       border1: snap['border1'],
       border2: snap['border2'],
       checkEnd: snap['checkEnd'],
+      index: snap['index'],
     );
   }
 }
