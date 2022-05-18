@@ -90,69 +90,71 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
         ),
       ),
       body: Obx(
-        () => (_searchController.text != "")
-            ? SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                    children: _notiController.listUser.map((e) {
-                  return PersonCard(
-                    data: e,
-                    press: () {
-                      _notiController.creatMessageWithPerson(e.uid);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MessChat(
-                            uidPerson1: authMethods.user.uid,
-                            uidPerson2: e.uid,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList()),
-              )
-            : (_notiController.listMessage.isNotEmpty)
+        () => (!checkNotifi)
+            ? (_searchController.text != "")
                 ? SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
-                      children: _notiController.listMessage
-                          .map(
-                            (e) => MessageCard(
-                              message: e,
-                              index: 1 -
-                                  _notiController.getIndexUserInList(
-                                    authMethods.user.uid,
-                                    e.listUid,
-                                  ),
+                        children: _notiController.listUser.map((e) {
+                      return PersonCard(
+                        data: e,
+                        press: () {
+                          _notiController.creatMessageWithPerson(e.uid);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MessChat(
+                                uidPerson1: authMethods.user.uid,
+                                uidPerson2: e.uid,
+                              ),
                             ),
-                          )
-                          .toList(),
-                    ),
+                          );
+                        },
+                      );
+                    }).toList()),
                   )
-                : Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'You Don\t have Message',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                : (_notiController.listMessage.isNotEmpty)
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: _notiController.listMessage
+                              .map(
+                                (e) => MessageCard(
+                                  message: e,
+                                  index: 1 -
+                                      _notiController.getIndexUserInList(
+                                        authMethods.user.uid,
+                                        e.listUid,
+                                      ),
+                                ),
+                              )
+                              .toList(),
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Please search and start chat with Your friend',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+                      )
+                    : Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'You Don\t have Message',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Please search and start chat with Your friend',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      )
+            : Container(),
       ),
     );
   }

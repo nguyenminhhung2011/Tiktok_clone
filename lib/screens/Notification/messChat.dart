@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tiktok_clone/controls/fake_data.dart';
+import 'package:tiktok_clone/screens/Notification/settingScreen.dart';
 import 'package:tiktok_clone/screens/Notification/widget/recCard.dart';
 import 'package:tiktok_clone/screens/Notification/widget/sendCard.dart';
 import 'package:tiktok_clone/utils/untils.dart';
@@ -16,6 +18,7 @@ import '../../models/messItem.dart';
 class MessChat extends StatefulWidget {
   final String uidPerson1; //uid
   final String uidPerson2; //op Uid
+
   const MessChat({
     Key? key,
     required this.uidPerson1,
@@ -36,6 +39,7 @@ class _MessChatState extends State<MessChat> {
     super.initState();
     _messController.updateMessWithPerson(widget.uidPerson1, widget.uidPerson2);
     _messController.updateUserAndOpUser(widget.uidPerson1, widget.uidPerson2);
+    //_messController.upDateAllImageInMess(widget.uidPerson1, widget.uidPerson2);
   }
 
   void sendMessage() async {
@@ -130,7 +134,8 @@ class _MessChatState extends State<MessChat> {
                         ),
                         child: Icon(
                           Icons.send,
-                          color: const Color.fromARGB(255, 32, 211, 234),
+                          color: FakeData().color_mess[
+                              _messController.message['colorOfchat']]['color'],
                         ),
                       ),
                     )
@@ -160,14 +165,26 @@ class _MessChatState extends State<MessChat> {
                     onPressed: () {},
                     icon: Icon(
                       Icons.phone,
-                      color: const Color.fromARGB(255, 32, 211, 234),
+                      color: FakeData().color_mess[
+                          _messController.message['colorOfchat']]['color'],
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SettingScreen(
+                            listMess: _messController.allImageInMess,
+                            userOP: _messController.opUser,
+                          ),
+                        ),
+                      );
+                    },
                     icon: Icon(
                       Icons.settings,
-                      color: const Color.fromARGB(255, 32, 211, 234),
+                      color: FakeData().color_mess[
+                          _messController.message['colorOfchat']]['color'],
                     ),
                   )
                 ],
@@ -236,7 +253,8 @@ class _MessChatState extends State<MessChat> {
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
                               width: 2,
-                              color: const Color.fromARGB(255, 32, 211, 234),
+                              color: FakeData().color_mess[_messController
+                                  .message['colorOfchat']]['color'],
                             ),
                           ),
                           child: Row(
@@ -261,8 +279,8 @@ class _MessChatState extends State<MessChat> {
                               InkWell(
                                 child: Icon(
                                   Icons.mic,
-                                  color:
-                                      const Color.fromARGB(255, 32, 211, 234),
+                                  color: FakeData().color_mess[_messController
+                                      .message['colorOfchat']]['color'],
                                 ),
                               ),
                               InkWell(
@@ -271,15 +289,15 @@ class _MessChatState extends State<MessChat> {
                                 },
                                 child: Icon(
                                   Icons.picture_as_pdf,
-                                  color:
-                                      const Color.fromARGB(255, 32, 211, 234),
+                                  color: FakeData().color_mess[_messController
+                                      .message['colorOfchat']]['color'],
                                 ),
                               ),
                               InkWell(
                                 child: Icon(
                                   Icons.gif_box_outlined,
-                                  color:
-                                      const Color.fromARGB(255, 32, 211, 234),
+                                  color: FakeData().color_mess[_messController
+                                      .message['colorOfchat']]['color'],
                                 ),
                               ),
                             ],
@@ -292,7 +310,8 @@ class _MessChatState extends State<MessChat> {
                         },
                         icon: Icon(
                           Icons.send,
-                          color: const Color.fromARGB(255, 32, 211, 234),
+                          color: FakeData().color_mess[
+                              _messController.message['colorOfchat']]['color'],
                         ),
                       ),
                     ],
@@ -316,7 +335,8 @@ class _MessChatState extends State<MessChat> {
                           Text(
                             _messController.opUser['username'],
                             style: TextStyle(
-                              color: const Color.fromARGB(255, 32, 211, 234),
+                              color: FakeData().color_mess[_messController
+                                  .message['colorOfchat']]['color'],
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
@@ -353,7 +373,11 @@ class _MessChatState extends State<MessChat> {
                             if (e.uid == authMethods.user.uid) {
                               return SendCard(data: e);
                             }
-                            return RecCard(data: e);
+                            return RecCard(
+                              data: e,
+                              color: FakeData().color_mess[_messController
+                                  .message['colorOfchat']]['color'],
+                            );
                           },
                         ).toList(),
                       ),

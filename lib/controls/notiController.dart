@@ -10,10 +10,11 @@ class NotiController extends GetxController {
   // Message _controller
   final Rx<List<Message>> _listMessage = Rx<List<Message>>([]);
   final Rx<List<User>> _listUser = Rx<List<User>>([]);
+  final Rx<Map<String, dynamic>> _message = Rx<Map<String, dynamic>>({});
 
   List<Message> get listMessage => _listMessage.value;
   List<User> get listUser => _listUser.value;
-
+  Map<String, dynamic> get message => _message.value;
   Rx<String> _uid = "".obs;
 
   updateMessage(String id) {
@@ -96,11 +97,15 @@ class NotiController extends GetxController {
           listUid: listUid,
           username: username,
           photoUrl: photoUrl,
+          colorOfchat: 8,
         );
+
+        _message.value = mess.toJson();
         await firestore
             .collection('messages')
             .doc("message ${allMessage.docs.length}")
             .set(mess.toJson());
+        update();
       } else {
         return;
       }

@@ -4,9 +4,11 @@ import '../../../models/messItem.dart';
 
 class RecCard extends StatelessWidget {
   final MessItem data;
+  final Color color;
   const RecCard({
     Key? key,
     required this.data,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class RecCard extends StatelessWidget {
                 ? Container(
 //          margin: const EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 32, 211, 234),
+                      color: color,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(30),
                         topLeft: Radius.circular(data.border1 as double),

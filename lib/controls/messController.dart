@@ -11,12 +11,17 @@ class MessController extends GetxController {
   final Rx<List<MessItem>> _listMessItem = Rx<List<MessItem>>([]);
   final Rx<Map<String, dynamic>> _opUser = Rx<Map<String, dynamic>>({});
   final Rx<Map<String, dynamic>> _user = Rx<Map<String, dynamic>>({});
+  final Rx<Map<String, dynamic>> _message = Rx<Map<String, dynamic>>({});
+  final Rx<List<String>> _allImageInMess = Rx<List<String>>([]);
 
+  Map<String, dynamic> get message => _message.value;
+  List<String> get allImageInMess => _allImageInMess.value;
   List<MessItem> get listMessItem => _listMessItem.value;
   Map<String, dynamic> get opUser => _opUser.value;
   Map<String, dynamic> get user => _user.value;
 
   Rx<String> _uid = "".obs;
+
   updateMessWithPerson(String id, String opId) {
     _uid.value = id;
     getDataMessWithPerson(opId);
@@ -40,7 +45,12 @@ class MessController extends GetxController {
           (data.listUid.contains(_uid.value) && data.listUid.contains(opId))
               ? data.id
               : messId;
+      if ((data.listUid.contains(_uid.value) && data.listUid.contains(opId))) {
+        _message.value = data.toJson();
+        break;
+      }
     }
+    _allImageInMess.value.clear();
     _listMessItem.bindStream(
       firestore
           .collection('messages')
@@ -52,12 +62,17 @@ class MessController extends GetxController {
           List<MessItem> result = [];
           for (var item in event.docs) {
             result.add(MessItem.fromSnap(item));
+            if ((item.data() as Map<String, dynamic>)['typeOfMessage'] == 1) {
+              _allImageInMess.value
+                  .add((item.data() as Map<String, dynamic>)['tittle']);
+            }
           }
           result.sort(mySortComparison);
           return result;
         },
       ),
     );
+    update();
   }
 
   Future<void> sendMessage(String tittle, int typeMess, String opId) async {
@@ -86,13 +101,13 @@ class MessController extends GetxController {
 
         String mess_nearest = "";
         String userSend = "";
-        int index = 0;
         for (var item in allMessItem.docs) {
-          if (index == allMessItem.docs.length - 1) {
+          if ("messItem ${(allMessItem.docs.length - 1).toString()}" ==
+              (item.data() as Map<String, dynamic>)['itemId']) {
             mess_nearest = (item.data() as Map<String, dynamic>)["itemId"];
             userSend = (item.data() as Map<String, dynamic>)['username'];
+            break;
           }
-          index++;
         }
 
         await firestore.collection('messages').doc(messId).update({
@@ -160,5 +175,39 @@ class MessController extends GetxController {
     var userDoc = await firestore.collection('users').doc(id).get();
     Map<String, dynamic> result = (userDoc.data() as Map<String, dynamic>);
     return result;
+  }
+
+  upDateAllImageInMess(String idOp, String uid) {
+    _uid.value = uid;
+    getAllImageInMess(idOp);
+  }
+
+  getAllImageInMess(String opId) async {
+    var allMess = await firestore.collection('messages').get();
+    String messId = "";
+    for (var item in allMess.docs) {
+      Message data = Message.fromSnap(item);
+      messId =
+          (data.listUid.contains(_uid.value) && data.listUid.contains(opId))
+              ? data.id
+              : messId;
+    }
+    _allImageInMess.bindStream(
+      firestore
+          .collection('messages')
+          .doc(messId)
+          .collection('messItems')
+          .snapshots()
+          .map(
+        (event) {
+          List<String> result = [];
+          for (var item in event.docs) {
+            MessItem data = MessItem.fromSnap(item);
+            if (data.typeOfMessage == 1) result.add(data.tittle);
+          }
+          return result;
+        },
+      ),
+    );
   }
 }
