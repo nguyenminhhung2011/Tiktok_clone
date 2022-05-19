@@ -11,11 +11,37 @@ class NotiController extends GetxController {
   final Rx<List<Message>> _listMessage = Rx<List<Message>>([]);
   final Rx<List<User>> _listUser = Rx<List<User>>([]);
   final Rx<Map<String, dynamic>> _message = Rx<Map<String, dynamic>>({});
+  final Rx<List<Message>> _listGroupMessage = Rx<List<Message>>([]);
+  final Rx<List<User>> _allUser = Rx<List<User>>([]);
 
   List<Message> get listMessage => _listMessage.value;
   List<User> get listUser => _listUser.value;
   Map<String, dynamic> get message => _message.value;
+  List<Message> get listGroupMessage => _listGroupMessage.value;
+  List<User> get allUser => _allUser.value;
+
   Rx<String> _uid = "".obs;
+
+  updateGroupMessage(String id) {
+    _uid.value = id;
+  }
+
+  getDataGroupMessage() async {
+    _listGroupMessage.bindStream(
+      firestore.collection('messages').snapshots().map(
+        (event) {
+          List<Message> result = [];
+          for (var item in event.docs) {
+            Message d = Message.fromSnap(item);
+            if (d.listUid.contains(_uid.value) && d.groupOrWithPerson == 1) {
+              result.add(d);
+            }
+          }
+          return result;
+        },
+      ),
+    );
+  }
 
   updateMessage(String id) {
     _uid.value = id;
@@ -29,13 +55,25 @@ class NotiController extends GetxController {
           List<Message> result = [];
           for (var item in event.docs) {
             Message d = Message.fromSnap(item);
-            if (d.listUid.contains(_uid.value)) {
+            if (d.listUid.contains(_uid.value) && d.groupOrWithPerson == 0) {
               result.add(d);
             }
           }
           return result;
         },
       ),
+    );
+  }
+
+  getAllUser() async {
+    _allUser.bindStream(
+      firestore.collection('users').snapshots().map((event) {
+        List<User> result = [];
+        for (var item in event.docs) {
+          result.add(User.fromSnap(item));
+        }
+        return result;
+      }),
     );
   }
 

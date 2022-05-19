@@ -18,142 +18,341 @@ class NotifiCationScreen extends StatefulWidget {
 
 class _NotifiCationScreenState extends State<NotifiCationScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _nameGroup = TextEditingController();
   final NotiController _notiController = Get.put(NotiController());
   bool checkNotifi = false;
+  bool checkPersonGroup = true;
+  List<String> _listUserToAddGroup = [];
   @override
   void initState() {
     super.initState();
     _notiController.updateMessage(authMethods.user.uid);
+    _notiController.updateGroupMessage(authMethods.user.uid);
+    _notiController.getAllUser();
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        toolbarHeight: (!checkNotifi)
-            ? MediaQuery.of(context).size.height / 5
-            : MediaQuery.of(context).size.height / 6,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  'All Acitivities',
-                  // ignore: deprecated_member_use
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            CheckNoti(context),
-            const SizedBox(height: 10),
-            !(checkNotifi)
-                ? Container(
-                    width: MediaQuery.of(context).size.width / 1.1,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 153, 231, 255),
-                      borderRadius: BorderRadius.circular(30),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          toolbarHeight: (!checkNotifi)
+              ? MediaQuery.of(context).size.height / 4
+              : MediaQuery.of(context).size.height / 6,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'All Acitivities',
+                    // ignore: deprecated_member_use
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
-                    child: Row(
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              CheckNoti(context),
+              const SizedBox(height: 10),
+              !(checkNotifi)
+                  ? Column(
                       children: [
-                        Icon(Icons.search, color: Colors.white),
-                        const SizedBox(width: 2),
                         Container(
-                          width: MediaQuery.of(context).size.width / 1.6,
-                          child: TextFormField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: 'Search',
-                              border: InputBorder.none,
-                            ),
-                            onChanged: (_) {
-                              setState(() {
-                                _notiController
-                                    .searchWithType(_searchController.text);
-                              });
-                            },
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 153, 231, 255),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.search, color: Colors.white),
+                              const SizedBox(width: 2),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 1.6,
+                                child: TextFormField(
+                                  controller: _searchController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Search',
+                                    border: InputBorder.none,
+                                  ),
+                                  onChanged: (_) {
+                                    setState(() {
+                                      _notiController.searchWithType(
+                                          _searchController.text);
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
-                    ),
-                  )
-                : Container(),
-          ],
-        ),
-      ),
-      body: Obx(
-        () => (!checkNotifi)
-            ? (_searchController.text != "")
-                ? SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                        children: _notiController.listUser.map((e) {
-                      return PersonCard(
-                        data: e,
-                        press: () {
-                          _notiController.creatMessageWithPerson(e.uid);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MessChat(
-                                uidPerson1: authMethods.user.uid,
-                                uidPerson2: e.uid,
+                    )
+                  : Container(),
+              const SizedBox(height: 10),
+              !(checkNotifi)
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 3, vertical: 3),
+                          height: 40,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 255, 252, 227),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  if (checkPersonGroup == false) {
+                                    setState(() {
+                                      checkPersonGroup = true;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 71,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    color: (checkPersonGroup)
+                                        ? Color.fromARGB(255, 250, 45, 108)
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                      topRight: Radius.circular(4),
+                                      bottomRight: Radius.circular(4),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Person',
+                                    style: TextStyle(
+                                      color: (checkPersonGroup)
+                                          ? Colors.white
+                                          : Color.fromARGB(255, 250, 45, 108),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
                               ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  if (checkPersonGroup == true) {
+                                    setState(() {
+                                      checkPersonGroup = false;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  width: 71,
+                                  height: 34,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: (!checkPersonGroup)
+                                        ? Color.fromARGB(255, 32, 211, 234)
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(4),
+                                      bottomLeft: Radius.circular(4),
+                                      topRight: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Group',
+                                    style: TextStyle(
+                                      color: (!checkPersonGroup)
+                                          ? Colors.white
+                                          : Color.fromARGB(255, 32, 211, 234),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        if (!checkPersonGroup)
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.5,
+                                    height:
+                                        MediaQuery.of(context).size.height / 2,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 10),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2, horizontal: 15),
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              width: 2,
+                                              color: const Color.fromARGB(
+                                                  255, 32, 211, 231),
+                                            ),
+                                          ),
+                                          child: TextFormField(
+                                            controller: _nameGroup,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            decoration: InputDecoration(
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              hintText: 'Name of Group',
+                                              border: InputBorder.none,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        SingleChildScrollView(
+                                          child: Column(
+                                              children: _notiController.allUser
+                                                  .map(
+                                                    (e) => PerSonCardAddGroup(
+                                                      data: e,
+                                                      press: () {
+                                                        _listUserToAddGroup
+                                                            .add(e.uid);
+                                                        _notiController.allUser
+                                                            .removeWhere(
+                                                                (element) =>
+                                                                    element
+                                                                        .uid ==
+                                                                    e.uid);
+                                                        setState(() {});
+                                                      },
+                                                    ),
+                                                  )
+                                                  .toList()),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.person_add,
+                              color: Color.fromARGB(255, 32, 211, 234),
                             ),
-                          );
-                        },
-                      );
-                    }).toList()),
-                  )
-                : (_notiController.listMessage.isNotEmpty)
+                          )
+                      ],
+                    )
+                  : Container()
+            ],
+          ),
+        ),
+        body: (!checkNotifi)
+            ? (checkPersonGroup)
+                ? (_searchController.text != "")
                     ? SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
-                          children: _notiController.listMessage
-                              .map(
-                                (e) => MessageCard(
-                                  message: e,
-                                  index: 1 -
-                                      _notiController.getIndexUserInList(
-                                        authMethods.user.uid,
-                                        e.listUid,
-                                      ),
+                            children: _notiController.listUser.map((e) {
+                          return PersonCard(
+                            data: e,
+                            press: () {
+                              _notiController.creatMessageWithPerson(e.uid);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MessChat(
+                                    uidPerson1: authMethods.user.uid,
+                                    uidPerson2: e.uid,
+                                  ),
                                 ),
-                              )
-                              .toList(),
-                        ),
+                              );
+                            },
+                          );
+                        }).toList()),
                       )
-                    : Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'You Don\t have Message',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
-                              ),
+                    : (_notiController.listMessage.isNotEmpty)
+                        ? SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                              children: _notiController.listMessage
+                                  .map(
+                                    (e) => MessageCard(
+                                      message: e,
+                                      index: 1 -
+                                          _notiController.getIndexUserInList(
+                                            authMethods.user.uid,
+                                            e.listUid,
+                                          ),
+                                    ),
+                                  )
+                                  .toList(),
                             ),
-                            const SizedBox(height: 10),
-                            Text(
-                              'Please search and start chat with Your friend',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
+                          )
+                        : Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'You Don\t have Message',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  'Please search and start chat with Your friend',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )
+                          )
+                : SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: [
+                        MessageGroupCard(),
+                        MessageGroupCard(),
+                        MessageGroupCard(),
+                      ],
+                    ),
+                  )
             : Container(),
       ),
     );
@@ -285,6 +484,60 @@ class PersonCard extends StatelessWidget {
               Icons.send,
               color: Color.fromARGB(255, 32, 211, 234),
             ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class PerSonCardAddGroup extends StatelessWidget {
+  final User data;
+  final Function() press;
+  const PerSonCardAddGroup({
+    Key? key,
+    required this.data,
+    required this.press,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      //color: Colors.red,
+      margin: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AvatarCircle(avtPath: data.photoUrl, sizeAvt: 60),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.username,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  // fontFamily: "Muli",
+                  fontSize: 15,
+                ),
+              ),
+              Text(
+                '#${data.bio}',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  // fontFamily: "Muli",
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+          Spacer(),
+          IconButton(
+            icon: Icon(Icons.person_add, color: Colors.black),
+            onPressed: press,
           )
         ],
       ),

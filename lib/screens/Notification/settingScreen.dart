@@ -188,7 +188,15 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           const SizedBox(height: 20),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  backgroundColor: Colors.transparent,
+                  child: Container(),
+                ),
+              );
+            },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 50),
               width: MediaQuery.of(context).size.width - 20,
