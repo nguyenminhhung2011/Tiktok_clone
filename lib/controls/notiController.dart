@@ -48,6 +48,17 @@ class NotiController extends GetxController {
     getDataMessage();
   }
 
+  removeUserInAllUser(String uid) async {
+    _allUser.value.removeWhere((element) => element.uid == uid);
+    update();
+  }
+
+  addUserInAllUser(String uid) async {
+    var userDoc = await firestore.collection('users').doc(uid).get();
+    _allUser.value.add(User.fromSnap(userDoc));
+    update();
+  }
+
   getDataMessage() async {
     _listMessage.bindStream(
       firestore.collection('messages').snapshots().map(
@@ -136,6 +147,7 @@ class NotiController extends GetxController {
           username: username,
           photoUrl: photoUrl,
           colorOfchat: 8,
+          nameOfGroup: "",
         );
 
         _message.value = mess.toJson();

@@ -11,6 +11,7 @@ class Message {
   List photoUrl;
   List username;
   int colorOfchat;
+  String nameOfGroup;
   Message({
     required this.id,
     required this.messNearest,
@@ -20,6 +21,7 @@ class Message {
     required this.photoUrl,
     required this.username,
     required this.colorOfchat,
+    required this.nameOfGroup,
   });
 
   Map<String, dynamic> toJson() => {
@@ -31,6 +33,7 @@ class Message {
         'photoUrl': photoUrl,
         'username': username,
         'colorOfchat': colorOfchat,
+        'nameOfGroup': nameOfGroup,
       };
 
   static Message fromSnap(DocumentSnapshot snap) {
@@ -43,6 +46,7 @@ class Message {
       photoUrl: snap['photoUrl'],
       username: snap['username'],
       colorOfchat: snap['colorOfchat'],
+      nameOfGroup: snap['nameOfGroup'],
     );
   }
 }

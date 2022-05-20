@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/controls/notiController.dart';
+import 'package:tiktok_clone/screens/Notification/addGroupScreen.dart';
 import 'package:tiktok_clone/screens/Notification/messChat.dart';
 import 'package:tiktok_clone/screens/Notification/widget/messageCard.dart';
 import 'package:tiktok_clone/screens/Notification/widget/messageGroupCard.dart';
@@ -22,13 +23,29 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
   final NotiController _notiController = Get.put(NotiController());
   bool checkNotifi = false;
   bool checkPersonGroup = true;
-  List<String> _listUserToAddGroup = [];
+  List<Map<String, dynamic>> _listUserToAddGroup = [];
   @override
   void initState() {
     super.initState();
     _notiController.updateMessage(authMethods.user.uid);
     _notiController.updateGroupMessage(authMethods.user.uid);
     _notiController.getAllUser();
+  }
+
+  void removeUserInAllUser(String uid, String username) async {
+    setState(() {
+      _notiController.removeUserInAllUser(uid);
+      _listUserToAddGroup.add({'uid': uid, 'username': username});
+    });
+  }
+
+  void removeUserInListUserToAdd(String uid, String username) async {
+    setState(() {
+      _notiController.addUserInAllUser(uid);
+      _listUserToAddGroup.removeWhere((element) {
+        return (element['uid'] == uid && element['username'] == username);
+      });
+    });
   }
 
   Widget build(BuildContext context) {
@@ -193,78 +210,10 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                         if (!checkPersonGroup)
                           IconButton(
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  backgroundColor: Colors.transparent,
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.5,
-                                    height:
-                                        MediaQuery.of(context).size.height / 2,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 10),
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 2, horizontal: 15),
-                                          decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            border: Border.all(
-                                              width: 2,
-                                              color: const Color.fromARGB(
-                                                  255, 32, 211, 231),
-                                            ),
-                                          ),
-                                          child: TextFormField(
-                                            controller: _nameGroup,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            decoration: InputDecoration(
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              hintText: 'Name of Group',
-                                              border: InputBorder.none,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        SingleChildScrollView(
-                                          child: Column(
-                                              children: _notiController.allUser
-                                                  .map(
-                                                    (e) => PerSonCardAddGroup(
-                                                      data: e,
-                                                      press: () {
-                                                        _listUserToAddGroup
-                                                            .add(e.uid);
-                                                        _notiController.allUser
-                                                            .removeWhere(
-                                                                (element) =>
-                                                                    element
-                                                                        .uid ==
-                                                                    e.uid);
-                                                        setState(() {});
-                                                      },
-                                                    ),
-                                                  )
-                                                  .toList()),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateGroupScreen()),
                               );
                             },
                             icon: Icon(
@@ -484,60 +433,6 @@ class PersonCard extends StatelessWidget {
               Icons.send,
               color: Color.fromARGB(255, 32, 211, 234),
             ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class PerSonCardAddGroup extends StatelessWidget {
-  final User data;
-  final Function() press;
-  const PerSonCardAddGroup({
-    Key? key,
-    required this.data,
-    required this.press,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      //color: Colors.red,
-      margin: const EdgeInsets.symmetric(horizontal: 18),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          AvatarCircle(avtPath: data.photoUrl, sizeAvt: 60),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                data.username,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  // fontFamily: "Muli",
-                  fontSize: 15,
-                ),
-              ),
-              Text(
-                '#${data.bio}',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  // fontFamily: "Muli",
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          Spacer(),
-          IconButton(
-            icon: Icon(Icons.person_add, color: Colors.black),
-            onPressed: press,
           )
         ],
       ),
