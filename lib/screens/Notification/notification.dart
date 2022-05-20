@@ -295,11 +295,9 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                 : SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
-                      children: [
-                        MessageGroupCard(),
-                        MessageGroupCard(),
-                        MessageGroupCard(),
-                      ],
+                      children: _notiController.listGroupMessage
+                          .map((e) => MessageGroupCard(data: e))
+                          .toList(),
                     ),
                   )
             : Container(),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/controls/addGroupController.dart';
+import 'package:tiktok_clone/controls/storage_methods.dart';
 import 'package:tiktok_clone/screens/Notification/widget/personCardToAddGroup.dart';
 
 import '../../models/user.dart';
@@ -44,6 +45,22 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     setState(() {
       _image = file;
     });
+  }
+
+  void creataGroup() async {
+    String photoUrl = await StorageMethods()
+        .UploadImageStorage('GroupImages', _image!, false);
+    if (_listUserToAddGroup.length > 2) {
+      await _addGroupController.addGroup(
+          _listUserToAddGroup, photoUrl, _nameController.text);
+      Navigator.pop(context);
+    } else {
+      Get.snackbar(
+        'Create Group',
+        'Must be have 3 or more member',
+        backgroundColor: const Color.fromARGB(255, 32, 211, 231),
+      );
+    }
   }
 
   Widget build(BuildContext context) {
@@ -214,7 +231,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             ),
             Spacer(),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                creataGroup();
+              },
               child: Container(
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width - 100,

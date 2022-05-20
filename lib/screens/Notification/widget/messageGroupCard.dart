@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/screens/Notification/widget/memberIngroup.dart';
 
+import '../../../models/message.dart';
 import '../../../widgets/Avtar_circle.dart';
 
 class MessageGroupCard extends StatelessWidget {
+  final Message data;
   const MessageGroupCard({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -21,8 +24,7 @@ class MessageGroupCard extends StatelessWidget {
       child: Row(
         children: [
           AvatarCircle(
-            avtPath:
-                'https://i.pinimg.com/originals/46/cb/f6/46cbf63a8a09b08170778befb024c4fc.jpg',
+            avtPath: data.photoGroup_member,
             sizeAvt: 70,
           ),
           const SizedBox(width: 15),
@@ -30,14 +32,14 @@ class MessageGroupCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Name group chat',
+                data.nameOfGroup,
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 17),
               ),
               Text(
-                '2 members in group chat',
+                '${data.listUid.length} members in group chat',
                 style: TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
@@ -67,21 +69,18 @@ class MessageGroupCard extends StatelessWidget {
                 child: Stack(
                   children: [
                     MemberInGroup(
-                      photoPath:
-                          'https://i.pinimg.com/originals/46/cb/f6/46cbf63a8a09b08170778befb024c4fc.jpg',
+                      photoPath: data.photoUrl[0],
                     ),
                     Positioned(
                       left: 20,
                       child: MemberInGroup(
-                        photoPath:
-                            'https://media-cdn-v2.laodong.vn/storage/newsportal/2021/10/8/961484/Rose-Blackpink.jpg',
+                        photoPath: data.photoUrl[1],
                       ),
                     ),
                     Positioned(
                       left: 40,
                       child: MemberInGroup(
-                        photoPath:
-                            'https://thuthuatnhanh.com/wp-content/uploads/2021/06/Hinh-anh-Rose-Black-Pink-1.jpg',
+                        photoPath: data.photoUrl[2],
                       ),
                     )
                   ],

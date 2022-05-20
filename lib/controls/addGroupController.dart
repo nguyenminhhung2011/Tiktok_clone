@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constains.dart';
+import '../models/message.dart';
 import '../models/user.dart';
 
 class AddGroupController extends GetxController {
@@ -33,19 +34,47 @@ class AddGroupController extends GetxController {
     update();
   }
 
-  Future<void> addGroup(String uid, List<User> all_user, String photoPath,
-      String nameOfGroup) async {
+  Future<void> addGroup(
+      List<User> all_user, String photoPath, String nameOfGroup) async {
     try {
       if (nameOfGroup == "") {
-        Get.snackbar('Create Group', 'Name of group is null');
+        Get.snackbar(
+          'Create Group',
+          'Name of group is null',
+          backgroundColor: const Color.fromARGB(255, 32, 211, 231),
+        );
         return;
       }
       if (photoPath == "") {
-        Get.snackbar('Create Group', 'Please Pick Image of Group');
+        Get.snackbar(
+          'Create Group',
+          'Please Pick Image of Group',
+          backgroundColor: const Color.fromARGB(255, 32, 211, 231),
+        );
         return;
       }
       var allMessages = await firestore.collection('messages').get();
       String grID = "message ${allMessages.docs.length}";
+      List<String> l_uid = [];
+      List<String> l_username = [];
+      List<String> l_photo = [];
+      for (var item in all_user) {
+        l_uid.add(item.uid);
+        l_username.add(item.username);
+        l_photo.add(item.photoUrl);
+      }
+      Message mess = Message(
+        id: grID,
+        messNearest: "Don\'t have mess Nearest",
+        groupOrWithPerson: 1,
+        photoGroup_member: photoPath,
+        listUid: l_uid,
+        username: l_username,
+        photoUrl: l_photo,
+        colorOfchat: 8,
+        nameOfGroup: nameOfGroup,
+      );
+      await firestore.collection('messages').doc(grID).set(mess.toJson());
     } catch (err) {
       print(err.toString());
     }

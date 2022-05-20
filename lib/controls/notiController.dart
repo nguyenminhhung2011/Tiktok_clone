@@ -24,6 +24,7 @@ class NotiController extends GetxController {
 
   updateGroupMessage(String id) {
     _uid.value = id;
+    getDataGroupMessage();
   }
 
   getDataGroupMessage() async {
