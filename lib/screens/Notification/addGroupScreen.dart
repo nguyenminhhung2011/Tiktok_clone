@@ -48,11 +48,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   }
 
   void creataGroup() async {
-    String photoUrl = await StorageMethods()
-        .UploadImageStorage('GroupImages', _image!, false);
     if (_listUserToAddGroup.length > 2) {
       await _addGroupController.addGroup(
-          _listUserToAddGroup, photoUrl, _nameController.text);
+          _listUserToAddGroup, _image!, _nameController.text);
       Navigator.pop(context);
     } else {
       Get.snackbar(

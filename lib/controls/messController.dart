@@ -82,10 +82,11 @@ class MessController extends GetxController {
         String messId = "";
         for (var item in allMess.docs) {
           Message data = Message.fromSnap(item);
-          messId =
-              (data.listUid.contains(_uid.value) && data.listUid.contains(opId))
-                  ? data.id
-                  : messId;
+          messId = (data.listUid.contains(_uid.value) &&
+                  data.listUid.contains(opId) &&
+                  data.groupOrWithPerson == 0)
+              ? data.id
+              : messId;
         }
         var allMessItem = await firestore
             .collection('messages')

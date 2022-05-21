@@ -9,10 +9,12 @@ import '../../models/messItem.dart';
 class SettingScreen extends StatefulWidget {
   final List<String> listMess;
   final Map<String, dynamic> userOP;
+  final int typeOfMess;
   const SettingScreen({
     Key? key,
     required this.listMess,
     required this.userOP,
+    required this.typeOfMess,
   }) : super(key: key);
 
   @override
@@ -22,8 +24,15 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final SettingControllers _settingController = Get.put(SettingControllers());
   String imagePath =
-      "https://i.pinimg.com/originals/46/cb/f6/46cbf63a8a09b08170778befb024c4fc.jpg";
+      "https://tkwebgiare.com/sites/default/files/2021-01/go%20lang.jpg";
   @override
+  void initState() {
+    super.initState();
+    if (widget.typeOfMess == 1) {
+      _settingController.getAllMemberInGroup(widget.userOP['id']);
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -55,17 +64,31 @@ class _SettingScreenState extends State<SettingScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AvatarCircle(avtPath: widget.userOP['photoUrl'], sizeAvt: 170),
+              (widget.typeOfMess == 0)
+                  ? AvatarCircle(
+                      avtPath: widget.userOP['photoUrl'], sizeAvt: 170)
+                  : AvatarCircle(
+                      avtPath: widget.userOP['photoGroup_member'],
+                      sizeAvt: 170),
             ],
           ),
-          Text(
-            widget.userOP['username'],
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-            ),
-          ),
+          (widget.typeOfMess == 0)
+              ? Text(
+                  widget.userOP['username'],
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                )
+              : Text(
+                  widget.userOP['nameOfGroup'],
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
           const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -82,15 +105,83 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
               const SizedBox(width: 10),
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromARGB(255, 255, 252, 227),
-                ),
-                child: Icon(
-                  Icons.person,
-                  color: const Color.fromARGB(255, 32, 211, 234),
+              InkWell(
+                onTap: () {
+                  if (widget.typeOfMess == 1) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        backgroundColor: Colors.transparent,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 3,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Column(
+                                children: _settingController.listMemberInGroup
+                                    .map((e) {
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                color: Colors.transparent,
+                                child: Row(
+                                  children: [
+                                    AvatarCircle(
+                                        avtPath: e['photoPath'], sizeAvt: 60),
+                                    const SizedBox(width: 5),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          e['username'],
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            // fontFamily: "Muli",
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        Text(
+                                          '#${e['bio']}',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.bold,
+                                            // fontFamily: "Muli",
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Icon(Icons.person, color: Colors.black),
+                                  ],
+                                ),
+                              );
+                            }).toList()),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color.fromARGB(255, 255, 252, 227),
+                  ),
+                  child: Icon(
+                    Icons.person,
+                    color: const Color.fromARGB(255, 32, 211, 234),
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -134,10 +225,19 @@ class _SettingScreenState extends State<SettingScreen> {
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                           onTap: () {
-                            _settingController.updateColorOfChat(
+                            if (widget.typeOfMess == 0) {
+                              _settingController.updateColorOfChat(
                                 widget.userOP['uid'],
-                                FakeData().color_mess[index]['index']);
-
+                                FakeData().color_mess[index]['index'],
+                                0,
+                              );
+                            } else {
+                              _settingController.updateColorOfChat(
+                                widget.userOP['id'],
+                                FakeData().color_mess[index]['index'],
+                                1,
+                              );
+                            }
                             Navigator.pop(context);
                           },
                           child: Container(

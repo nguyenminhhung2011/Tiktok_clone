@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tiktok_clone/controls/storage_methods.dart';
 
 import '../constains.dart';
 import '../models/message.dart';
@@ -35,7 +38,7 @@ class AddGroupController extends GetxController {
   }
 
   Future<void> addGroup(
-      List<User> all_user, String photoPath, String nameOfGroup) async {
+      List<User> all_user, Uint8List file, String nameOfGroup) async {
     try {
       if (nameOfGroup == "") {
         Get.snackbar(
@@ -45,7 +48,7 @@ class AddGroupController extends GetxController {
         );
         return;
       }
-      if (photoPath == "") {
+      if (file == Null) {
         Get.snackbar(
           'Create Group',
           'Please Pick Image of Group',
@@ -55,6 +58,8 @@ class AddGroupController extends GetxController {
       }
       var allMessages = await firestore.collection('messages').get();
       String grID = "message ${allMessages.docs.length}";
+      String photoPath =
+          await StorageMethods().UpLoadImageGroupToStorage(grID, file);
       List<String> l_uid = [];
       List<String> l_username = [];
       List<String> l_photo = [];

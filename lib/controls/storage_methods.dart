@@ -22,4 +22,13 @@ class StorageMethods {
     String dowloadUrl = await snap.ref.getDownloadURL();
     return dowloadUrl;
   }
+
+  Future<String> UpLoadImageGroupToStorage(String child, Uint8List file) async {
+    Reference ref = _storage.ref().child('GroupPics').child(child);
+
+    UploadTask upLoadTask = ref.putData(file);
+    TaskSnapshot snap = await upLoadTask;
+    String dowloadUrl = await snap.ref.getDownloadURL();
+    return dowloadUrl;
+  }
 }

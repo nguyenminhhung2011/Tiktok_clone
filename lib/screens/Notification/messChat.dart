@@ -80,8 +80,8 @@ class _MessChatState extends State<MessChat> {
     setState(() {
       isLoading = true;
     });
-    String photoUrl = await StorageMethods()
-        .UploadImageStorage('MessagePics', _image!, false);
+    String photoUrl =
+        await StorageMethods().UploadImageStorage('MessagePics', _image!, true);
     await _messController.sendMessage(photoUrl, 1, widget.uidPerson2);
     setState(() {
       isLoading = false;
@@ -177,6 +177,7 @@ class _MessChatState extends State<MessChat> {
                           builder: (context) => SettingScreen(
                             listMess: _messController.allImageInMess,
                             userOP: _messController.opUser,
+                            typeOfMess: 0,
                           ),
                         ),
                       );
