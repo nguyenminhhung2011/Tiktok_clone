@@ -89,6 +89,11 @@ class _MessChatState extends State<MessChat> {
     Navigator.pop(context);
   }
 
+  void sendEmoji(BuildContext context, String emoji_path) async {
+    _messController.sendMessage(emoji_path, 2, widget.uidPerson2);
+    Navigator.pop(context);
+  }
+
   void selectedImage() async {
     Uint8List file = await pickImage(ImageSource.gallery);
     setState(() {
@@ -295,8 +300,53 @@ class _MessChatState extends State<MessChat> {
                                 ),
                               ),
                               InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => Dialog(
+                                      backgroundColor: Colors.transparent,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: GridView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: 9,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 5,
+                                            mainAxisSpacing: 2,
+                                            childAspectRatio: 2,
+                                          ),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return IconButton(
+                                              onPressed: () {
+                                                sendEmoji(
+                                                    context,
+                                                    FakeData().emoji[index]
+                                                        ['path']);
+                                              },
+                                              icon: Image(
+                                                image: NetworkImage(
+                                                  FakeData().emoji[index]
+                                                      ['path'],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Icon(
-                                  Icons.gif_box_outlined,
+                                  Icons.favorite,
                                   color: FakeData().color_mess[_messController
                                       .message['colorOfchat']]['color'],
                                 ),

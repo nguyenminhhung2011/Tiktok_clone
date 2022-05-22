@@ -41,6 +41,11 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
     });
   }
 
+  void sendEmoji(BuildContext context, String emojiPath) async {
+    _messGroupController.sendMessage(emojiPath, 2, widget.data.id);
+    Navigator.pop(context);
+  }
+
   void sendImage(BuildContext context) async {
     String photoUrl =
         await StorageMethods().UploadImageStorage('MessagePics', _image!, true);
@@ -71,7 +76,9 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                       width: MediaQuery.of(context).size.width - 20,
                       height: MediaQuery.of(context).size.height / 4,
                       margin: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 5),
+                        horizontal: 5,
+                        vertical: 5,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -245,8 +252,49 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                           ),
                         ),
                         InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                backgroundColor: Colors.transparent,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: 9,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 2,
+                                      childAspectRatio: 2,
+                                    ),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return IconButton(
+                                        onPressed: () {
+                                          sendEmoji(context,
+                                              FakeData().emoji[index]['path']);
+                                        },
+                                        icon: Image(
+                                          image: NetworkImage(
+                                            FakeData().emoji[index]['path'],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                           child: Icon(
-                            Icons.gif_box_outlined,
+                            Icons.favorite,
                             color: FakeData()
                                 .color_mess[widget.data.colorOfchat]['color'],
                           ),
