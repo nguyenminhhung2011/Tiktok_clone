@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
+import 'package:tiktok_clone/screens/profileUser/profileDifUser.dart';
 import 'package:tiktok_clone/screens/profileUser/videoFavTab.dart';
 import 'package:tiktok_clone/screens/profileUser/videoTab.dart';
 import 'package:tiktok_clone/screens/profileUser/widgets/cardPersonInList.dart';
@@ -45,344 +46,337 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return GetBuilder<ProfileControls>(
-      init: ProfileControls(),
-      builder: (controller) {
-        if (controller.user.isEmpty) {
-          Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        return (controller.user['username'] != null)
-            ? DefaultTabController(
-                length: 3,
-                child: Scaffold(
-                  backgroundColor: Colors.white,
-                  appBar: AppBar(
-                    toolbarHeight: (isShowListPerson &&
-                            _profileControls.userUnFollow.length > 0)
-                        ? MediaQuery.of(context).size.height / 2
-                        : MediaQuery.of(context).size.height / 4,
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    bottom: TabBar(
-                      onTap: (index) {
-                        setState(() {
-                          indexOfTab = index;
-                        });
-                      },
-                      indicatorColor: Color.fromARGB(255, 242, 196, 15),
-                      tabs: [
-                        Tab(
-                          icon: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.tiktok,
+    return Obx(
+      () => (_profileControls.user['username'] != null)
+          ? DefaultTabController(
+              length: 3,
+              child: Scaffold(
+                backgroundColor: Colors.white,
+                appBar: AppBar(
+                  toolbarHeight: (isShowListPerson &&
+                          _profileControls.userUnFollow.length > 0)
+                      ? MediaQuery.of(context).size.height / 2
+                      : MediaQuery.of(context).size.height / 4,
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  bottom: TabBar(
+                    onTap: (index) {
+                      setState(() {
+                        indexOfTab = index;
+                      });
+                    },
+                    indicatorColor: Color.fromARGB(255, 242, 196, 15),
+                    tabs: [
+                      Tab(
+                        icon: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.tiktok,
+                              color: (indexOfTab == 0)
+                                  ? Color.fromARGB(255, 242, 196, 15)
+                                  : Colors.grey,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              'Videos',
+                              style: TextStyle(
                                 color: (indexOfTab == 0)
                                     ? Color.fromARGB(255, 242, 196, 15)
                                     : Colors.grey,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(width: 5),
-                              Text(
-                                'Videos',
-                                style: TextStyle(
-                                  color: (indexOfTab == 0)
-                                      ? Color.fromARGB(255, 242, 196, 15)
-                                      : Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                        Tab(
-                          icon: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.person,
+                      ),
+                      Tab(
+                        icon: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.person,
+                              color: (indexOfTab == 1)
+                                  ? Color.fromARGB(255, 242, 196, 15)
+                                  : Colors.grey,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              'Person',
+                              style: TextStyle(
                                 color: (indexOfTab == 1)
                                     ? Color.fromARGB(255, 242, 196, 15)
                                     : Colors.grey,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(width: 5),
-                              Text(
-                                'Person',
-                                style: TextStyle(
-                                  color: (indexOfTab == 1)
-                                      ? Color.fromARGB(255, 242, 196, 15)
-                                      : Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                        Tab(
-                          icon: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.favorite,
+                      ),
+                      Tab(
+                        icon: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.favorite,
+                              color: (indexOfTab == 2)
+                                  ? Color.fromARGB(255, 242, 196, 15)
+                                  : Colors.grey,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              'Favorited',
+                              style: TextStyle(
                                 color: (indexOfTab == 2)
                                     ? Color.fromARGB(255, 242, 196, 15)
                                     : Colors.grey,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(width: 5),
-                              Text(
-                                'Favorited',
-                                style: TextStyle(
-                                  color: (indexOfTab == 2)
-                                      ? Color.fromARGB(255, 242, 196, 15)
-                                      : Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  title: Container(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Profile User',
+                              // ignore: deprecated_member_use
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Spacer(),
+                            Icon(
+                              Icons.favorite,
+                              color: Color.fromARGB(255, 250, 45, 108),
+                            ),
+                            const SizedBox(width: 20),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              AvatarCircle(
+                                avtPath: _profileControls.user['profilePic'],
+                                sizeAvt: 90,
+                              ),
+                              const SizedBox(width: 10),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _profileControls.user['username'],
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.blue,
+                                        ),
+                                        child: Icon(
+                                          Icons.tiktok,
+                                          color: Colors.white,
+                                          size: 10,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: '',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                      children: [
+                                        TextSpan(text: 'Posts: '),
+                                        TextSpan(
+                                          text: _profileControls
+                                              .user['allPosts'].length
+                                              .toString(),
+                                        ),
+                                        TextSpan(text: ' | '),
+                                        TextSpan(text: 'Following: '),
+                                        TextSpan(
+                                          text: _profileControls
+                                              .user['following'].length
+                                              .toString(),
+                                        ),
+                                        TextSpan(text: ' | '),
+                                        TextSpan(text: 'Followers: '),
+                                        TextSpan(
+                                            text: _profileControls
+                                                .user['followers'].length
+                                                .toString()),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: '',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                      children: [
+                                        TextSpan(text: 'Email: '),
+                                        TextSpan(
+                                            text:
+                                                _profileControls.user['email']),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                    title: Container(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Profile User',
-                                // ignore: deprecated_member_use
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 50),
+                            InkWell(
+                              borderRadius: BorderRadius.circular(14),
+                              onTap: () {},
+                              child: Container(
+                                width: 200,
+                                height: 40,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 250, 45, 108),
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                child: Text(
+                                  'Edit your profile',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ),
-                              Spacer(),
-                              Icon(
-                                Icons.favorite,
-                                color: Color.fromARGB(255, 250, 45, 108),
-                              ),
-                              const SizedBox(width: 20),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                AvatarCircle(
-                                  avtPath: controller.user['profilePic'],
-                                  sizeAvt: 90,
-                                ),
-                                const SizedBox(width: 10),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          controller.user['username'],
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Container(
-                                          width: 20,
-                                          height: 20,
-                                          padding: const EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.blue,
-                                          ),
-                                          child: Icon(
-                                            Icons.tiktok,
-                                            color: Colors.white,
-                                            size: 10,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(height: 5),
-                                    RichText(
-                                      text: TextSpan(
-                                        text: '',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                        ),
-                                        children: [
-                                          TextSpan(text: 'Posts: '),
-                                          TextSpan(
-                                            text: controller
-                                                .user['allPosts'].length
-                                                .toString(),
-                                          ),
-                                          TextSpan(text: ' | '),
-                                          TextSpan(text: 'Following: '),
-                                          TextSpan(
-                                            text: controller
-                                                .user['following'].length
-                                                .toString(),
-                                          ),
-                                          TextSpan(text: ' | '),
-                                          TextSpan(text: 'Followers: '),
-                                          TextSpan(
-                                              text: controller
-                                                  .user['followers'].length
-                                                  .toString()),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    RichText(
-                                      text: TextSpan(
-                                        text: '',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                        ),
-                                        children: [
-                                          TextSpan(text: 'Email: '),
-                                          TextSpan(
-                                              text: controller.user['email']),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(width: 50),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(14),
-                                onTap: () {},
-                                child: Container(
-                                  width: 200,
-                                  height: 40,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 250, 45, 108),
+                            const SizedBox(width: 5),
+                            InkWell(
+                              borderRadius: BorderRadius.circular(14),
+                              onTap: () {},
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14),
-                                  ),
-                                  child: Text(
-                                    'Edit your profile',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
-                                  ),
+                                    color: Colors.grey.withOpacity(0.3)),
+                                child: Icon(
+                                  Icons.facebook_outlined,
+                                  size: 20,
+                                  color: Colors.blue,
                                 ),
                               ),
-                              const SizedBox(width: 5),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(14),
-                                onTap: () {},
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                      color: Colors.grey.withOpacity(0.3)),
-                                  child: Icon(
-                                    Icons.facebook_outlined,
-                                    size: 20,
-                                    color: Colors.blue,
-                                  ),
+                            ),
+                            const SizedBox(width: 5),
+                            InkWell(
+                              borderRadius: BorderRadius.circular(14),
+                              onTap: () {
+                                setState(() {
+                                  isShowListPerson =
+                                      (_profileControls.userUnFollow.length !=
+                                              0)
+                                          ? !isShowListPerson
+                                          : isShowListPerson;
+                                });
+                              },
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    color: Colors.grey.withOpacity(0.3)),
+                                child: Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 30,
+                                  color: Colors.black,
                                 ),
                               ),
-                              const SizedBox(width: 5),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(14),
-                                onTap: () {
-                                  setState(() {
-                                    isShowListPerson =
-                                        (controller.userUnFollow.length != 0)
-                                            ? !isShowListPerson
-                                            : isShowListPerson;
-                                  });
-                                },
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                      color: Colors.grey.withOpacity(0.3)),
-                                  child: Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 30,
-                                    color: Colors.black,
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        (isShowListPerson)
+                            ? Container(
+                                width: size.width,
+                                alignment: Alignment.centerLeft,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children:
+                                        _profileControls.userUnFollow.map((e) {
+                                      return CardPersonInList(
+                                        size: size,
+                                        user: e,
+                                        press: () async {
+                                          _profileControls.followingUser(
+                                              e.uid, e.following);
+                                          updateController();
+                                          setState(() {});
+                                        },
+                                      );
+                                    }).toList(),
                                   ),
                                 ),
                               )
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          (isShowListPerson)
-                              ? Container(
-                                  width: size.width,
-                                  alignment: Alignment.centerLeft,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children:
-                                          controller.userUnFollow.map((e) {
-                                        return CardPersonInList(
-                                          size: size,
-                                          user: e,
-                                          press: () async {
-                                            _profileControls.followingUser(
-                                                e.uid, e.following);
-                                            updateController();
-                                            setState(() {});
-                                          },
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                        ],
-                      ),
+                            : Container(),
+                      ],
                     ),
                   ),
-                  body: TabBarView(
-                    children: [
-                      VideosTab(data: controller.user),
-                      PersonTab(
-                        followingUser: _profileControls.following,
-                        followerUser: _profileControls.followers,
-                      ),
-                      videoFavTab(data: controller.videoFav),
-                    ],
-                  ),
                 ),
-              )
-            : Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.blue,
+                body: TabBarView(
+                  children: [
+                    VideosTab(data: _profileControls.user),
+                    PersonTab(
+                      followingUser: _profileControls.following,
+                      followerUser: _profileControls.followers,
+                      profileControls: _profileControls,
+                    ),
+                    videoFavTab(data: _profileControls.videoFav),
+                  ],
                 ),
-              );
-      },
+              ),
+            )
+          : Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            ),
     );
   }
 }
@@ -392,10 +386,12 @@ class PersonTab extends StatefulWidget {
     Key? key,
     required this.followingUser,
     required this.followerUser,
+    required this.profileControls,
   }) : super(key: key);
 
   final List<User> followingUser;
   final List<User> followerUser;
+  final ProfileControls profileControls;
   @override
   State<PersonTab> createState() => _PersonTabState();
 }
@@ -507,12 +503,18 @@ class _PersonTabState extends State<PersonTab> {
               children: (checkFollowingFollowers)
                   ? widget.followingUser.map(
                       (e) {
-                        return FollowingCardPerson(data: e);
+                        return FollowingCardPerson(
+                          data: e,
+                          profileControls: widget.profileControls,
+                        );
                       },
                     ).toList()
                   : widget.followerUser.map(
                       (e) {
-                        return FollowersCardPerson(data: e);
+                        return FollowersCardPerson(
+                          data: e,
+                          profileControls: widget.profileControls,
+                        );
                       },
                     ).toList(),
             ),
@@ -527,47 +529,62 @@ class FollowersCardPerson extends StatelessWidget {
   const FollowersCardPerson({
     Key? key,
     required this.data,
+    required this.profileControls,
   }) : super(key: key);
   final User data;
+  final ProfileControls profileControls;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18),
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(),
-      child: Row(
-        children: [
-          AvatarCircle(
-            avtPath: data.photoUrl,
-            sizeAvt: 70,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileDifScreen(
+              data: data,
+              profileControls: profileControls,
+            ),
           ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                data.username,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 18),
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(),
+        child: Row(
+          children: [
+            AvatarCircle(
+              avtPath: data.photoUrl,
+              sizeAvt: 70,
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data.username,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
                 ),
-              ),
-              Text(
-                '#${data.bio}',
-                style:
-                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          Spacer(),
-          Icon(
-            Icons.favorite,
-            color: Color.fromARGB(255, 32, 211, 234),
-          ),
-        ],
+                Text(
+                  '#${data.bio}',
+                  style: TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            Spacer(),
+            Icon(
+              Icons.favorite,
+              color: Color.fromARGB(255, 32, 211, 234),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -577,48 +594,62 @@ class FollowingCardPerson extends StatelessWidget {
   const FollowingCardPerson({
     Key? key,
     required this.data,
+    required this.profileControls,
   }) : super(key: key);
   final User data;
-
+  final ProfileControls profileControls;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18),
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(),
-      child: Row(
-        children: [
-          AvatarCircle(
-            avtPath: data.photoUrl,
-            sizeAvt: 70,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileDifScreen(
+              data: data,
+              profileControls: profileControls,
+            ),
           ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                data.username,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 18),
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(),
+        child: Row(
+          children: [
+            AvatarCircle(
+              avtPath: data.photoUrl,
+              sizeAvt: 70,
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data.username,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
                 ),
-              ),
-              Text(
-                '#${data.bio}',
-                style:
-                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          Spacer(),
-          Icon(
-            Icons.favorite,
-            color: Color.fromARGB(255, 250, 45, 108),
-          ),
-        ],
+                Text(
+                  '#${data.bio}',
+                  style: TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+            Spacer(),
+            Icon(
+              Icons.favorite,
+              color: Color.fromARGB(255, 250, 45, 108),
+            ),
+          ],
+        ),
       ),
     );
   }

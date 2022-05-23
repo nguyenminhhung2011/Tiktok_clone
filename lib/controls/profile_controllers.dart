@@ -145,6 +145,10 @@ class ProfileControls extends GetxController {
   updateFollowing(String id) {
     _uid.value = id;
     getDataFollowing();
+    // print("---------------------");
+    // for (var item in _following.value) {
+    //   print(item.username);
+    // }
   }
 
   getDataFollowing() async {

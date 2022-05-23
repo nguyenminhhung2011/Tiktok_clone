@@ -112,7 +112,11 @@ class MessController extends GetxController {
         }
 
         await firestore.collection('messages').doc(messId).update({
-          'messNearest': (typeMess == 0) ? tittle : "Receive Picture",
+          'messNearest': (typeMess == 0)
+              ? tittle
+              : (typeMess == 1)
+                  ? "Receive Picture"
+                  : "Receive Emoju",
         });
 
         border1 =
