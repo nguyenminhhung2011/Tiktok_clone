@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
+import 'package:tiktok_clone/screens/profileUser/widgets/displayVideo.dart';
 import 'package:tiktok_clone/screens/profileUser/widgets/videoFavCard.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
@@ -10,11 +11,9 @@ import '../../models/user.dart';
 
 class ProfileDifScreen extends StatefulWidget {
   final User data;
-  final ProfileControls profileControls;
   const ProfileDifScreen({
     Key? key,
     required this.data,
-    required this.profileControls,
   }) : super(key: key);
 
   @override
@@ -23,6 +22,7 @@ class ProfileDifScreen extends StatefulWidget {
 
 class _ProfileDifScreenState extends State<ProfileDifScreen> {
   final ProDiffControl _prodiffControls = Get.put(ProDiffControl());
+  final ProfileControls profileControls = Get.put(ProfileControls());
   int _currentIndex = 0;
   int checkClick = 0; //0: Videos 1: Persons 2: Favorites
   @override
@@ -46,8 +46,8 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
   }
 
   void updateDataOfMainUser() {
-    widget.profileControls.updateFollowing(authMethods.user.uid);
-    widget.profileControls.updateUserUnfollow(authMethods.user.uid);
+    profileControls.updateFollowing(authMethods.user.uid);
+    profileControls.updateUserUnfollow(authMethods.user.uid);
   }
 
   void dispose() {
@@ -360,9 +360,23 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                           childAspectRatio: 1,
                         ),
                         itemBuilder: (context, index) {
-                          return VideoDifCard(
-                            prodiffControls: _prodiffControls,
-                            index: index,
+                          return InkWell(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  child: DisPlayVideo(
+                                    size: MediaQuery.of(context).size,
+                                    video: _prodiffControls.listVideo[index],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: VideoDifCard(
+                              prodiffControls: _prodiffControls,
+                              index: index,
+                            ),
                           );
                         },
                       ),
@@ -503,59 +517,63 @@ class VideoDifCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Colors.transparent,
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.black26,
-            Colors.grey,
-          ],
-        ),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(_prodiffControls.listVideo[index].thumbNailsPath),
-        ),
-        border: Border.all(width: 5, color: Colors.white),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.favorite,
-                    color: const Color.fromARGB(255, 250, 45, 108),
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    '${_prodiffControls.listVideo[index].likes.length} likes',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ],
-              ),
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: Colors.transparent,
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.black26,
+              Colors.grey,
             ],
           ),
-          Center(
-            child: Icon(
-              Icons.play_arrow,
-              color: const Color.fromARGB(255, 32, 211, 234),
-              size: 30,
-            ),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image:
+                NetworkImage(_prodiffControls.listVideo[index].thumbNailsPath),
           ),
-        ],
+          border: Border.all(width: 5, color: Colors.white),
+        ),
+        child: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.favorite,
+                      color: const Color.fromARGB(255, 250, 45, 108),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      '${_prodiffControls.listVideo[index].likes.length} likes',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            Center(
+              child: Icon(
+                Icons.play_arrow,
+                color: const Color.fromARGB(255, 32, 211, 234),
+                size: 30,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

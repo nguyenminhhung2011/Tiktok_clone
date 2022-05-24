@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.tiktok,
+                              Icons.play_arrow_sharp,
                               color: (indexOfTab == 0)
                                   ? Color.fromARGB(255, 242, 196, 15)
                                   : Colors.grey,
@@ -542,7 +542,7 @@ class FollowersCardPerson extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ProfileDifScreen(
               data: data,
-              profileControls: profileControls,
+              //profileControls: profileControls,
             ),
           ),
         );
@@ -607,7 +607,7 @@ class FollowingCardPerson extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ProfileDifScreen(
               data: data,
-              profileControls: profileControls,
+              //profileControls: profileControls,
             ),
           ),
         );

@@ -63,14 +63,6 @@ class _DisPlayVideoState extends State<DisPlayVideo>
             width: double.infinity,
             child: VideoPlayer(videoController),
           ),
-          // Container(
-          //   width: double.infinity,
-          //   height: double.infinity,
-          //   child: Image(
-          //     image: new NetworkImage(widget.data.thumbNailsPath),
-          //     fit: BoxFit.fill,
-          //   ),
-          // ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
