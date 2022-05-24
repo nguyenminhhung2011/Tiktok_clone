@@ -517,63 +517,59 @@ class VideoDifCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: Colors.transparent,
-          gradient: const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.black26,
-              Colors.grey,
-            ],
-          ),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image:
-                NetworkImage(_prodiffControls.listVideo[index].thumbNailsPath),
-          ),
-          border: Border.all(width: 5, color: Colors.white),
-        ),
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.favorite,
-                      color: const Color.fromARGB(255, 250, 45, 108),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      '${_prodiffControls.listVideo[index].likes.length} likes',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            Center(
-              child: Icon(
-                Icons.play_arrow,
-                color: const Color.fromARGB(255, 32, 211, 234),
-                size: 30,
-              ),
-            ),
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: Colors.transparent,
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.black26,
+            Colors.grey,
           ],
         ),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(_prodiffControls.listVideo[index].thumbNailsPath),
+        ),
+        border: Border.all(width: 5, color: Colors.white),
+      ),
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.favorite,
+                    color: const Color.fromARGB(255, 250, 45, 108),
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    '${_prodiffControls.listVideo[index].likes.length} likes',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+          Center(
+            child: Icon(
+              Icons.play_arrow,
+              color: const Color.fromARGB(255, 32, 211, 234),
+              size: 30,
+            ),
+          ),
+        ],
       ),
     );
   }

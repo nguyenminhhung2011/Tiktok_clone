@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
+import 'package:tiktok_clone/screens/profileUser/editProfileScreen.dart';
 import 'package:tiktok_clone/screens/profileUser/profileDifUser.dart';
 import 'package:tiktok_clone/screens/profileUser/videoFavTab.dart';
 import 'package:tiktok_clone/screens/profileUser/videoTab.dart';
@@ -264,7 +265,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             const SizedBox(width: 50),
                             InkWell(
                               borderRadius: BorderRadius.circular(14),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditProfileScreen(),
+                                  ),
+                                );
+                              },
                               child: Container(
                                 width: 200,
                                 height: 40,
