@@ -11,6 +11,7 @@ import '../../controls/profile_controllers.dart';
 import '../../models/user.dart';
 import '../../models/video.dart';
 import '../../widgets/Avtar_circle.dart';
+import '../../widgets/textField_desgin.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int indexOfTab = 0;
   bool isShowListPerson = false;
   final ProfileControls _profileControls = Get.put(ProfileControls());
+  final TextEditingController _passwordControls = TextEditingController();
+  final TextEditingController _newPassControls = TextEditingController();
   int counter = 2;
   @override
   void initState() {
@@ -42,6 +45,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         isShowListPerson = false;
       });
+    }
+  }
+
+  void changePass() async {
+    if (_passwordControls.text.isEmpty || _newPassControls.text.isEmpty) {
+      Get.snackbar('Change password', "Feild is null",
+          backgroundColor: Colors.blue);
+    } else {
+      if (_passwordControls.text != _profileControls.user['password']) {
+        Get.snackbar('Change password', 'Pass is false',
+            backgroundColor: Colors.blue);
+      } else {}
     }
   }
 
@@ -157,6 +172,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icon(
                               Icons.favorite,
                               color: Color.fromARGB(255, 250, 45, 108),
+                            ),
+                            const SizedBox(width: 10),
+                            InkWell(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                    backgroundColor: Colors.transparent,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: MediaQuery.of(context).size.width /
+                                          1.2,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              3,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(height: 10),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.lock,
+                                                color: Colors.blue,
+                                                size: 30,
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                "Update Password",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          TextFieldDesgin(
+                                            hintText: "Your password",
+                                            labelText: "Password",
+                                            isPass: true,
+                                            textController: _passwordControls,
+                                            icon: Icon(Icons.password),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          TextFieldDesgin(
+                                            hintText: "New password",
+                                            labelText: "n_password",
+                                            isPass: true,
+                                            textController: _newPassControls,
+                                            icon: Icon(Icons.password),
+                                          ),
+                                          Spacer(),
+                                          InkWell(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            onTap: () {},
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              width: 200,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                color: const Color.fromARGB(
+                                                    255, 250, 45, 108),
+                                              ),
+                                              child: Text(
+                                                "Update Password",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 17,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Icon(Icons.lock, color: Colors.blue),
                             ),
                             const SizedBox(width: 20),
                           ],

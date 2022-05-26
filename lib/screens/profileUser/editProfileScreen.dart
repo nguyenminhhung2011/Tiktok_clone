@@ -98,7 +98,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: (_image != null)
-                          ? (DecorationImage(image: MemoryImage(_image!)))
+                          ? (DecorationImage(
+                              fit: BoxFit.cover,
+                              image: MemoryImage(_image!),
+                            ))
                           : DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(

@@ -66,6 +66,7 @@ class ProfileControls extends GetxController {
       "followers": followers,
       "following": following,
       "bio": data_user['bio'],
+      "password": data_user['password'],
     };
     //  print(_user.value);
     update();
@@ -193,4 +194,6 @@ class ProfileControls extends GetxController {
       return result;
     }));
   }
+
+  updatePassword(String newPass) async {}
 }
