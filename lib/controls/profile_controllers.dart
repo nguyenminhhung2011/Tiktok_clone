@@ -65,6 +65,7 @@ class ProfileControls extends GetxController {
       "allPosts": allPosts,
       "followers": followers,
       "following": following,
+      "bio": data_user['bio'],
     };
     //  print(_user.value);
     update();
