@@ -108,4 +108,6 @@ class AuthControls extends GetxController {
     user = userDoc.data()! as Map<String, dynamic>;
     return user;
   }
+
+  getget() {}
 }
