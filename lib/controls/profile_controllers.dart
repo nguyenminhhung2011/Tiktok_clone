@@ -195,5 +195,15 @@ class ProfileControls extends GetxController {
     }));
   }
 
-  updatePassword(String newPass) async {}
+  updatePassword(String newPass) async {
+    await firebaseAuth.currentUser?.updatePassword(newPass).then((value) {
+      Get.snackbar("Update password", "success", backgroundColor: Colors.blue);
+    }).catchError((err) {
+      Get.snackbar("Update password", err.toString(),
+          backgroundColor: Colors.blue);
+    });
+    await firestore.collection('users').doc(authMethods.user.uid).update({
+      'password': newPass,
+    });
+  }
 }

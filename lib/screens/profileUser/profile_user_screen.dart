@@ -56,7 +56,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (_passwordControls.text != _profileControls.user['password']) {
         Get.snackbar('Change password', 'Pass is false',
             backgroundColor: Colors.blue);
-      } else {}
+      } else {
+        _profileControls.updatePassword(_newPassControls.text);
+        setState(() {
+          _passwordControls.clear();
+          _newPassControls.clear();
+        });
+      }
     }
   }
 
@@ -234,7 +240,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(30),
-                                            onTap: () {},
+                                            onTap: () {
+                                              changePass();
+                                            },
                                             child: Container(
                                               alignment: Alignment.center,
                                               width: 200,
