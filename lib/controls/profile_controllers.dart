@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
+import 'package:tiktok_clone/models/notification.dart';
 
 import '../models/user.dart';
 import '../models/video.dart';
@@ -137,8 +138,34 @@ class ProfileControls extends GetxController {
         firestore.collection('users').doc(uidUser).update({
           'followers': FieldValue.arrayUnion([uid]),
         });
+        addDataToNoti(uidUser, uid);
       }
       update();
+    } catch (err) {
+      print(err.toString());
+    }
+  }
+
+  addDataToNoti(String uidOp, String uid) async {
+    var userDoc = await firestore.collection('users').doc(uid).get();
+    User user = User.fromSnap(userDoc);
+
+    var allNoti = await firestore.collection('noti').get();
+    String notiId = 'noti ${allNoti.docs.length}';
+
+    Noti data = Noti(
+      notiId: notiId,
+      typeNoti: 0,
+      username: user.username,
+      profilePic: user.photoUrl,
+      uid: uid,
+      uidRec: uidOp,
+      postUid: "",
+      commentUid: "",
+    );
+
+    try {
+      await firestore.collection('noti').doc(notiId).set(data.toJson());
     } catch (err) {
       print(err.toString());
     }

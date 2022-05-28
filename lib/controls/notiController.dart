@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 
 import '../models/message.dart';
+import '../models/notification.dart';
 import '../models/user.dart';
 
 class NotiController extends GetxController {
@@ -13,13 +14,14 @@ class NotiController extends GetxController {
   final Rx<Map<String, dynamic>> _message = Rx<Map<String, dynamic>>({});
   final Rx<List<Message>> _listGroupMessage = Rx<List<Message>>([]);
   final Rx<List<User>> _allUser = Rx<List<User>>([]);
+  final Rx<List<Noti>> _allNoti = Rx<List<Noti>>([]);
 
   List<Message> get listMessage => _listMessage.value;
   List<User> get listUser => _listUser.value;
   Map<String, dynamic> get message => _message.value;
   List<Message> get listGroupMessage => _listGroupMessage.value;
   List<User> get allUser => _allUser.value;
-
+  List<Noti> get allNoti => _allNoti.value;
   Rx<String> _uid = "".obs;
 
   updateGroupMessage(String id) {
@@ -174,5 +176,27 @@ class NotiController extends GetxController {
       index++;
     }
     return index;
+  }
+
+  updateNoti(String uid) {
+    _uid.value = uid;
+    getDataNoti();
+  }
+
+  getDataNoti() async {
+    _allNoti.bindStream(
+      firestore.collection('noti').snapshots().map(
+        (event) {
+          List<Noti> result = [];
+          for (var item in event.docs) {
+            Noti noti = Noti.fromSnap(item);
+            if (noti.uidRec == _uid.value && noti.typeNoti == 0) {
+              result.add(noti);
+            }
+          }
+          return result;
+        },
+      ),
+    );
   }
 }

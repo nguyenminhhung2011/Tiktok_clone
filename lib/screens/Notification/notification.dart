@@ -8,6 +8,7 @@ import 'package:tiktok_clone/screens/Notification/widget/messageCard.dart';
 import 'package:tiktok_clone/screens/Notification/widget/messageGroupCard.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
+import '../../models/notification.dart';
 import '../../models/user.dart';
 
 class NotifiCationScreen extends StatefulWidget {
@@ -29,6 +30,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
     super.initState();
     _notiController.updateMessage(authMethods.user.uid);
     _notiController.updateGroupMessage(authMethods.user.uid);
+    _notiController.updateNoti(authMethods.user.uid);
     _notiController.getAllUser();
   }
 
@@ -300,7 +302,16 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                           .toList(),
                     ),
                   )
-            : Container(),
+            : SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: _notiController.allNoti
+                      .map(
+                        (e) => NotiFollowCard(data: e),
+                      )
+                      .toList(),
+                ),
+              ),
       ),
     );
   }
@@ -376,6 +387,102 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                 ),
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NotiFollowCard extends StatelessWidget {
+  final Noti data;
+  const NotiFollowCard({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Color.fromARGB(255, 230, 251, 255),
+      ),
+      child: Row(
+        children: [
+          AvatarCircle(
+            avtPath: data.profilePic,
+            sizeAvt: 70,
+          ),
+          const SizedBox(width: 15),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.username,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17),
+              ),
+              Text(
+                'was following you',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+          Spacer(),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '9:00 PM',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 8,
+                    width: 8,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Container(
+                    height: 8,
+                    width: 8,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Container(
+                    height: 8,
+                    width: 8,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.yellow,
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
         ],
       ),
