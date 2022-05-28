@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../models/message.dart';
-import '../../../models/user.dart';
 import '../../../widgets/Avtar_circle.dart';
 import '../messChat.dart';
 
@@ -34,7 +33,7 @@ class MessageCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 230, 251, 255),
+          color: const Color.fromARGB(255, 230, 251, 255),
         ),
         child: Row(
           children: [
@@ -48,14 +47,14 @@ class MessageCard extends StatelessWidget {
               children: [
                 Text(
                   message.username[index],
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 17),
                 ),
                 Text(
                   message.messNearest,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -63,12 +62,12 @@ class MessageCard extends StatelessWidget {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       '9:00 PM',
                       style: TextStyle(color: Colors.grey),
@@ -82,7 +81,7 @@ class MessageCard extends StatelessWidget {
                     Container(
                       height: 8,
                       width: 8,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.red,
                       ),
@@ -91,7 +90,7 @@ class MessageCard extends StatelessWidget {
                     Container(
                       height: 8,
                       width: 8,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.blue,
                       ),
@@ -100,7 +99,7 @@ class MessageCard extends StatelessWidget {
                     Container(
                       height: 8,
                       width: 8,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.yellow,
                       ),

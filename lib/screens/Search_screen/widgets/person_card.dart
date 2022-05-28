@@ -26,7 +26,7 @@ class PerSonCard extends StatelessWidget {
             children: [
               Text(
                 data.username,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   // fontFamily: "Muli",
@@ -35,7 +35,7 @@ class PerSonCard extends StatelessWidget {
               ),
               Text(
                 '#${data.bio}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                   // fontFamily: "Muli",
@@ -44,23 +44,23 @@ class PerSonCard extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(23),
-              color: Color.fromARGB(255, 250, 45, 108),
+              color: const Color.fromARGB(255, 250, 45, 108),
             ),
             child: Row(
               children: [
-                Icon(Icons.favorite),
+                const Icon(Icons.favorite),
                 const SizedBox(width: 5),
                 Text('${data.followers.length}k'),
               ],
             ),
           ),
           IconButton(
-            icon: Icon(Icons.person_add, color: Colors.black),
+            icon: const Icon(Icons.person_add, color: Colors.black),
             onPressed: () {},
           )
         ],

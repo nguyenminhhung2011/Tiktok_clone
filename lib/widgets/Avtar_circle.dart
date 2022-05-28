@@ -17,7 +17,7 @@ class AvatarCircle extends StatelessWidget {
           width: sizeAvt,
           height: sizeAvt,
           padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
               image: AssetImage('images/border.png'),

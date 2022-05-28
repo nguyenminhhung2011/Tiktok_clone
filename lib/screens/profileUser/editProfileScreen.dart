@@ -5,11 +5,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/controls/profile_controllers.dart';
-import 'package:tiktok_clone/widgets/Avtar_circle.dart';
-import 'package:tiktok_clone/widgets/textField_desgin.dart';
 
 import '../../controls/editProfileController.dart';
-import '../../models/user.dart';
 import '../../utils/untils.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -59,11 +56,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
+  @override
   void dispose() {
     super.dispose();
     _profilController.upDateUser(authMethods.user.uid);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -73,12 +72,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
         ),
-        title: Text(
+        title: const Text(
           'Edit Profile',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -119,9 +118,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             shape: BoxShape.circle, color: Colors.blue),
-                        child: Icon(
+                        child: const Icon(
                           Icons.camera,
                           color: Colors.white,
                           size: 30,
@@ -148,8 +147,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: 40),
+                    children: const [
+                      SizedBox(width: 40),
                       Text(
                         "Username",
                         style: TextStyle(
@@ -159,14 +158,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   TextFieldDesign(
                     textController: _usernameController,
-                    icon: Icon(Icons.person, color: Colors.blue),
+                    icon: const Icon(Icons.person, color: Colors.blue),
                     hintText: "New username",
                   ),
                   const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: 40),
+                    children: const [
+                      SizedBox(width: 40),
                       Text(
                         "Bio",
                         style: TextStyle(
@@ -176,7 +175,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   TextFieldDesign(
                     textController: _bioController,
-                    icon: Icon(Icons.tiktok, color: Colors.blue),
+                    icon: const Icon(Icons.tiktok, color: Colors.blue),
                     hintText: "New Bio",
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 8),
@@ -193,7 +192,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         borderRadius: BorderRadius.circular(30),
                         color: const Color.fromARGB(255, 250, 45, 108),
                       ),
-                      child: Text(
+                      child: const Text(
                         "Update Profile",
                         style: TextStyle(
                           color: Colors.white,
@@ -245,14 +244,14 @@ class TextFieldDesign extends StatelessWidget {
           Expanded(
             child: TextFormField(
               controller: textController,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hintText,
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),

@@ -20,7 +20,7 @@ class ButtonDesign extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 136, 199, 250),
+          color: const Color.fromARGB(255, 136, 199, 250),
         ),
         child: title,
       ),
@@ -58,7 +58,7 @@ class ButtonWithIcon extends StatelessWidget {
             // icon,
             Text(
               tittle,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),

@@ -40,10 +40,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: LoginScreen(),
+      home: const LoginScreen(),
       getPages: [
-        GetPage(name: '/LoginScreen', page: () => LoginScreen()),
-        GetPage(name: '/HomeScreen', page: () => HomeScreen()),
+        GetPage(name: '/LoginScreen', page: () => const LoginScreen()),
+        GetPage(name: '/HomeScreen', page: () => const HomeScreen()),
       ],
     );
   }

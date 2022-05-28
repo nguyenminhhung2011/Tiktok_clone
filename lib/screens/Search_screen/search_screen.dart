@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/controls/fake_data.dart';
-import 'package:tiktok_clone/controls/searchVideo.dart';
 import 'package:tiktok_clone/screens/Search_screen/widgets/person_card.dart';
 import 'package:tiktok_clone/screens/Search_screen/widgets/video_card.dart';
 
@@ -32,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              children: const [
                 Text(
                   'Search',
                   textAlign: TextAlign.center,
@@ -58,15 +57,15 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Row(
                 children: [
                   const SizedBox(width: 10),
-                  Icon(Icons.search, color: Colors.black, size: 30),
+                  const Icon(Icons.search, color: Colors.black, size: 30),
                   const SizedBox(width: 5),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width / 1.4,
                     child: TextFormField(
                       controller: _searchController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintStyle: TextStyle(color: Colors.grey),
                         hintText: 'Search here',
                         border: InputBorder.none,
@@ -142,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         },
                       ).toList(),
                     ),
-                    Text(
+                    const Text(
                       'Popular Search',
                       style: TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
@@ -192,7 +191,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   color: checkSearch ? Colors.white : Colors.transparent,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text(
+                child: const Text(
                   'Person',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -221,7 +220,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   color: !checkSearch ? Colors.white : Colors.transparent,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text(
+                child: const Text(
                   'Videos',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -250,13 +249,13 @@ class FakePersonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.access_time, color: Colors.black),
+        const Icon(Icons.access_time, color: Colors.black),
         const SizedBox(width: 4),
-        Text(name, style: TextStyle(color: Colors.black)),
-        Spacer(),
+        Text(name, style: const TextStyle(color: Colors.black)),
+        const Spacer(),
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.close, color: Colors.black),
+          icon: const Icon(Icons.close, color: Colors.black),
         )
       ],
     );
@@ -279,11 +278,11 @@ class FakePopularSearch extends StatelessWidget {
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 4),
-        Text(name, style: TextStyle(color: Colors.black)),
-        Spacer(),
+        Text(name, style: const TextStyle(color: Colors.black)),
+        const Spacer(),
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.close, color: Colors.black),
+          icon: const Icon(Icons.close, color: Colors.black),
         )
       ],
     );

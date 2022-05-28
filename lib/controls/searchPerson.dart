@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/models/video.dart';

@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/controls/storage_methods.dart';
 import 'package:tiktok_clone/models/user.dart' as models;
@@ -13,7 +11,7 @@ import '../screens/login_screen.dart';
 
 class AuthControls extends GetxController {
   static AuthControls instance = Get.find();
-  var _firStore = FirebaseFirestore.instance;
+  final _firStore = FirebaseFirestore.instance;
   late Rx<User?> _user;
   User get user => _user.value!;
   @override
@@ -27,9 +25,9 @@ class AuthControls extends GetxController {
   _setIntialScreen(User? user) {
     //if user == null screen will go to Login screen else go to home screen
     if (user == null) {
-      Get.offAll(() => LoginScreen());
+      Get.offAll(() => const LoginScreen());
     } else {
-      Get.offAll(() => HomeScreen());
+      Get.offAll(() => const HomeScreen());
     }
   }
 
@@ -45,8 +43,7 @@ class AuthControls extends GetxController {
       if (username.isNotEmpty &&
           password.isNotEmpty &&
           password.isNotEmpty &&
-          bio.isNotEmpty &&
-          image != null) {
+          bio.isNotEmpty) {
         UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(
             email: email, password: password); // get uid of user
         String photouUrl = await StorageMethods()

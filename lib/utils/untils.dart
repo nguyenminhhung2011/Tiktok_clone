@@ -15,11 +15,11 @@ showSnackBar(String content, BuildContext context) {
     SnackBar(
       content: Text(
         content,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
         ),
       ),
-      backgroundColor: Color.fromARGB(255, 136, 199, 250),
+      backgroundColor: const Color.fromARGB(255, 136, 199, 250),
     ),
   );
 }

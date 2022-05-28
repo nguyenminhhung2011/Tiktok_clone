@@ -28,7 +28,7 @@ class PerSonCardAddGroup extends StatelessWidget {
             children: [
               Text(
                 data.username,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   // fontFamily: "Muli",
@@ -37,7 +37,7 @@ class PerSonCardAddGroup extends StatelessWidget {
               ),
               Text(
                 '#${data.bio}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                   // fontFamily: "Muli",
@@ -46,9 +46,9 @@ class PerSonCardAddGroup extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
-            icon: Icon(Icons.person_add, color: Colors.black),
+            icon: const Icon(Icons.person_add, color: Colors.black),
             onPressed: press,
           )
         ],

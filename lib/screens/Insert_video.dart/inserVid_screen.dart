@@ -22,6 +22,7 @@ class InserVid extends StatelessWidget {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
@@ -39,24 +40,24 @@ class InserVid extends StatelessWidget {
                 onTap: () {},
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(255, 136, 199, 250),
                   ),
-                  child: Icon(Icons.close, size: 20),
+                  child: const Icon(Icons.close, size: 20),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {},
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(255, 136, 199, 250),
                   ),
-                  child: Icon(Icons.download, size: 20),
+                  child: const Icon(Icons.download, size: 20),
                 ),
               ),
             ],
@@ -73,7 +74,7 @@ class InserVid extends StatelessWidget {
           Container(
             width: double.infinity,
             height: MediaQuery.of(context).size.height - 80,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(60),
                 bottomRight: Radius.circular(60),
@@ -99,7 +100,7 @@ class InserVid extends StatelessWidget {
                           height: 45,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               fit: BoxFit.fill,
                               image:
                                   AssetImage('assets/images/background2.png'),
@@ -107,7 +108,7 @@ class InserVid extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Effect',
                         style: TextStyle(
                           fontFamily: "Muli",
@@ -117,7 +118,7 @@ class InserVid extends StatelessWidget {
                       )
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   InkWell(
                     onTap: () {},
                     child: Container(
@@ -134,14 +135,14 @@ class InserVid extends StatelessWidget {
                       child: Container(
                         width: 60,
                         height: 60,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.red,
                         ),
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Column(
                     children: [
                       InkWell(
@@ -150,7 +151,7 @@ class InserVid extends StatelessWidget {
                             context: context,
                             builder: (context) => Dialog(
                               backgroundColor:
-                                  Color.fromARGB(255, 255, 252, 227),
+                                  const Color.fromARGB(255, 255, 252, 227),
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: [
@@ -163,13 +164,13 @@ class InserVid extends StatelessWidget {
                                           vertical: 10,
                                         ),
                                         child: Row(
-                                          children: [
+                                          children: const [
                                             Icon(
                                               Icons.upload,
                                               color: Color.fromARGB(
                                                   255, 136, 199, 250),
                                             ),
-                                            const SizedBox(width: 10),
+                                            SizedBox(width: 10),
                                             Text(
                                               'Choose from file',
                                               style: TextStyle(
@@ -195,7 +196,7 @@ class InserVid extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(width: 3, color: Colors.white),
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               fit: BoxFit.fill,
                               image:
                                   AssetImage('assets/images/background1.jpg'),
@@ -203,7 +204,7 @@ class InserVid extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Upload',
                         style: TextStyle(
                           fontFamily: "Muli",

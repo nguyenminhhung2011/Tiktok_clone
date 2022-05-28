@@ -24,7 +24,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
   final NotiController _notiController = Get.put(NotiController());
   bool checkNotifi = false;
   bool checkPersonGroup = true;
-  List<Map<String, dynamic>> _listUserToAddGroup = [];
+  final List<Map<String, dynamic>> _listUserToAddGroup = [];
   @override
   void initState() {
     super.initState();
@@ -50,6 +50,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
@@ -63,7 +64,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
           title: Column(
             children: [
               Row(
-                children: [
+                children: const [
                   Text(
                     'All Acitivities',
                     // ignore: deprecated_member_use
@@ -86,18 +87,18 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 2),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 153, 231, 255),
+                            color: const Color.fromARGB(255, 153, 231, 255),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Row(
                             children: [
-                              Icon(Icons.search, color: Colors.white),
+                              const Icon(Icons.search, color: Colors.white),
                               const SizedBox(width: 2),
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.of(context).size.width / 1.6,
                                 child: TextFormField(
                                   controller: _searchController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: 'Search',
                                     border: InputBorder.none,
                                   ),
@@ -127,7 +128,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                           height: 40,
                           width: 150,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 255, 252, 227),
+                            color: const Color.fromARGB(255, 255, 252, 227),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -146,9 +147,9 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                   height: 34,
                                   decoration: BoxDecoration(
                                     color: (checkPersonGroup)
-                                        ? Color.fromARGB(255, 250, 45, 108)
+                                        ? const Color.fromARGB(255, 250, 45, 108)
                                         : Colors.transparent,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       bottomLeft: Radius.circular(10),
                                       topRight: Radius.circular(4),
@@ -160,7 +161,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                     style: TextStyle(
                                       color: (checkPersonGroup)
                                           ? Colors.white
-                                          : Color.fromARGB(255, 250, 45, 108),
+                                          : const Color.fromARGB(255, 250, 45, 108),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
                                     ),
@@ -184,9 +185,9 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: (!checkPersonGroup)
-                                        ? Color.fromARGB(255, 32, 211, 234)
+                                        ? const Color.fromARGB(255, 32, 211, 234)
                                         : Colors.transparent,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(4),
                                       bottomLeft: Radius.circular(4),
                                       topRight: Radius.circular(10),
@@ -198,7 +199,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                     style: TextStyle(
                                       color: (!checkPersonGroup)
                                           ? Colors.white
-                                          : Color.fromARGB(255, 32, 211, 234),
+                                          : const Color.fromARGB(255, 32, 211, 234),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
                                     ),
@@ -208,17 +209,17 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                             ],
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         if (!checkPersonGroup)
                           IconButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateGroupScreen()),
+                                    builder: (context) => const CreateGroupScreen()),
                               );
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.person_add,
                               color: Color.fromARGB(255, 32, 211, 234),
                             ),
@@ -273,7 +274,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                           )
                         : Center(
                             child: Column(
-                              children: [
+                              children: const [
                                 Text(
                                   'You Don\t have Message',
                                   style: TextStyle(
@@ -282,7 +283,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                     fontSize: 22,
                                   ),
                                 ),
-                                const SizedBox(height: 10),
+                                SizedBox(height: 10),
                                 Text(
                                   'Please search and start chat with Your friend',
                                   style: TextStyle(
@@ -347,7 +348,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                   color: checkNotifi ? Colors.white : Colors.transparent,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text(
+                child: const Text(
                   'Notification',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -376,7 +377,7 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                   color: !checkNotifi ? Colors.white : Colors.transparent,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text(
+                child: const Text(
                   'Message',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -409,7 +410,7 @@ class NotiFollowCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: Color.fromARGB(255, 230, 251, 255),
+        color: const Color.fromARGB(255, 230, 251, 255),
       ),
       child: Row(
         children: [
@@ -423,12 +424,12 @@ class NotiFollowCard extends StatelessWidget {
             children: [
               Text(
                 data.username,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 17),
               ),
-              Text(
+              const Text(
                 'was following you',
                 style: TextStyle(
                   color: Colors.grey,
@@ -438,12 +439,12 @@ class NotiFollowCard extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Text(
                     '9:00 PM',
                     style: TextStyle(color: Colors.grey),
@@ -457,7 +458,7 @@ class NotiFollowCard extends StatelessWidget {
                   Container(
                     height: 8,
                     width: 8,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.red,
                     ),
@@ -466,7 +467,7 @@ class NotiFollowCard extends StatelessWidget {
                   Container(
                     height: 8,
                     width: 8,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.blue,
                     ),
@@ -475,7 +476,7 @@ class NotiFollowCard extends StatelessWidget {
                   Container(
                     height: 8,
                     width: 8,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.yellow,
                     ),
@@ -505,7 +506,7 @@ class PersonCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(),
+      decoration: const BoxDecoration(),
       child: Row(
         children: [
           AvatarCircle(
@@ -518,7 +519,7 @@ class PersonCard extends StatelessWidget {
             children: [
               Text(
                 data.username,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
@@ -527,14 +528,14 @@ class PersonCard extends StatelessWidget {
               Text(
                 '#${data.bio}',
                 style:
-                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
               )
             ],
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
             onPressed: press,
-            icon: Icon(
+            icon: const Icon(
               Icons.send,
               color: Color.fromARGB(255, 32, 211, 234),
             ),

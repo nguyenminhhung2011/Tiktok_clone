@@ -38,7 +38,7 @@ class AddGroupController extends GetxController {
   }
 
   Future<void> addGroup(
-      List<User> all_user, Uint8List file, String nameOfGroup) async {
+      List<User> allUser, Uint8List file, String nameOfGroup) async {
     try {
       if (nameOfGroup == "") {
         Get.snackbar(
@@ -60,22 +60,22 @@ class AddGroupController extends GetxController {
       String grID = "message ${allMessages.docs.length}";
       String photoPath =
           await StorageMethods().UpLoadImageGroupToStorage(grID, file);
-      List<String> l_uid = [];
-      List<String> l_username = [];
-      List<String> l_photo = [];
-      for (var item in all_user) {
-        l_uid.add(item.uid);
-        l_username.add(item.username);
-        l_photo.add(item.photoUrl);
+      List<String> lUid = [];
+      List<String> lUsername = [];
+      List<String> lPhoto = [];
+      for (var item in allUser) {
+        lUid.add(item.uid);
+        lUsername.add(item.username);
+        lPhoto.add(item.photoUrl);
       }
       Message mess = Message(
         id: grID,
-        messNearest: "Don\'t have mess Nearest",
+        messNearest: "Don't have mess Nearest",
         groupOrWithPerson: 1,
         photoGroup_member: photoPath,
-        listUid: l_uid,
-        username: l_username,
-        photoUrl: l_photo,
+        listUid: lUid,
+        username: lUsername,
+        photoUrl: lPhoto,
         colorOfchat: 8,
         nameOfGroup: nameOfGroup,
       );

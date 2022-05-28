@@ -8,6 +8,7 @@ import '../models/video.dart';
 class VideoController extends GetxController {
   final Rx<List<Video>> _listVideo = Rx<List<Video>>([]);
   List<Video> get listVIdeo => _listVideo.value;
+  @override
   void onInit() {
     super.onInit();
     _listVideo.bindStream(

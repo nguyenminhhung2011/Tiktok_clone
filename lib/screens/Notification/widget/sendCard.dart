@@ -18,11 +18,11 @@ class SendCard extends StatelessWidget {
         child: (data.typeOfMessage == 0)
             ? Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 222, 236, 238),
+                  color: const Color.fromARGB(255, 222, 236, 238),
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
+                    topLeft: const Radius.circular(30),
                     topRight: Radius.circular(data.border1 as double),
-                    bottomLeft: Radius.circular(30),
+                    bottomLeft: const Radius.circular(30),
                     bottomRight: Radius.circular(data.border2 as double),
                   ),
                 ),
@@ -30,7 +30,7 @@ class SendCard extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 child: Text(
                   data.tittle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
@@ -74,11 +74,11 @@ class SendCard extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 5,
                       width: MediaQuery.of(context).size.width / 2.2,
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 222, 236, 238),
+                        color: const Color.fromARGB(255, 222, 236, 238),
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
+                          topLeft: const Radius.circular(30),
                           topRight: Radius.circular(data.border1 as double),
-                          bottomLeft: Radius.circular(30),
+                          bottomLeft: const Radius.circular(30),
                           bottomRight: Radius.circular(data.border2 as double),
                         ),
                         image: DecorationImage(
@@ -88,7 +88,7 @@ class SendCard extends StatelessWidget {
                       ),
                     ),
                   )
-                : Container(
+                : SizedBox(
                     height: 50,
                     width: 50,
                     child: Image(

@@ -29,7 +29,7 @@ class VideoCard extends StatelessWidget {
           const SizedBox(height: 3),
           Text(
             data.caption,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
@@ -51,13 +51,13 @@ class VideoCard extends StatelessWidget {
               const SizedBox(width: 5),
               Text(
                 data.username,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Spacer(),
-              Icon(
+              const Spacer(),
+              const Icon(
                 Icons.favorite,
                 size: 18,
                 color: Color.fromARGB(255, 250, 45, 108),
@@ -65,7 +65,7 @@ class VideoCard extends StatelessWidget {
               const SizedBox(width: 3),
               Text(
                 data.likes.length.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),

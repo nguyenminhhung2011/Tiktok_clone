@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/models/messItem.dart';
 
 import '../models/message.dart';
-import '../models/user.dart';
 
 class MessController extends GetxController {
   final Rx<List<MessItem>> _listMessItem = Rx<List<MessItem>>([]);
@@ -20,7 +18,7 @@ class MessController extends GetxController {
   Map<String, dynamic> get opUser => _opUser.value;
   Map<String, dynamic> get user => _user.value;
 
-  Rx<String> _uid = "".obs;
+  final Rx<String> _uid = "".obs;
 
   updateMessWithPerson(String id, String opId) {
     _uid.value = id;
@@ -62,9 +60,9 @@ class MessController extends GetxController {
           List<MessItem> result = [];
           for (var item in event.docs) {
             result.add(MessItem.fromSnap(item));
-            if ((item.data() as Map<String, dynamic>)['typeOfMessage'] == 1) {
+            if ((item.data())['typeOfMessage'] == 1) {
               _allImageInMess.value
-                  .add((item.data() as Map<String, dynamic>)['tittle']);
+                  .add((item.data())['tittle']);
             }
           }
           result.sort(mySortComparison);
@@ -100,13 +98,13 @@ class MessController extends GetxController {
         int border1 = 0;
         int border2 = 30;
 
-        String mess_nearest = "";
+        String messNearest = "";
         String userSend = "";
         for (var item in allMessItem.docs) {
           if ("messItem ${(allMessItem.docs.length - 1).toString()}" ==
-              (item.data() as Map<String, dynamic>)['itemId']) {
-            mess_nearest = (item.data() as Map<String, dynamic>)["itemId"];
-            userSend = (item.data() as Map<String, dynamic>)['username'];
+              (item.data())['itemId']) {
+            messNearest = (item.data())["itemId"];
+            userSend = (item.data())['username'];
             break;
           }
         }
@@ -128,7 +126,7 @@ class MessController extends GetxController {
               .collection('messages')
               .doc(messId)
               .collection('messItems')
-              .doc(mess_nearest)
+              .doc(messNearest)
               .update(
             {
               'border2': 5,

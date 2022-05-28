@@ -50,11 +50,13 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
     profileControls.updateUserUnfollow(authMethods.user.uid);
   }
 
+  @override
   void dispose() {
     super.dispose();
     updateDataOfMainUser();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
@@ -66,25 +68,25 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
             ),
           ),
           title: Text(
             widget.data.username,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
-          actions: [
+          actions: const [
             Icon(
               Icons.favorite,
-              color: const Color.fromARGB(255, 32, 211, 234),
+              color: Color.fromARGB(255, 32, 211, 234),
             ),
-            const SizedBox(width: 20),
+            SizedBox(width: 20),
           ],
         ),
         body: Column(
@@ -103,7 +105,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
             const SizedBox(height: 10),
             Text(
               widget.data.username,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 19,
@@ -112,7 +114,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
             const SizedBox(height: 5),
             Text(
               "${_prodiffControls.listVideo.length} Posts | ${widget.data.following.length} following | ${widget.data.followers.length} followers",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -121,7 +123,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
             const SizedBox(height: 5),
             Text(
               "Email: ${widget.data.email}",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -145,12 +147,12 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                       borderRadius: BorderRadius.circular(14),
                       color:
                           (widget.data.followers.contains(authMethods.user.uid))
-                              ? Color.fromARGB(255, 32, 211, 234)
-                              : Color.fromARGB(255, 250, 45, 108),
+                              ? const Color.fromARGB(255, 32, 211, 234)
+                              : const Color.fromARGB(255, 250, 45, 108),
                     ),
                     child:
                         (widget.data.followers.contains(authMethods.user.uid))
-                            ? Text(
+                            ? const Text(
                                 'UnFollowing',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -158,7 +160,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                                   fontSize: 15,
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 'Following',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -179,7 +181,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         color: Colors.grey.withOpacity(0.3)),
-                    child: Icon(
+                    child: const Icon(
                       Icons.facebook_outlined,
                       size: 20,
                       color: Colors.blue,
@@ -197,7 +199,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
                         color: Colors.grey.withOpacity(0.3)),
-                    child: Icon(
+                    child: const Icon(
                       Icons.tiktok,
                       size: 20,
                       color: Color.fromARGB(255, 250, 45, 108),
@@ -217,7 +219,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               height: 50,
               padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 32, 211, 234),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -243,16 +245,16 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: (checkClick == 0)
-                              ? Color.fromARGB(255, 250, 45, 108)
+                              ? const Color.fromARGB(255, 250, 45, 108)
                               : Colors.transparent,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(25),
                             topRight: Radius.circular(5),
                             bottomLeft: Radius.circular(5),
                             bottomRight: Radius.circular(5),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Videos',
                           style: TextStyle(
                               color: Colors.white,
@@ -276,16 +278,16 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: (checkClick == 1)
-                              ? Color.fromARGB(255, 250, 45, 108)
+                              ? const Color.fromARGB(255, 250, 45, 108)
                               : Colors.transparent,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(5),
                             topRight: Radius.circular(5),
                             bottomLeft: Radius.circular(5),
                             bottomRight: Radius.circular(5),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Persons',
                           style: TextStyle(
                               color: Colors.white,
@@ -310,16 +312,16 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                         margin: const EdgeInsets.only(left: 5),
                         decoration: BoxDecoration(
                           color: (checkClick == 2)
-                              ? Color.fromARGB(255, 250, 45, 108)
+                              ? const Color.fromARGB(255, 250, 45, 108)
                               : Colors.transparent,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(5),
                             topRight: Radius.circular(25),
                             bottomLeft: Radius.circular(5),
                             bottomRight: Radius.circular(5),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Favorites',
                           style: TextStyle(
                               color: Colors.white,
@@ -337,7 +339,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               height: MediaQuery.of(context).size.height / 2.2,
               padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 255, 248, 183),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
@@ -399,11 +401,11 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Text(
+                                            const Text(
                                               'Following',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: const Color.fromARGB(
+                                                color: Color.fromARGB(
                                                     255, 250, 45, 108),
                                                 fontSize: 20,
                                               ),
@@ -425,11 +427,11 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Text(
+                                            const Text(
                                               'Follower',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: const Color.fromARGB(
+                                                color: Color.fromARGB(
                                                     255, 32, 211, 234),
                                                 fontSize: 20,
                                               ),
@@ -487,7 +489,7 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
 
   Widget buildIndicator(bool isActive, Size size) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       height: 12,
       width: isActive ? 80 : 30,
       margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -495,8 +497,8 @@ class _ProfileDifScreenState extends State<ProfileDifScreen> {
           //container with border
           color:
               isActive ? Colors.blue : const Color.fromARGB(255, 32, 211, 234),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          boxShadow: [
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          boxShadow: const [
             BoxShadow(
                 color: Colors.black38, offset: Offset(2, 3), blurRadius: 3)
           ]),
@@ -546,14 +548,14 @@ class VideoDifCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.favorite,
-                    color: const Color.fromARGB(255, 250, 45, 108),
+                    color: Color.fromARGB(255, 250, 45, 108),
                   ),
                   const SizedBox(width: 5),
                   Text(
                     '${_prodiffControls.listVideo[index].likes.length} likes',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -562,10 +564,10 @@ class VideoDifCard extends StatelessWidget {
               ),
             ],
           ),
-          Center(
+          const Center(
             child: Icon(
               Icons.play_arrow,
-              color: const Color.fromARGB(255, 32, 211, 234),
+              color: Color.fromARGB(255, 32, 211, 234),
               size: 30,
             ),
           ),
@@ -584,13 +586,13 @@ class FollowersDifCardPerson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 255, 252, 227),
+      color: const Color.fromARGB(255, 255, 252, 227),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 18),
         padding: const EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         child: Row(
           children: [
             AvatarCircle(
@@ -603,7 +605,7 @@ class FollowersDifCardPerson extends StatelessWidget {
               children: [
                 Text(
                   data.username,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -611,13 +613,13 @@ class FollowersDifCardPerson extends StatelessWidget {
                 ),
                 Text(
                   '#${data.bio}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            Spacer(),
-            Icon(
+            const Spacer(),
+            const Icon(
               Icons.favorite,
               color: Color.fromARGB(255, 32, 211, 234),
             ),
@@ -637,13 +639,13 @@ class FollowingDifCardPerson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 255, 252, 227),
+      color: const Color.fromARGB(255, 255, 252, 227),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 18),
         padding: const EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         child: Row(
           children: [
             AvatarCircle(
@@ -656,7 +658,7 @@ class FollowingDifCardPerson extends StatelessWidget {
               children: [
                 Text(
                   data.username,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -664,13 +666,13 @@ class FollowingDifCardPerson extends StatelessWidget {
                 ),
                 Text(
                   '#${data.bio}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            Spacer(),
-            Icon(
+            const Spacer(),
+            const Icon(
               Icons.favorite,
               color: Color.fromARGB(255, 250, 45, 108),
             ),

@@ -29,7 +29,7 @@ class MessageGroupCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Color.fromARGB(255, 255, 252, 227),
+          color: const Color.fromARGB(255, 255, 252, 227),
         ),
         child: Row(
           children: [
@@ -43,14 +43,14 @@ class MessageGroupCard extends StatelessWidget {
               children: [
                 Text(
                   data.nameOfGroup,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 17),
                 ),
                 Text(
                   '${data.listUid.length} members in group chat',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -58,14 +58,14 @@ class MessageGroupCard extends StatelessWidget {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: 10),
+                  children: const [
+                    SizedBox(width: 10),
                     Text(
                       '9:00 PM',
                       style: TextStyle(color: Colors.grey),
@@ -73,7 +73,7 @@ class MessageGroupCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 5),
-                Container(
+                SizedBox(
                   width: 80,
                   height: 30,
                   child: Stack(

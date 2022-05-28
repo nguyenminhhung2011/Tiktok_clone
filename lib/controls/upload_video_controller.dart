@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
@@ -78,13 +77,13 @@ class upLoadVideoController extends GetxController {
       Get.snackbar(
         'UpLoad video',
         "Success",
-        backgroundColor: Color.fromARGB(255, 136, 199, 250),
+        backgroundColor: const Color.fromARGB(255, 136, 199, 250),
       );
     } catch (err) {
       Get.snackbar(
         'Error Upload Video',
         err.toString(),
-        backgroundColor: Color.fromARGB(255, 136, 199, 250),
+        backgroundColor: const Color.fromARGB(255, 136, 199, 250),
       );
     }
   }

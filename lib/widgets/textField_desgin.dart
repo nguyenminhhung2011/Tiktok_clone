@@ -24,7 +24,7 @@ class _TextFieldDesginState extends State<TextFieldDesgin> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,
         fontSize: 17,
@@ -33,8 +33,8 @@ class _TextFieldDesginState extends State<TextFieldDesgin> {
       keyboardType: TextInputType.emailAddress,
       obscureText: (widget.isPass) ? isLook : false,
       decoration: InputDecoration(
-        iconColor: Color.fromARGB(255, 32, 211, 234),
-        labelStyle: TextStyle(
+        iconColor: const Color.fromARGB(255, 32, 211, 234),
+        labelStyle: const TextStyle(
           // color: (widget.textController.text == "")
           //     ? Colors.grey
           //     : Colors.grey,
@@ -79,8 +79,8 @@ class _TextFieldDesginState extends State<TextFieldDesgin> {
         hintText: widget.hintText,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(
-            color: const Color.fromARGB(255, 32, 211, 234),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 32, 211, 234),
             width: 2,
           ),
         ),
@@ -120,7 +120,7 @@ class _TextFieldDesgin1State extends State<TextFieldDesgin1> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
         fontSize: 17,
@@ -129,8 +129,8 @@ class _TextFieldDesgin1State extends State<TextFieldDesgin1> {
       keyboardType: TextInputType.emailAddress,
       obscureText: (widget.isPass) ? isLook : false,
       decoration: InputDecoration(
-        iconColor: Color.fromARGB(255, 32, 211, 234),
-        labelStyle: TextStyle(
+        iconColor: const Color.fromARGB(255, 32, 211, 234),
+        labelStyle: const TextStyle(
           // color: (widget.textController.text == "")
           //     ? Colors.grey
           //     : Colors.grey,
@@ -175,8 +175,8 @@ class _TextFieldDesgin1State extends State<TextFieldDesgin1> {
         hintText: widget.hintText,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(
-            color: const Color.fromARGB(255, 32, 211, 234),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 32, 211, 234),
             width: 2,
           ),
         ),

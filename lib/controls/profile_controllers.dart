@@ -19,7 +19,7 @@ class ProfileControls extends GetxController {
   List<User> get userUnFollow => _userUnFollow.value;
   List<User> get following => _following.value;
   List<User> get followers => _followers.value;
-  Rx<String> _uid = "".obs;
+  final Rx<String> _uid = "".obs;
 
   upDateUser(String id) {
     _uid.value = id;
@@ -38,9 +38,9 @@ class ProfileControls extends GetxController {
     uid = _uid.value;
     DocumentSnapshot userDoc =
         await firestore.collection('users').doc(_uid.value).get();
-    Map<String, dynamic> data_user = userDoc.data() as Map<String, dynamic>;
-    username = data_user['username'];
-    profilePic = data_user['photoUrl'];
+    Map<String, dynamic> dataUser = userDoc.data() as Map<String, dynamic>;
+    username = dataUser['username'];
+    profilePic = dataUser['photoUrl'];
     email = (userDoc.data() as Map<String, dynamic>)['email'];
     var allVids =
         await firestore.collection('videos').where('uid', isEqualTo: uid).get();
@@ -52,10 +52,10 @@ class ProfileControls extends GetxController {
       };
       allPosts.add(i);
     }
-    for (var item in data_user['followers']) {
+    for (var item in dataUser['followers']) {
       followers.add(item);
     }
-    for (var item in data_user['following']) {
+    for (var item in dataUser['following']) {
       following.add(item);
     }
     _user.value = {
@@ -66,8 +66,8 @@ class ProfileControls extends GetxController {
       "allPosts": allPosts,
       "followers": followers,
       "following": following,
-      "bio": data_user['bio'],
-      "password": data_user['password'],
+      "bio": dataUser['bio'],
+      "password": dataUser['password'],
     };
     //  print(_user.value);
     update();
@@ -82,7 +82,7 @@ class ProfileControls extends GetxController {
     var allVideo = await firestore.collection('videos').get();
     List<Video> result = [];
     for (var item in allVideo.docs) {
-      if ((item.data() as Map<String, dynamic>)['likes'].contains(_uid.value)) {
+      if ((item.data())['likes'].contains(_uid.value)) {
         result.add(Video.fromSnap(item));
       }
     }

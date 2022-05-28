@@ -29,12 +29,12 @@ class VideoCard extends StatelessWidget {
           children: [
             Container(
               height: 50,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                 ),
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
@@ -68,14 +68,14 @@ class VideoCard extends StatelessWidget {
                     children: [
                       Text(
                         data['username'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 32, 211, 234),
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                        children: const [
                           Icon(
                             Icons.play_arrow,
                             color: Colors.white,

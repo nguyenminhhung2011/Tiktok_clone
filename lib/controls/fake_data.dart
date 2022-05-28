@@ -71,7 +71,7 @@ class FakeData {
     },
     {
       "index": 8,
-      "color": Color.fromARGB(255, 32, 211, 234),
+      "color": const Color.fromARGB(255, 32, 211, 234),
     }
   ];
   final List<Map<String, dynamic>> emoji = [

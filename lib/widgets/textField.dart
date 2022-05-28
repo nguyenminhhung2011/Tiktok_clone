@@ -21,6 +21,7 @@ class _TextField_desginState extends State<TextField_desgin> {
   @override
   bool _isOcused = true;
 
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -29,7 +30,7 @@ class _TextField_desginState extends State<TextField_desgin> {
       child: TextFormField(
         keyboardType: widget.textInputType,
         controller: widget.textEdittingCotroller,
-        style: TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16),
         decoration: InputDecoration(
           hintText: widget.hintText,
           enabledBorder: OutlineInputBorder(
@@ -57,7 +58,7 @@ class _TextField_desginState extends State<TextField_desgin> {
                   ),
                   color: _isOcused
                       ? Colors.blue
-                      : Color.fromARGB(255, 214, 212, 211),
+                      : const Color.fromARGB(255, 214, 212, 211),
                 )
               : null,
         ),

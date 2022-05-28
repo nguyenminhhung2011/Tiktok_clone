@@ -25,7 +25,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   final TextEditingController _songController = TextEditingController();
   bool is_upload = false;
   bool is_filter = false;
-  double _height = 0;
+  final double _height = 0;
   bool isLoading = false;
   @override
   void initState() {
@@ -67,11 +67,13 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     Navigator.pop(context);
   }
 
+  @override
   void dispose() {
     super.dispose();
     vidController.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
@@ -83,7 +85,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
-              Spacer(),
+              const Spacer(),
               InkWell(
                 borderRadius: BorderRadius.circular(50),
                 onTap: () {
@@ -98,11 +100,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(255, 136, 199, 250),
                   ),
-                  child: Icon(Icons.filter, size: 20),
+                  child: const Icon(Icons.filter, size: 20),
                 ),
               ),
               const SizedBox(width: 5),
@@ -111,11 +113,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                 onTap: () {},
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(255, 136, 199, 250),
                   ),
-                  child: Icon(Icons.download, size: 20),
+                  child: const Icon(Icons.download, size: 20),
                 ),
               ),
               const SizedBox(width: 5),
@@ -142,7 +144,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                 labelText: 'Caption',
                                 isPass: false,
                                 textController: _captionController,
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.closed_caption,
                                   color: Colors.grey,
                                 ),
@@ -153,7 +155,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                 labelText: 'Song name',
                                 isPass: false,
                                 textController: _songController,
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.music_note,
                                   color: Colors.grey,
                                 ),
@@ -167,11 +169,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
                                   decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 136, 199, 250),
+                                    color: const Color.fromARGB(255, 136, 199, 250),
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: (!isLoading)
-                                      ? Text('Upload')
+                                      ? const Text('Upload')
                                       : const Center(
                                           child: CircularProgressIndicator(
                                             color: Colors.white,
@@ -188,11 +190,11 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(255, 250, 45, 108),
                   ),
-                  child: Icon(Icons.upload, size: 20),
+                  child: const Icon(Icons.upload, size: 20),
                 ),
               ),
             ],

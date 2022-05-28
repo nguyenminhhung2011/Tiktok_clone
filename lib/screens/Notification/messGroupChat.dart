@@ -95,7 +95,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -115,6 +115,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
@@ -154,7 +155,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           ),
           title: Row(
             children: [
@@ -168,7 +169,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                 children: [
                   Text(
                     widget.data.nameOfGroup,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -176,7 +177,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                   ),
                   Text(
                     '${widget.data.listUid.length} members in group chat',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
@@ -189,7 +190,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
         ),
         bottomNavigationBar: Container(
           height: MediaQuery.of(context).size.height * 0.1,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),
@@ -204,7 +205,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                 Expanded(
                   child: Container(
                     alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     height: 50,
                     decoration: BoxDecoration(
                       color: Colors.transparent,
@@ -220,11 +221,11 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                         Expanded(
                           child: TextFormField(
                             controller: _stringController,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintStyle: TextStyle(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -341,7 +342,7 @@ class _MessGroupScreenState extends State<MessGroupScreen> {
                     ),
                     Text(
                       '${widget.data.listUid.length} members in group chat',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 17,

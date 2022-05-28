@@ -13,7 +13,7 @@ class VideoFavCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 255, 252, 227),
+      color: const Color.fromARGB(255, 255, 252, 227),
       child: InkWell(
         onTap: () {
           showDialog(
@@ -50,23 +50,23 @@ class VideoFavCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.person,
                         color: Color.fromARGB(255, 32, 211, 234),
                       ),
                       const SizedBox(width: 3),
                       Text(
                         data.username,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
                         ),
                       ),
-                      Text(' '),
+                      const Text(' '),
                       Text(
                         data.caption,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
@@ -78,26 +78,26 @@ class VideoFavCard extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       text: '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                       ),
                       children: [
-                        TextSpan(
+                        const TextSpan(
                           text: 'View ',
                           style: TextStyle(
                             color: Color.fromARGB(255, 32, 211, 234),
                           ),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: '20.11k',
                           style: TextStyle(color: Colors.black),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: '|',
                           style: TextStyle(color: Colors.grey),
                         ),
-                        TextSpan(
+                        const TextSpan(
                           text: 'Likes ',
                           style: TextStyle(
                             color: Color.fromARGB(255, 32, 211, 234),
@@ -105,15 +105,15 @@ class VideoFavCard extends StatelessWidget {
                         ),
                         TextSpan(
                           text: data.likes.length.toString(),
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              Spacer(),
-              Icon(
+              const Spacer(),
+              const Icon(
                 Icons.favorite,
                 color: Color.fromARGB(255, 250, 45, 108),
               )

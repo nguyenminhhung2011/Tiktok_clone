@@ -4,7 +4,6 @@ import 'package:tiktok_clone/controls/settingController.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
 import '../../controls/fake_data.dart';
-import '../../models/messItem.dart';
 
 class SettingScreen extends StatefulWidget {
   final List<String> listMess;
@@ -33,6 +32,7 @@ class _SettingScreenState extends State<SettingScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -41,9 +41,9 @@ class _SettingScreenState extends State<SettingScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.menu,
-              color: const Color.fromARGB(255, 32, 211, 234),
+              color: Color.fromARGB(255, 32, 211, 234),
             ),
           ),
         ],
@@ -54,7 +54,7 @@ class _SettingScreenState extends State<SettingScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
       ),
       body: Column(
@@ -75,7 +75,7 @@ class _SettingScreenState extends State<SettingScreen> {
           (widget.typeOfMess == 0)
               ? Text(
                   widget.userOP['username'],
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -83,7 +83,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 )
               : Text(
                   widget.userOP['nameOfGroup'],
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -95,13 +95,13 @@ class _SettingScreenState extends State<SettingScreen> {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color.fromARGB(255, 255, 252, 227),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.phone,
-                  color: const Color.fromARGB(255, 32, 211, 234),
+                  color: Color.fromARGB(255, 32, 211, 234),
                 ),
               ),
               const SizedBox(width: 10),
@@ -142,7 +142,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                       children: [
                                         Text(
                                           e['username'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             // fontFamily: "Muli",
@@ -151,7 +151,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                         ),
                                         Text(
                                           '#${e['bio']}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,
                                             // fontFamily: "Muli",
@@ -160,8 +160,8 @@ class _SettingScreenState extends State<SettingScreen> {
                                         ),
                                       ],
                                     ),
-                                    Spacer(),
-                                    Icon(Icons.person, color: Colors.black),
+                                    const Spacer(),
+                                    const Icon(Icons.person, color: Colors.black),
                                   ],
                                 ),
                               );
@@ -174,26 +174,26 @@ class _SettingScreenState extends State<SettingScreen> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color.fromARGB(255, 255, 252, 227),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.person,
-                    color: const Color.fromARGB(255, 32, 211, 234),
+                    color: Color.fromARGB(255, 32, 211, 234),
                   ),
                 ),
               ),
               const SizedBox(width: 10),
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color.fromARGB(255, 255, 252, 227),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.picture_as_pdf,
-                  color: const Color.fromARGB(255, 32, 211, 234),
+                  color: Color.fromARGB(255, 32, 211, 234),
                 ),
               ),
             ],
@@ -265,7 +265,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               child: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Change Collor of Message',
                     style: TextStyle(
                       color: Colors.white,
@@ -273,11 +273,11 @@ class _SettingScreenState extends State<SettingScreen> {
                       fontSize: 20,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     width: 20,
                     height: 20,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Color.fromARGB(255, 250, 45, 108),
                     ),
@@ -307,7 +307,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               child: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Change NickName',
                     style: TextStyle(
                       color: Colors.white,
@@ -315,11 +315,11 @@ class _SettingScreenState extends State<SettingScreen> {
                       fontSize: 20,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     width: 20,
                     height: 20,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.yellow,
                     ),
@@ -328,13 +328,13 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
           ),
-          Spacer(),
-          (widget.listMess.length > 0)
+          const Spacer(),
+          (widget.listMess.isNotEmpty)
               ? Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 2.3,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 255, 252, 227),
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 255, 252, 227),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),

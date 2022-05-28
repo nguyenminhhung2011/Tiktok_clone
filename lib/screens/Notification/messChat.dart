@@ -13,7 +13,6 @@ import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 import '../../constains.dart';
 import '../../controls/messController.dart';
 import '../../controls/storage_methods.dart';
-import '../../models/messItem.dart';
 
 class MessChat extends StatefulWidget {
   final String uidPerson1; //uid
@@ -50,8 +49,7 @@ class _MessChatState extends State<MessChat> {
         String addS = "";
         int check = 1;
         int count = 0;
-        l.forEach(
-          (element) {
+        for (var element in l) {
             if ((countLength / 25).floor() == check && count < l.length - 1) {
               addS += '\n';
               check++;
@@ -59,8 +57,7 @@ class _MessChatState extends State<MessChat> {
             countLength += element.length;
             addS += element + ' ';
             count++;
-          },
-        );
+          }
         await _messController.sendMessage(addS, 0, widget.uidPerson2);
       } else {
         await _messController.sendMessage(
@@ -89,8 +86,8 @@ class _MessChatState extends State<MessChat> {
     Navigator.pop(context);
   }
 
-  void sendEmoji(BuildContext context, String emoji_path) async {
-    _messController.sendMessage(emoji_path, 2, widget.uidPerson2);
+  void sendEmoji(BuildContext context, String emojiPath) async {
+    _messController.sendMessage(emojiPath, 2, widget.uidPerson2);
     Navigator.pop(context);
   }
 
@@ -134,7 +131,7 @@ class _MessChatState extends State<MessChat> {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -147,7 +144,7 @@ class _MessChatState extends State<MessChat> {
                   ],
                 ),
                 (isLoading)
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(color: Colors.blue),
                       )
                     : Container(),
@@ -159,6 +156,7 @@ class _MessChatState extends State<MessChat> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => (_messController.user.isNotEmpty &&
@@ -201,7 +199,7 @@ class _MessChatState extends State<MessChat> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+                  icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                 ),
                 title: Row(
                   children: [
@@ -215,7 +213,7 @@ class _MessChatState extends State<MessChat> {
                       children: [
                         Text(
                           _messController.opUser['username'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -223,7 +221,7 @@ class _MessChatState extends State<MessChat> {
                         ),
                         Text(
                           '#${_messController.opUser['bio']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
@@ -237,7 +235,7 @@ class _MessChatState extends State<MessChat> {
               backgroundColor: Colors.white,
               bottomNavigationBar: Container(
                 height: MediaQuery.of(context).size.height * 0.1,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
@@ -252,7 +250,7 @@ class _MessChatState extends State<MessChat> {
                       Expanded(
                         child: Container(
                           alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           height: 50,
                           decoration: BoxDecoration(
                             color: Colors.transparent,
@@ -268,11 +266,11 @@ class _MessChatState extends State<MessChat> {
                               Expanded(
                                 child: TextFormField(
                                   controller: _stringController,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintStyle: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
@@ -394,7 +392,7 @@ class _MessChatState extends State<MessChat> {
                           ),
                           Text(
                             _messController.opUser['bio'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
@@ -405,7 +403,7 @@ class _MessChatState extends State<MessChat> {
                             children: [
                               Text(
                                 '${_messController.opUser['following'].length} Following | ${_messController.opUser['followers'].length} followers',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
@@ -437,7 +435,7 @@ class _MessChatState extends State<MessChat> {
                 ),
               ),
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );

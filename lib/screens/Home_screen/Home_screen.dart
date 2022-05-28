@@ -1,7 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/constains.dart';
-import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/screens/Insert_video.dart/inserVid_screen.dart';
 import 'package:tiktok_clone/screens/Search_screen/search_screen.dart';
 import 'package:tiktok_clone/screens/profileUser/profile_user_screen.dart';
@@ -34,14 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor: (_page != 2)
               ? (_page < 2)
-                  ? Color.fromARGB(255, 136, 199, 250)
-                  : Color.fromARGB(255, 250, 45, 108)
+                  ? const Color.fromARGB(255, 136, 199, 250)
+                  : const Color.fromARGB(255, 250, 45, 108)
               : Colors.transparent,
           labelTextStyle: MaterialStateProperty.all(
             const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
@@ -55,11 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
           onDestinationSelected: (int newIndex) {
             NavigatorTapped(newIndex);
           },
-          destinations: [
+          destinations: const [
             NavigationDestination(
               icon: Icon(
                 Icons.home,
-                color: const Color.fromARGB(255, 32, 211, 234),
+                color: Color.fromARGB(255, 32, 211, 234),
                 size: 27,
               ),
               selectedIcon: Icon(
@@ -71,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             NavigationDestination(
               icon: Icon(
                 Icons.search,
-                color: const Color.fromARGB(255, 32, 211, 234),
+                color: Color.fromARGB(255, 32, 211, 234),
                 size: 27,
               ),
               selectedIcon: Icon(
@@ -108,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: PageView(
         controller: _pageController,
-        children: [
+        children: const [
           Home(),
           SearchScreen(),
           InserVid(),

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 
@@ -22,7 +20,7 @@ class NotiController extends GetxController {
   List<Message> get listGroupMessage => _listGroupMessage.value;
   List<User> get allUser => _allUser.value;
   List<Noti> get allNoti => _allNoti.value;
-  Rx<String> _uid = "".obs;
+  final Rx<String> _uid = "".obs;
 
   updateGroupMessage(String id) {
     _uid.value = id;
@@ -101,7 +99,7 @@ class NotiController extends GetxController {
         (event) {
           List<User> result = [];
           for (var item in event.docs) {
-            if ((item.data() as Map<String, dynamic>)['uid'] != _uid.value) {
+            if ((item.data())['uid'] != _uid.value) {
               result.add(User.fromSnap(item));
             }
           }

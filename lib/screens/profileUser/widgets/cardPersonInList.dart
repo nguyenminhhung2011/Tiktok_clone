@@ -31,7 +31,7 @@ class CardPersonInList extends StatelessWidget {
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width / 3.5,
           height: MediaQuery.of(context).size.height / 4.5,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color.fromARGB(255, 248, 243, 191),
           ),
           child: Stack(
@@ -45,12 +45,12 @@ class CardPersonInList extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     user.username,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "#${user.bio}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
@@ -67,7 +67,7 @@ class CardPersonInList extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         color: const Color.fromARGB(255, 32, 211, 234),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Following',
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),

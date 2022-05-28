@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
-import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/controls/video_controler.dart';
 import 'package:video_player/video_player.dart';
 
@@ -41,16 +40,18 @@ class _DisPlayVideoState extends State<DisPlayVideo>
           ..repeat();
   }
 
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
     videoController.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(15),
           bottomRight: Radius.circular(15),
@@ -59,7 +60,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: VideoPlayer(videoController),
           ),
@@ -69,12 +70,12 @@ class _DisPlayVideoState extends State<DisPlayVideo>
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                     flex: 4,
-                    child: Container(
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height / 6,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,13 +109,13 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                           const SizedBox(height: 7),
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.music_note,
                                 color: Colors.white,
                                 size: 20,
                               ),
                               const SizedBox(width: 5),
-                              Container(
+                              SizedBox(
                                 height: 20,
                                 width: MediaQuery.of(context).size.width / 2,
                                 child: Marquee(
@@ -138,13 +139,12 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                     ),
                   ),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height / 1.9 - 20,
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
                           Stack(
-                            overflow: Overflow.visible,
                             children: [
                               Container(
                                 width: 60,
@@ -157,27 +157,27 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                   ),
                                   color: Colors.red,
                                   image: DecorationImage(
-                                    image: new NetworkImage(
+                                    image: NetworkImage(
                                         widget.data.proFilePic),
                                   ),
                                 ),
                               ),
                               Positioned(
                                 left: 22,
-                                top: 49,
+                                top: 40,
                                 child: Container(
                                   padding: const EdgeInsets.all(2),
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Color.fromARGB(255, 250, 45, 108),
                                   ),
-                                  child: Icon(Icons.add,
+                                  child: const Icon(Icons.add,
                                       color: Colors.white, size: 15),
                                 ),
                               )
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Icon_text(
                             no: '${widget.data.likes.length}',
                             press: () async {
@@ -195,7 +195,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                               size: 35,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Icon_text(
                             no: '${widget.data.commentCount}',
                             press: () {
@@ -208,24 +208,24 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                 ),
                               );
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.comment,
                               size: 35,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Icon_text(
                             no: '${widget.data.shareCount}',
                             press: () async {
                               videoController.dispose();
                               await firebaseAuth.signOut();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.share,
                               size: 35,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Icon_text(
                             no: 'View',
                             press: () {
@@ -234,25 +234,25 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                 _checkShowProfile = !_checkShowProfile;
                               });
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.person,
                               size: 35,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           AnimatedBuilder(
                             animation: _controller,
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               width: 50,
                               height: 50,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Color.fromARGB(255, 136, 199, 250),
                               ),
                               child: CircleAvatar(
                                 backgroundImage:
-                                    new NetworkImage(widget.data.proFilePic),
+                                    NetworkImage(widget.data.proFilePic),
                               ),
                             ),
                             builder: (context, Widget? child) {
@@ -261,7 +261,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                   child: child);
                             },
                           ),
-                          Spacer(),
+                          const Spacer(),
                         ],
                       ),
                     ),
@@ -272,13 +272,13 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                 curve: Curves.fastOutSlowIn,
                 width: double.infinity,
                 height: _height,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
                   color: Colors.black,
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
@@ -287,7 +287,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                     ],
                   ),
                 ),
-                duration: Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
@@ -306,12 +306,12 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   width: 2,
-                                  color: Color.fromARGB(255, 136, 199, 250),
+                                  color: const Color.fromARGB(255, 136, 199, 250),
                                 ),
                               ),
                               child: CircleAvatar(
                                 backgroundImage:
-                                    new NetworkImage(widget.data.proFilePic),
+                                    NetworkImage(widget.data.proFilePic),
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -336,7 +336,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                 ),
                                 const SizedBox(height: 3),
                                 Text(
-                                  '${widget.data.caption}',
+                                  widget.data.caption,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
@@ -349,18 +349,18 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                 const SizedBox(height: 5),
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 13, vertical: 10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(23),
-                                color: Color.fromARGB(255, 250, 45, 108),
+                                color: const Color.fromARGB(255, 250, 45, 108),
                               ),
                               child: Row(
-                                children: [
+                                children: const [
                                   Icon(Icons.favorite),
-                                  const SizedBox(width: 5),
+                                  SizedBox(width: 5),
                                   Text('7,7k'),
                                 ],
                               ),

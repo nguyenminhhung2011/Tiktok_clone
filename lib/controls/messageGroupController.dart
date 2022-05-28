@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constains.dart';
 import '../models/messItem.dart';
-import '../models/message.dart';
 
 class MessageGroupController extends GetxController {
   final Rx<List<MessItem>> _listMessages = Rx<List<MessItem>>([]);
@@ -12,7 +9,7 @@ class MessageGroupController extends GetxController {
 
   List<MessItem> get listMessages => _listMessages.value;
   List<String> get allImagesInMess => _allImagesInMess.value;
-  Rx<String> _uid = "".obs;
+  final Rx<String> _uid = "".obs;
   upDateMessages(String id, String messId) {
     _uid.value = id;
     getDataMessages(messId);
@@ -68,13 +65,13 @@ class MessageGroupController extends GetxController {
         var userDoc = await firestore.collection('users').doc(uid).get();
         int border1 = 0;
         int border2 = 30;
-        String mess_nearest = "";
+        String messNearest = "";
         String userSend = "";
         for (var item in allMessagesItem.docs) {
           if ("messItem ${(allMessagesItem.docs.length - 1).toString()}" ==
-              (item.data() as Map<String, dynamic>)['itemId']) {
-            mess_nearest = (item.data() as Map<String, dynamic>)["itemId"];
-            userSend = (item.data() as Map<String, dynamic>)['username'];
+              (item.data())['itemId']) {
+            messNearest = (item.data())["itemId"];
+            userSend = (item.data())['username'];
             break;
           }
         }
@@ -87,7 +84,7 @@ class MessageGroupController extends GetxController {
               .collection('messages')
               .doc(messId)
               .collection('messItems')
-              .doc(mess_nearest)
+              .doc(messNearest)
               .update(
             {
               'border2': 5,

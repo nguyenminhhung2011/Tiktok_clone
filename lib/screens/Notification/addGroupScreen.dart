@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/controls/addGroupController.dart';
-import 'package:tiktok_clone/controls/storage_methods.dart';
 import 'package:tiktok_clone/screens/Notification/widget/personCardToAddGroup.dart';
 
 import '../../models/user.dart';
@@ -20,7 +19,7 @@ class CreateGroupScreen extends StatefulWidget {
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
   final TextEditingController _nameController = TextEditingController();
   final AddGroupController _addGroupController = Get.put(AddGroupController());
-  List<User> _listUserToAddGroup = [];
+  final List<User> _listUserToAddGroup = [];
   Uint8List? _image;
   @override
   void initState() {
@@ -61,6 +60,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
@@ -71,9 +71,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back_ios, color: Colors.black),
+            child: const Icon(Icons.arrow_back_ios, color: Colors.black),
           ),
-          title: Text(
+          title: const Text(
             'Create Group',
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -93,11 +93,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               ),
               child: TextFormField(
                 controller: _nameController,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintStyle: TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
@@ -116,7 +116,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 vertical: 2,
                 horizontal: 15,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 255, 252, 227),
               ),
               child: SingleChildScrollView(
@@ -175,11 +175,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       width: 3,
-                      color: Color.fromARGB(255, 94, 153, 201),
+                      color: const Color.fromARGB(255, 94, 153, 201),
                     ),
                   ),
                   child: (_image == null)
-                      ? CircleAvatar(
+                      ? const CircleAvatar(
                           backgroundImage: NetworkImage(
                               'https://i0.wp.com/phocode.com/wp-content/uploads/2016/08/golang.sh-600x600.png?fit=300%2C300&ssl=1'),
                           radius: 45,
@@ -193,7 +193,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Select your Image of Group',
                       style: TextStyle(
                         color: Colors.black,
@@ -211,13 +211,13 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                             horizontal: 20, vertical: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: Color.fromARGB(255, 94, 153, 201),
+                          color: const Color.fromARGB(255, 94, 153, 201),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                          children: const [
                             Icon(Icons.camera),
-                            const SizedBox(width: 5),
+                            SizedBox(width: 5),
                             Text('Pick Image'),
                           ],
                         ),
@@ -227,7 +227,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             InkWell(
               onTap: () {
                 creataGroup();
@@ -240,7 +240,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   color: const Color.fromARGB(255, 32, 211, 231),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Text(
+                child: const Text(
                   'Creata Group',
                   style: TextStyle(
                       color: Colors.white,
@@ -285,14 +285,14 @@ class UserCardToAddGroup extends StatelessWidget {
         children: [
           Text(
             username,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 15,
             ),
           ),
           const SizedBox(width: 2),
-          InkWell(onTap: press, child: Icon(Icons.close, size: 12)),
+          InkWell(onTap: press, child: const Icon(Icons.close, size: 12)),
         ],
       ),
     );

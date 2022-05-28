@@ -9,7 +9,6 @@ import 'package:tiktok_clone/screens/profileUser/widgets/cardPersonInList.dart';
 
 import '../../controls/profile_controllers.dart';
 import '../../models/user.dart';
-import '../../models/video.dart';
 import '../../widgets/Avtar_circle.dart';
 import '../../widgets/textField_desgin.dart';
 
@@ -41,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _profileControls.upDateUser(authMethods.user.uid);
     _profileControls.updateUserUnfollow(authMethods.user.uid);
     _profileControls.updateFollowing(authMethods.user.uid);
-    if (_profileControls.userUnFollow.length == 0) {
+    if (_profileControls.userUnFollow.isEmpty) {
       setState(() {
         isShowListPerson = false;
       });
@@ -66,6 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Obx(
@@ -76,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   toolbarHeight: (isShowListPerson &&
-                          _profileControls.userUnFollow.length > 0)
+                          _profileControls.userUnFollow.isNotEmpty)
                       ? MediaQuery.of(context).size.height / 2
                       : MediaQuery.of(context).size.height / 4,
                   elevation: 0,
@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         indexOfTab = index;
                       });
                     },
-                    indicatorColor: Color.fromARGB(255, 242, 196, 15),
+                    indicatorColor: const Color.fromARGB(255, 242, 196, 15),
                     tabs: [
                       Tab(
                         icon: Row(
@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icon(
                               Icons.play_arrow_sharp,
                               color: (indexOfTab == 0)
-                                  ? Color.fromARGB(255, 242, 196, 15)
+                                  ? const Color.fromARGB(255, 242, 196, 15)
                                   : Colors.grey,
                             ),
                             const SizedBox(width: 5),
@@ -104,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               'Videos',
                               style: TextStyle(
                                 color: (indexOfTab == 0)
-                                    ? Color.fromARGB(255, 242, 196, 15)
+                                    ? const Color.fromARGB(255, 242, 196, 15)
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -119,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icon(
                               Icons.person,
                               color: (indexOfTab == 1)
-                                  ? Color.fromARGB(255, 242, 196, 15)
+                                  ? const Color.fromARGB(255, 242, 196, 15)
                                   : Colors.grey,
                             ),
                             const SizedBox(width: 5),
@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               'Person',
                               style: TextStyle(
                                 color: (indexOfTab == 1)
-                                    ? Color.fromARGB(255, 242, 196, 15)
+                                    ? const Color.fromARGB(255, 242, 196, 15)
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Icon(
                               Icons.favorite,
                               color: (indexOfTab == 2)
-                                  ? Color.fromARGB(255, 242, 196, 15)
+                                  ? const Color.fromARGB(255, 242, 196, 15)
                                   : Colors.grey,
                             ),
                             const SizedBox(width: 5),
@@ -150,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               'Favorited',
                               style: TextStyle(
                                 color: (indexOfTab == 2)
-                                    ? Color.fromARGB(255, 242, 196, 15)
+                                    ? const Color.fromARGB(255, 242, 196, 15)
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -165,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               'Profile User',
                               // ignore: deprecated_member_use
                               style: TextStyle(
@@ -174,8 +174,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 fontSize: 20,
                               ),
                             ),
-                            Spacer(),
-                            Icon(
+                            const Spacer(),
+                            const Icon(
                               Icons.favorite,
                               color: Color.fromARGB(255, 250, 45, 108),
                             ),
@@ -203,13 +203,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         children: [
                                           const SizedBox(height: 10),
                                           Row(
-                                            children: [
+                                            children: const [
                                               Icon(
                                                 Icons.lock,
                                                 color: Colors.blue,
                                                 size: 30,
                                               ),
-                                              const SizedBox(width: 10),
+                                              SizedBox(width: 10),
                                               Text(
                                                 "Update Password",
                                                 style: TextStyle(
@@ -226,7 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             labelText: "Password",
                                             isPass: true,
                                             textController: _passwordControls,
-                                            icon: Icon(Icons.password),
+                                            icon: const Icon(Icons.password),
                                           ),
                                           const SizedBox(height: 10),
                                           TextFieldDesgin(
@@ -234,9 +234,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             labelText: "n_password",
                                             isPass: true,
                                             textController: _newPassControls,
-                                            icon: Icon(Icons.password),
+                                            icon: const Icon(Icons.password),
                                           ),
-                                          Spacer(),
+                                          const Spacer(),
                                           InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(30),
@@ -253,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 color: const Color.fromARGB(
                                                     255, 250, 45, 108),
                                               ),
-                                              child: Text(
+                                              child: const Text(
                                                 "Update Password",
                                                 style: TextStyle(
                                                   color: Colors.white,
@@ -270,7 +270,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 );
                               },
-                              child: Icon(Icons.lock, color: Colors.blue),
+                              child: const Icon(Icons.lock, color: Colors.blue),
                             ),
                             const SizedBox(width: 20),
                           ],
@@ -295,7 +295,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       Text(
                                         _profileControls.user['username'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 22,
@@ -306,11 +306,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         width: 20,
                                         height: 20,
                                         padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: Colors.blue,
                                         ),
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.tiktok,
                                           color: Colors.white,
                                           size: 10,
@@ -322,27 +322,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   RichText(
                                     text: TextSpan(
                                       text: '',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
                                       children: [
-                                        TextSpan(text: 'Posts: '),
+                                        const TextSpan(text: 'Posts: '),
                                         TextSpan(
                                           text: _profileControls
                                               .user['allPosts'].length
                                               .toString(),
                                         ),
-                                        TextSpan(text: ' | '),
-                                        TextSpan(text: 'Following: '),
+                                        const TextSpan(text: ' | '),
+                                        const TextSpan(text: 'Following: '),
                                         TextSpan(
                                           text: _profileControls
                                               .user['following'].length
                                               .toString(),
                                         ),
-                                        TextSpan(text: ' | '),
-                                        TextSpan(text: 'Followers: '),
+                                        const TextSpan(text: ' | '),
+                                        const TextSpan(text: 'Followers: '),
                                         TextSpan(
                                             text: _profileControls
                                                 .user['followers'].length
@@ -354,13 +354,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   RichText(
                                     text: TextSpan(
                                       text: '',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
                                       ),
                                       children: [
-                                        TextSpan(text: 'Email: '),
+                                        const TextSpan(text: 'Email: '),
                                         TextSpan(
                                             text:
                                                 _profileControls.user['email']),
@@ -394,10 +394,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 40,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 250, 45, 108),
+                                  color: const Color.fromARGB(255, 250, 45, 108),
                                   borderRadius: BorderRadius.circular(14),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'Edit your profile',
                                   style: TextStyle(
                                     color: Colors.white,
@@ -418,7 +418,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14),
                                     color: Colors.grey.withOpacity(0.3)),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.facebook_outlined,
                                   size: 20,
                                   color: Colors.blue,
@@ -431,8 +431,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {
                                 setState(() {
                                   isShowListPerson =
-                                      (_profileControls.userUnFollow.length !=
-                                              0)
+                                      (_profileControls.userUnFollow.isNotEmpty)
                                           ? !isShowListPerson
                                           : isShowListPerson;
                                 });
@@ -444,7 +443,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14),
                                     color: Colors.grey.withOpacity(0.3)),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.arrow_drop_down,
                                   size: 30,
                                   color: Colors.black,
@@ -496,7 +495,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(
                 color: Colors.blue,
               ),
@@ -537,7 +536,7 @@ class _PersonTabState extends State<PersonTab> {
                 height: 40,
                 width: 150,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 252, 227),
+                  color: const Color.fromARGB(255, 255, 252, 227),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -556,9 +555,9 @@ class _PersonTabState extends State<PersonTab> {
                         height: 34,
                         decoration: BoxDecoration(
                           color: (checkFollowingFollowers)
-                              ? Color.fromARGB(255, 250, 45, 108)
+                              ? const Color.fromARGB(255, 250, 45, 108)
                               : Colors.transparent,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),
                             bottomLeft: Radius.circular(10),
                             topRight: Radius.circular(4),
@@ -570,7 +569,7 @@ class _PersonTabState extends State<PersonTab> {
                           style: TextStyle(
                             color: (checkFollowingFollowers)
                                 ? Colors.white
-                                : Color.fromARGB(255, 250, 45, 108),
+                                : const Color.fromARGB(255, 250, 45, 108),
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -594,9 +593,9 @@ class _PersonTabState extends State<PersonTab> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: (!checkFollowingFollowers)
-                              ? Color.fromARGB(255, 32, 211, 234)
+                              ? const Color.fromARGB(255, 32, 211, 234)
                               : Colors.transparent,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(4),
                             bottomLeft: Radius.circular(4),
                             topRight: Radius.circular(10),
@@ -608,7 +607,7 @@ class _PersonTabState extends State<PersonTab> {
                           style: TextStyle(
                             color: (!checkFollowingFollowers)
                                 ? Colors.white
-                                : Color.fromARGB(255, 32, 211, 234),
+                                : const Color.fromARGB(255, 32, 211, 234),
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -676,7 +675,7 @@ class FollowersCardPerson extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         child: Row(
           children: [
             AvatarCircle(
@@ -689,7 +688,7 @@ class FollowersCardPerson extends StatelessWidget {
               children: [
                 Text(
                   data.username,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -697,13 +696,13 @@ class FollowersCardPerson extends StatelessWidget {
                 ),
                 Text(
                   '#${data.bio}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            Spacer(),
-            Icon(
+            const Spacer(),
+            const Icon(
               Icons.favorite,
               color: Color.fromARGB(255, 32, 211, 234),
             ),
@@ -741,7 +740,7 @@ class FollowingCardPerson extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         child: Row(
           children: [
             AvatarCircle(
@@ -754,7 +753,7 @@ class FollowingCardPerson extends StatelessWidget {
               children: [
                 Text(
                   data.username,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -762,13 +761,13 @@ class FollowingCardPerson extends StatelessWidget {
                 ),
                 Text(
                   '#${data.bio}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.grey, fontWeight: FontWeight.bold),
                 )
               ],
             ),
-            Spacer(),
-            Icon(
+            const Spacer(),
+            const Icon(
               Icons.favorite,
               color: Color.fromARGB(255, 250, 45, 108),
             ),

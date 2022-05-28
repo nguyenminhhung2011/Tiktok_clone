@@ -61,11 +61,12 @@ class _SignUpMainState extends State<SignUpMain> {
       Get.snackbar(
         'Error Sign Up',
         res,
-        backgroundColor: Color.fromARGB(255, 136, 199, 250),
+        backgroundColor: const Color.fromARGB(255, 136, 199, 250),
       );
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -77,11 +78,11 @@ class _SignUpMainState extends State<SignUpMain> {
                 shape: BoxShape.circle,
                 border: Border.all(
                   width: 3,
-                  color: Color.fromARGB(255, 94, 153, 201),
+                  color: const Color.fromARGB(255, 94, 153, 201),
                 ),
               ),
               child: (_image == null)
-                  ? CircleAvatar(
+                  ? const CircleAvatar(
                       backgroundImage: NetworkImage(
                         'https://images.unsplash.com/photo-1650859111563-2cfcfbbe586b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
                       ),
@@ -96,7 +97,7 @@ class _SignUpMainState extends State<SignUpMain> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Select your avatar',
                   style: TextStyle(
                     color: Colors.black,
@@ -114,13 +115,13 @@ class _SignUpMainState extends State<SignUpMain> {
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Color.fromARGB(255, 94, 153, 201),
+                      color: const Color.fromARGB(255, 94, 153, 201),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Icon(Icons.camera),
-                        const SizedBox(width: 5),
+                        SizedBox(width: 5),
                         Text('Pick Image'),
                       ],
                     ),
@@ -136,7 +137,7 @@ class _SignUpMainState extends State<SignUpMain> {
           labelText: 'Username',
           isPass: false,
           textController: widget._usernameController,
-          icon: Icon(Icons.person, color: Colors.grey),
+          icon: const Icon(Icons.person, color: Colors.grey),
         ),
         const SizedBox(height: 20),
         TextFieldDesgin(
@@ -144,7 +145,7 @@ class _SignUpMainState extends State<SignUpMain> {
           labelText: 'Email',
           isPass: false,
           textController: widget._emailControllelrSU,
-          icon: Icon(Icons.email, color: Colors.grey),
+          icon: const Icon(Icons.email, color: Colors.grey),
         ),
         const SizedBox(height: 20),
         TextFieldDesgin(
@@ -152,7 +153,7 @@ class _SignUpMainState extends State<SignUpMain> {
           labelText: 'Password',
           isPass: true,
           textController: widget._passwordControllelrSU,
-          icon: Icon(Icons.person, color: Colors.grey),
+          icon: const Icon(Icons.person, color: Colors.grey),
         ),
         const SizedBox(height: 20),
         TextFieldDesgin(
@@ -160,7 +161,7 @@ class _SignUpMainState extends State<SignUpMain> {
           labelText: 'Bio',
           isPass: false,
           textController: widget._bioControllelr,
-          icon: Icon(Icons.tiktok, color: Colors.grey),
+          icon: const Icon(Icons.tiktok, color: Colors.grey),
         ),
         const SizedBox(height: 20),
         Padding(
@@ -171,7 +172,7 @@ class _SignUpMainState extends State<SignUpMain> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'By selecting Agree and continue below',
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -181,7 +182,7 @@ class _SignUpMainState extends State<SignUpMain> {
                     ),
                   ),
                   RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       text: '',
                       style: TextStyle(fontSize: 15),
                       children: [
@@ -215,7 +216,7 @@ class _SignUpMainState extends State<SignUpMain> {
             signUpUser();
           },
           title: (!isLoading)
-              ? Text(
+              ? const Text(
                   'Continue',
                   style: TextStyle(
                     color: Colors.white,

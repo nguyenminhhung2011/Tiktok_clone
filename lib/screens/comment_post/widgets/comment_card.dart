@@ -42,6 +42,7 @@ class _CommentCardState extends State<CommentCard> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return (!checkLoad)
         ? Padding(
@@ -50,7 +51,7 @@ class _CommentCardState extends State<CommentCard> {
               vertical: 3,
             ),
             child: Card(
-              color: Color.fromARGB(255, 255, 252, 227),
+              color: const Color.fromARGB(255, 255, 252, 227),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -59,7 +60,7 @@ class _CommentCardState extends State<CommentCard> {
                   children: [
                     AvatarCircle(avtPath: widget.data.profilePic, sizeAvt: 60),
                     const SizedBox(width: 10),
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width / 1.7,
                       child: Column(
                         children: [
@@ -68,15 +69,15 @@ class _CommentCardState extends State<CommentCard> {
                             children: [
                               Text(
                                 widget.data.username,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color:
-                                      const Color.fromARGB(255, 32, 211, 234),
+                                      Color.fromARGB(255, 32, 211, 234),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 5),
-                              Container(
+                              const SizedBox(width: 5),
+                              SizedBox(
                                 width:
                                     MediaQuery.of(context).size.width / 2.25 -
                                         widget.data.username.length * 2,
@@ -84,7 +85,7 @@ class _CommentCardState extends State<CommentCard> {
                                   widget.data.title,
                                   overflow: TextOverflow.fade,
                                   maxLines: 2,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
@@ -100,16 +101,16 @@ class _CommentCardState extends State<CommentCard> {
                               Text(
                                 DateFormat.yMMMd()
                                     .format(widget.data.datePublished.toDate()),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Text(
                                 '${widget.data.likes.length} likes',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
@@ -120,7 +121,7 @@ class _CommentCardState extends State<CommentCard> {
                         ],
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
                       onPressed: () {
                         CommentsController().likesCmt(
@@ -134,7 +135,7 @@ class _CommentCardState extends State<CommentCard> {
                         Icons.favorite,
                         color:
                             (widget.data.likes.contains(authMethods.user.uid))
-                                ? Color.fromARGB(255, 250, 45, 108)
+                                ? const Color.fromARGB(255, 250, 45, 108)
                                 : const Color.fromARGB(255, 32, 211, 234),
                         size: 30,
                       ),

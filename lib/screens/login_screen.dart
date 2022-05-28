@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tiktok_clone/controls/auth_controls.dart';
 import 'package:tiktok_clone/screens/signIn_main.dart';
 import 'package:tiktok_clone/screens/signUp_main.dart';
-import 'package:tiktok_clone/utils/color.dart';
-import 'package:tiktok_clone/utils/untils.dart';
 
-import '../controls/fireStore_methods.dart';
-import '../widgets/button_desgin.dart';
-import '../widgets/textField_desgin.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -35,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -49,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       'Tik Tik',
                       textAlign: TextAlign.center,
@@ -124,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             color: Colors.white,
           ),
-          child: Image(
+          child: const Image(
             image: AssetImage('assets/images/facebook.png'),
             height: 30,
           ),
@@ -140,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             color: Colors.white,
           ),
-          child: Image(
+          child: const Image(
             image: AssetImage('assets/images/google.png'),
             height: 30,
           ),
@@ -156,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             color: Colors.white,
           ),
-          child: Image(
+          child: const Image(
             image: AssetImage('assets/images/apple.png'),
             height: 30,
           ),
@@ -194,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: isCheckSign ? Colors.white : Colors.transparent,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text(
+                child: const Text(
                   'Enter account',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -223,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: !isCheckSign ? Colors.white : Colors.transparent,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text(
+                child: const Text(
                   'Register account',
                   textAlign: TextAlign.center,
                   style: TextStyle(

@@ -9,7 +9,7 @@ class IconDesgin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 60,
-        decoration: BoxDecoration(),
+        decoration: const BoxDecoration(),
         child: Stack(
           children: [
             Align(
@@ -46,7 +46,7 @@ class IconDesgin extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   color: const Color.fromARGB(255, 255, 252, 227),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.add,
                   color: Colors.black,
                   size: 25,

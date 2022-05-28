@@ -1,11 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tiktok_clone/constains.dart';
-import 'package:tiktok_clone/controls/auth_controls.dart';
-import 'package:tiktok_clone/controls/profile_controllers.dart';
 import 'package:tiktok_clone/controls/video_controler.dart';
-import 'package:tiktok_clone/models/comment.dart';
 import 'package:tiktok_clone/screens/comment_post/widgets/comment_card.dart';
 
 import '../../controls/comments_controller.dart';
@@ -32,6 +27,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     cmtController.upDatePostId(widget.data.id);
 
@@ -46,10 +42,10 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
         title: Row(
-          children: [
+          children: const [
             Text(
               'Comments',
               // ignore: deprecated_member_use
@@ -65,7 +61,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
       ),
       bottomNavigationBar: Container(
         height: MediaQuery.of(context).size.height * 0.1,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
@@ -84,7 +80,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundImage: NetworkImage(
                   'https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.6435-9/199077180_344520240499485_2792476399852603899_n.jpg?_nc_cat=106&ccb=1-6&_nc_sid=174925&_nc_ohc=-xWqMqllrCUAX-JR9S1&_nc_oc=AQktIZvG7GEZ8hAam3eWWzOYAd4ePl6ZHqfAe4Aj34rxwp8cd2n09Me_CO7Q6pyD3Ng&_nc_ht=scontent.fsgn2-3.fna&oh=00_AT9bY3sEb8ZY5fJQdB1QEJKuFGKclTyyrLyDGBkVs8U7Gw&oe=629D6B46',
                 ),
@@ -94,7 +90,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
               Expanded(
                 child: Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   height: 50,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
@@ -106,11 +102,11 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                   ),
                   child: TextFormField(
                     controller: commentConttoller,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintStyle: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -128,9 +124,9 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
                     commentConttoller.clear();
                   });
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.send,
-                  color: const Color.fromARGB(255, 32, 211, 234),
+                  color: Color.fromARGB(255, 32, 211, 234),
                 ),
               ),
             ],
@@ -141,7 +137,7 @@ class _CommentPostScreenState extends State<CommentPostScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height -
                   MediaQuery.of(context).size.height * 0.17,
               child: SingleChildScrollView(

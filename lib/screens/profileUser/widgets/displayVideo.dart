@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../models/user.dart';
 import '../../../models/video.dart';
 
 class DisPlayVideo extends StatefulWidget {
@@ -31,6 +30,7 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
       });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(5),
@@ -43,7 +43,7 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: VideoPlayer(videoController),
@@ -68,20 +68,20 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                     },
                     child: Container(
                       padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: const Color.fromARGB(255, 255, 252, 227),
+                        color: Color.fromARGB(255, 255, 252, 227),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.play_arrow,
-                        color: const Color.fromARGB(255, 250, 45, 108),
+                        color: Color.fromARGB(255, 250, 45, 108),
                         size: 20,
                       ),
                     ),
                   )
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -89,7 +89,7 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                     children: [
                       Row(
                         children: [
-                          InkWell(
+                          const InkWell(
                             child: Icon(
                               Icons.send,
                               color: Colors.blue,
@@ -99,7 +99,7 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                           const SizedBox(width: 2),
                           Text(
                             widget.video.caption,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -109,14 +109,14 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                       ),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.music_note,
                             size: 15,
                           ),
                           const SizedBox(width: 2),
                           Text(
                             widget.video.songName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -131,8 +131,8 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                     width: 50,
                     height: 50,
                     padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 32, 211, 234),
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 32, 211, 234),
                       shape: BoxShape.circle,
                     ),
                     child: Container(
@@ -156,10 +156,10 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                 children: [
                   Column(
                     children: [
-                      Icon(Icons.favorite, color: Colors.white),
+                      const Icon(Icons.favorite, color: Colors.white),
                       Text(
                         '${widget.video.likes.length},0 K',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -169,10 +169,10 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                   const SizedBox(width: 10),
                   Column(
                     children: [
-                      Icon(Icons.message, color: Colors.white),
+                      const Icon(Icons.message, color: Colors.white),
                       Text(
                         '${widget.video.commentCount},0 K',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -182,10 +182,10 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                   const SizedBox(width: 10),
                   Column(
                     children: [
-                      Icon(Icons.share, color: Colors.white),
+                      const Icon(Icons.share, color: Colors.white),
                       Text(
                         '${widget.video.shareCount},0 K',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -199,8 +199,8 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
               Container(
                 alignment: Alignment.center,
                 height: widget.size.height / 7,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
@@ -224,7 +224,7 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                       children: [
                         Text(
                           widget.video.username,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -232,7 +232,7 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                         ),
                         Text(
                           '#${widget.video.caption}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -240,7 +240,7 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                         )
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(
@@ -252,11 +252,11 @@ class _DisPlayVideoState extends State<DisPlayVideo> {
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.favorite, color: Colors.white),
+                          const Icon(Icons.favorite, color: Colors.white),
                           const SizedBox(width: 5),
                           Text(
                             '${widget.video.likes.length},0 K',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 13,

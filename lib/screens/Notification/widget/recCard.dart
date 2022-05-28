@@ -30,7 +30,7 @@ class RecCard extends StatelessWidget {
                   fit: BoxFit.cover,
                   image: (data.checkEnd == 1)
                       ? NetworkImage(data.userPic)
-                      : NetworkImage(
+                      : const NetworkImage(
                           'https://tse4.mm.bing.net/th?id=OIP.gP1tVKJUehx7kX43qmrSswHaHa&pid=Api&P=0&w=172&h=172',
                         ),
                 ),
@@ -46,7 +46,7 @@ class RecCard extends StatelessWidget {
                           const SizedBox(width: 10),
                           Text(
                             data.username,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
@@ -61,9 +61,9 @@ class RecCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: color,
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30),
+                            topRight: const Radius.circular(30),
                             topLeft: Radius.circular(data.border1 as double),
-                            bottomRight: Radius.circular(30),
+                            bottomRight: const Radius.circular(30),
                             bottomLeft: Radius.circular(data.border2 as double),
                           ),
                         ),
@@ -71,7 +71,7 @@ class RecCard extends StatelessWidget {
                             horizontal: 20, vertical: 12),
                         child: Text(
                           data.tittle,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -121,12 +121,12 @@ class RecCard extends StatelessWidget {
                               height: MediaQuery.of(context).size.height / 5,
                               width: MediaQuery.of(context).size.width / 2.2,
                               decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 222, 236, 238),
+                                color: const Color.fromARGB(255, 222, 236, 238),
                                 borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(30),
+                                  topRight: const Radius.circular(30),
                                   topLeft:
                                       Radius.circular(data.border1 as double),
-                                  bottomRight: Radius.circular(30),
+                                  bottomRight: const Radius.circular(30),
                                   bottomLeft:
                                       Radius.circular(data.border2 as double),
                                 ),
@@ -137,7 +137,7 @@ class RecCard extends StatelessWidget {
                               ),
                             ),
                           )
-                        : Container(
+                        : SizedBox(
                             height: 50,
                             width: 50,
                             child: Image(

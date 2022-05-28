@@ -36,6 +36,7 @@ class _SignInMainState extends State<SignInMain> {
     } else {}
   }
 
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -52,12 +53,12 @@ class _SignInMainState extends State<SignInMain> {
           labelText: 'Password',
           isPass: true,
           textController: widget._passwordControllelr,
-          icon: Icon(Icons.email),
+          icon: const Icon(Icons.email),
         ),
         const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+          children: const [
             Text(
               'Don\'t have an account? ',
               style: TextStyle(
@@ -69,7 +70,7 @@ class _SignInMainState extends State<SignInMain> {
             Text(
               'Sign Up',
               style: TextStyle(
-                color: const Color.fromARGB(255, 32, 211, 234),
+                color: Color.fromARGB(255, 32, 211, 234),
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
               ),
@@ -79,12 +80,12 @@ class _SignInMainState extends State<SignInMain> {
         const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+          children: const [
             Text(
               'Forgot your password',
               textAlign: TextAlign.start,
               style: TextStyle(
-                color: const Color.fromARGB(255, 32, 211, 234),
+                color: Color.fromARGB(255, 32, 211, 234),
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
               ),
@@ -97,7 +98,7 @@ class _SignInMainState extends State<SignInMain> {
             SignIn();
           },
           title: (!isLoading)
-              ? Text(
+              ? const Text(
                   'Continue',
                   style: TextStyle(
                     color: Colors.white,
@@ -105,7 +106,7 @@ class _SignInMainState extends State<SignInMain> {
                     fontSize: 17,
                   ),
                 )
-              : Center(
+              : const Center(
                   child: CircularProgressIndicator(color: Colors.white),
                 ),
         ),

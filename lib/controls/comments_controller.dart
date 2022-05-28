@@ -1,14 +1,11 @@
-import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/models/comment.dart';
-import 'package:uuid/uuid.dart';
 
 class CommentsController extends GetxController {
-  final Rx<List<Comments>> _listComments = new Rx<List<Comments>>([]);
+  final Rx<List<Comments>> _listComments = Rx<List<Comments>>([]);
   List<Comments> get listComments => _listComments.value;
   String postId = "";
   upDatePostId(String id) {
