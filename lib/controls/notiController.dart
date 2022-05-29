@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 
 import '../models/message.dart';
 import '../models/notification.dart';
 import '../models/user.dart';
+import '../models/video.dart';
 
 class NotiController extends GetxController {
   // Message _controller
@@ -20,7 +23,7 @@ class NotiController extends GetxController {
   List<Message> get listGroupMessage => _listGroupMessage.value;
   List<User> get allUser => _allUser.value;
   List<Noti> get allNoti => _allNoti.value;
-  final Rx<String> _uid = "".obs;
+  Rx<String> _uid = "".obs;
 
   updateGroupMessage(String id) {
     _uid.value = id;
@@ -99,7 +102,7 @@ class NotiController extends GetxController {
         (event) {
           List<User> result = [];
           for (var item in event.docs) {
-            if ((item.data())['uid'] != _uid.value) {
+            if ((item.data() as Map<String, dynamic>)['uid'] != _uid.value) {
               result.add(User.fromSnap(item));
             }
           }
@@ -188,7 +191,7 @@ class NotiController extends GetxController {
           List<Noti> result = [];
           for (var item in event.docs) {
             Noti noti = Noti.fromSnap(item);
-            if (noti.uidRec == _uid.value && noti.typeNoti == 0) {
+            if (noti.uidRec == _uid.value) {
               result.add(noti);
             }
           }
@@ -196,5 +199,11 @@ class NotiController extends GetxController {
         },
       ),
     );
+  }
+
+  Future<Video> getVidShow(String id) async {
+    var vidDOc = await firestore.collection('videos').doc(id).get();
+    Video result = Video.fromSnap(vidDOc);
+    return result;
   }
 }

@@ -8,6 +8,7 @@ class Noti {
   String uid;
   String uidRec;
   String postUid;
+  String postPath;
   String commentUid;
   Noti({
     required this.notiId,
@@ -17,6 +18,7 @@ class Noti {
     required this.uid,
     required this.uidRec,
     required this.postUid,
+    required this.postPath,
     required this.commentUid,
   });
 
@@ -28,6 +30,7 @@ class Noti {
         'uid': uid,
         'uidRec': uidRec,
         'postUid': postUid,
+        'postPath': postPath,
         'commentUid': commentUid,
       };
 
@@ -40,6 +43,7 @@ class Noti {
       uid: snap['uid'],
       uidRec: snap['uidRec'],
       postUid: snap['postUid'],
+      postPath: snap['postPath'],
       commentUid: snap['commentUid'],
     );
   }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 
+import '../models/notification.dart';
+import '../models/user.dart';
 import '../models/video.dart';
 
 class VideoController extends GetxController {
@@ -24,7 +26,8 @@ class VideoController extends GetxController {
     );
   }
 
-  Future<void> likeVideo(String uidUser, List userLike, String idVid) async {
+  Future<void> likeVideo(
+      String uidUser, List userLike, String idVid, String uidOp) async {
     try {
       var uid = authMethods.user.uid;
       if (userLike.contains(uidUser)) {
@@ -35,6 +38,7 @@ class VideoController extends GetxController {
         await firestore.collection('videos').doc(idVid).update({
           'likes': FieldValue.arrayUnion([uid]),
         });
+        addDataNotiFi(uidOp, idVid);
       }
     } catch (err) {
       Get.snackbar('Error when like video', err.toString(),
@@ -54,6 +58,37 @@ class VideoController extends GetxController {
       print('pluss');
     } catch (err) {
       print(err.toString());
+    }
+  }
+
+  addDataNotiFi(String uidOp, String idVid) async {
+    var userDoc =
+        await firestore.collection('users').doc(authMethods.user.uid).get();
+
+    var vidDoc = await firestore.collection('videos').doc(idVid).get();
+    Video vid = Video.fromSnap(vidDoc);
+    User user = User.fromSnap(userDoc);
+    if (uidOp != user.uid) {
+      var allNoti = await firestore.collection('noti').get();
+      String notiId = 'noti ${allNoti.docs.length}';
+
+      Noti data = Noti(
+        notiId: notiId,
+        typeNoti: 1,
+        username: user.username,
+        profilePic: user.photoUrl,
+        uid: user.uid,
+        uidRec: uidOp,
+        postUid: vid.id,
+        postPath: vid.thumbNailsPath,
+        commentUid: "",
+      );
+
+      try {
+        await firestore.collection('noti').doc(notiId).set(data.toJson());
+      } catch (err) {
+        print(err.toString());
+      }
     }
   }
 }

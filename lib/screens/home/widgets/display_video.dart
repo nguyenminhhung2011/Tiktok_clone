@@ -157,8 +157,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                   ),
                                   color: Colors.red,
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        widget.data.proFilePic),
+                                    image: NetworkImage(widget.data.proFilePic),
                                   ),
                                 ),
                               ),
@@ -184,7 +183,8 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                               await VideoController().likeVideo(
                                   firebaseAuth.currentUser!.uid,
                                   widget.data.likes,
-                                  widget.data.id);
+                                  widget.data.id,
+                                  widget.data.uid);
                             },
                             icon: Icon(
                               Icons.favorite,
@@ -216,10 +216,7 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                           const Spacer(),
                           Icon_text(
                             no: '${widget.data.shareCount}',
-                            press: () async {
-                              videoController.dispose();
-                              await firebaseAuth.signOut();
-                            },
+                            press: () async {},
                             icon: const Icon(
                               Icons.share,
                               size: 35,
@@ -306,7 +303,8 @@ class _DisPlayVideoState extends State<DisPlayVideo>
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   width: 2,
-                                  color: const Color.fromARGB(255, 136, 199, 250),
+                                  color:
+                                      const Color.fromARGB(255, 136, 199, 250),
                                 ),
                               ),
                               child: CircleAvatar(

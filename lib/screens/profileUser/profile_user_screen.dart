@@ -272,6 +272,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               },
                               child: const Icon(Icons.lock, color: Colors.blue),
                             ),
+                            const SizedBox(width: 10),
+                            InkWell(
+                              onTap: () {
+                                firebaseAuth.signOut();
+                              },
+                              child: Icon(Icons.logout, color: Colors.blue),
+                            ),
                             const SizedBox(width: 20),
                           ],
                         ),
@@ -394,7 +401,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: 40,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 250, 45, 108),
+                                  color:
+                                      const Color.fromARGB(255, 250, 45, 108),
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                                 child: const Text(

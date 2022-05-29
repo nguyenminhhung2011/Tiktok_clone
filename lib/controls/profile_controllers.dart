@@ -161,6 +161,7 @@ class ProfileControls extends GetxController {
       uid: uid,
       uidRec: uidOp,
       postUid: "",
+      postPath: "",
       commentUid: "",
     );
 

@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_clone/constains.dart';
 import 'package:tiktok_clone/controls/notiController.dart';
+import 'package:tiktok_clone/models/video.dart';
 import 'package:tiktok_clone/screens/Notification/addGroupScreen.dart';
 import 'package:tiktok_clone/screens/Notification/messChat.dart';
+import 'package:tiktok_clone/screens/Notification/widget/NotiFollowCard.dart';
+import 'package:tiktok_clone/screens/Notification/widget/NotiLikePostComment.dart';
 import 'package:tiktok_clone/screens/Notification/widget/messageCard.dart';
 import 'package:tiktok_clone/screens/Notification/widget/messageGroupCard.dart';
 import 'package:tiktok_clone/widgets/Avtar_circle.dart';
 
 import '../../models/notification.dart';
 import '../../models/user.dart';
+import '../profileUser/widgets/displayVideo.dart';
 
 class NotifiCationScreen extends StatefulWidget {
   const NotifiCationScreen({Key? key}) : super(key: key);
@@ -147,7 +151,8 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                   height: 34,
                                   decoration: BoxDecoration(
                                     color: (checkPersonGroup)
-                                        ? const Color.fromARGB(255, 250, 45, 108)
+                                        ? const Color.fromARGB(
+                                            255, 250, 45, 108)
                                         : Colors.transparent,
                                     borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(10),
@@ -161,7 +166,8 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                     style: TextStyle(
                                       color: (checkPersonGroup)
                                           ? Colors.white
-                                          : const Color.fromARGB(255, 250, 45, 108),
+                                          : const Color.fromARGB(
+                                              255, 250, 45, 108),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
                                     ),
@@ -185,7 +191,8 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: (!checkPersonGroup)
-                                        ? const Color.fromARGB(255, 32, 211, 234)
+                                        ? const Color.fromARGB(
+                                            255, 32, 211, 234)
                                         : Colors.transparent,
                                     borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(4),
@@ -199,7 +206,8 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                                     style: TextStyle(
                                       color: (!checkPersonGroup)
                                           ? Colors.white
-                                          : const Color.fromARGB(255, 32, 211, 234),
+                                          : const Color.fromARGB(
+                                              255, 32, 211, 234),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
                                     ),
@@ -216,7 +224,8 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const CreateGroupScreen()),
+                                    builder: (context) =>
+                                        const CreateGroupScreen()),
                               );
                             },
                             icon: const Icon(
@@ -306,11 +315,30 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
             : SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
-                  children: _notiController.allNoti
-                      .map(
-                        (e) => NotiFollowCard(data: e),
-                      )
-                      .toList(),
+                  children: _notiController.allNoti.map((e) {
+                    if (e.typeNoti == 0) {
+                      return NotiFollowCard(
+                        data: e,
+                      );
+                    }
+                    return NotiLikePostComment(
+                      data: e,
+                      press: () async {
+                        Video vidShow =
+                            await _notiController.getVidShow(e.postUid);
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: DisPlayVideo(
+                              size: MediaQuery.of(context).size,
+                              video: vidShow,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
                 ),
               ),
       ),
@@ -395,102 +423,6 @@ class _NotifiCationScreenState extends State<NotifiCationScreen> {
   }
 }
 
-class NotiFollowCard extends StatelessWidget {
-  final Noti data;
-  const NotiFollowCard({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: const Color.fromARGB(255, 230, 251, 255),
-      ),
-      child: Row(
-        children: [
-          AvatarCircle(
-            avtPath: data.profilePic,
-            sizeAvt: 70,
-          ),
-          const SizedBox(width: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                data.username,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17),
-              ),
-              const Text(
-                'was following you',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          const Spacer(),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    '9:00 PM',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 8,
-                    width: 8,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Container(
-                    height: 8,
-                    width: 8,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Container(
-                    height: 8,
-                    width: 8,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.yellow,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class PersonCard extends StatelessWidget {
   const PersonCard({
     Key? key,
@@ -527,8 +459,8 @@ class PersonCard extends StatelessWidget {
               ),
               Text(
                 '#${data.bio}',
-                style:
-                    const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.grey, fontWeight: FontWeight.bold),
               )
             ],
           ),
