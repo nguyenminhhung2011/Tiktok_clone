@@ -17,7 +17,6 @@
 <img width="200" src=".\UI\9.png"></a>
 <img width="200" src=".\UI\10.png"></a>
 <img width="200" src=".\UI\11.png"></a>
-<img width="200" src=".\UI\12.png"></a>
 <img width="200" src=".\UI\13.png"></a>
 <img width="200" src=".\UI\14.png"></a>
 <img width="200" src=".\UI\15.png"></a>
