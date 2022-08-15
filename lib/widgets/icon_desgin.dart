@@ -40,7 +40,7 @@ class IconDesgin extends StatelessWidget {
               alignment: Alignment.center,
               widthFactor: 100,
               child: Container(
-                width: 50,
+                width: 50,  
                 height: 35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
