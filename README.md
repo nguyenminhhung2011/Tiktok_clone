@@ -6,14 +6,30 @@
 ###### MSSV: 20120491
 
 
-### Requirements
-- [ ]  Sign Up, Sign In 
-- [ ]  Generate randomly n Students and add to the previous vector
-- [ ]  Overwrite and save and the students in the current vector back to the file "students.txt"
-- [ ]  Print out the average GPA of all students
-- [ ]  Print out all the students that have a GPA greater than the average GPA
-
-
-
-
-![1](https://user-images.githubusercontent.com/90996598/171014380-39981dd6-f352-4d65-9659-be00f8571d5a.png)
+<img width="200" src=".\UI\1.png"></a>
+<img width="200" src=".\UI\2.png"></a>
+<img width="200" src=".\UI\3.png"></a>
+<img width="200" src=".\UI\4.png"></a>
+<img width="200" src=".\UI\5.png"></a>
+<img width="200" src=".\UI\6.png"></a>
+<img width="200" src=".\UI\7.png"></a>
+<img width="200" src=".\UI\8.png"></a>
+<img width="200" src=".\UI\9.png"></a>
+<img width="200" src=".\UI\10.png"></a>
+<img width="200" src=".\UI\11.png"></a>
+<img width="200" src=".\UI\12.png"></a>
+<img width="200" src=".\UI\13.png"></a>
+<img width="200" src=".\UI\14.png"></a>
+<img width="200" src=".\UI\15.png"></a>
+<img width="200" src=".\UI\16.png"></a>
+<img width="200" src=".\UI\17.png"></a>
+<img width="200" src=".\UI\18.png"></a>
+<img width="200" src=".\UI\19.png"></a>
+<img width="200" src=".\UI\20.png"></a>
+<img width="200" src=".\UI\21.png"></a>
+<img width="200" src=".\UI\22.png"></a>
+<img width="200" src=".\UI\23.png"></a>
+<img width="200" src=".\UI\24.png"></a>
+<img width="200" src=".\UI\25.png"></a>
+<img width="200" src=".\UI\26.png"></a>
+<img width="200" src=".\UI\27.png"></a>
